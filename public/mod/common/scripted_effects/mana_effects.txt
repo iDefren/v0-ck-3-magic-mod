@@ -1,0 +1,371 @@
+# ============================================================
+# ARCANE DOMINION - common/scripted_effects/mana_effects.txt
+# Mana system using scripted variables
+# ============================================================
+
+# ============================================================
+# MANA INITIALIZATION
+# ============================================================
+
+# Called when a character first gains a magic trait
+initialize_mana_system = {
+	if = {
+		limit = { NOT = { has_variable = arcane_mana } }
+		set_variable = {
+			name = arcane_mana
+			value = 0
+		}
+	}
+	if = {
+		limit = { NOT = { has_variable = arcane_mana_max } }
+		recalculate_mana_max = yes
+	}
+}
+
+recalculate_mana_max = {
+	# Base max mana by tier
+	if = { limit = { has_trait = arcane_spark } set_variable = { name = arcane_mana_max value = 50 } }
+	else_if = { limit = { has_trait = mage_initiate } set_variable = { name = arcane_mana_max value = 100 } }
+	else_if = { limit = { has_trait = mage_adept } set_variable = { name = arcane_mana_max value = 175 } }
+	else_if = { limit = { has_trait = mage_journeyman } set_variable = { name = arcane_mana_max value = 280 } }
+	else_if = { limit = { has_trait = mage_expert } set_variable = { name = arcane_mana_max value = 420 } }
+	else_if = { limit = { has_trait = mage_master } set_variable = { name = arcane_mana_max value = 600 } }
+	else_if = { limit = { has_trait = archmage } set_variable = { name = arcane_mana_max value = 900 } }
+	# Demon tiers
+	else_if = { limit = { has_trait = demon_low } set_variable = { name = arcane_mana_max value = 200 } }
+	else_if = { limit = { has_trait = demon_mid } set_variable = { name = arcane_mana_max value = 400 } }
+	else_if = { limit = { has_trait = demon_high } set_variable = { name = arcane_mana_max value = 700 } }
+	else_if = { limit = { has_trait = demon_legendary } set_variable = { name = arcane_mana_max value = 1200 } }
+	# Angel tiers
+	else_if = { limit = { has_trait = angel_lesser } set_variable = { name = arcane_mana_max value = 200 } }
+	else_if = { limit = { has_trait = angel_greater } set_variable = { name = arcane_mana_max value = 400 } }
+	else_if = { limit = { has_trait = angel_archangel } set_variable = { name = arcane_mana_max value = 700 } }
+	else_if = { limit = { has_trait = celestial_ascended } set_variable = { name = arcane_mana_max value = 1200 } }
+
+	# Bonuses from artifacts and buildings
+	if = {
+		limit = {
+			any_artifact = { has_artifact_modifier = mana_battery }
+		}
+		change_variable = { name = arcane_mana_max add = 150 }
+	}
+}
+
+# ============================================================
+# MONTHLY MANA REGENERATION (called from on_monthly_pulse)
+# ============================================================
+
+monthly_mana_regen = {
+	if = {
+		limit = {
+			has_variable = arcane_mana
+			OR = {
+				has_trait = arcane_spark
+				has_trait = mage_initiate
+				has_trait = mage_adept
+				has_trait = mage_journeyman
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+				has_trait = demon_low
+				has_trait = demon_mid
+				has_trait = demon_high
+				has_trait = demon_legendary
+				has_trait = angel_lesser
+				has_trait = angel_greater
+				has_trait = angel_archangel
+				has_trait = celestial_ascended
+			}
+		}
+
+		# Base regen calculation
+		save_temporary_scope_value_as = {
+			name = mana_gain
+			value = 2
+		}
+
+		# Add from trait tier
+		if = { limit = { has_trait = arcane_spark } change_temporary_variable = { name = mana_gain add = 2 } }
+		if = { limit = { has_trait = mage_initiate } change_temporary_variable = { name = mana_gain add = 5 } }
+		if = { limit = { has_trait = mage_adept } change_temporary_variable = { name = mana_gain add = 10 } }
+		if = { limit = { has_trait = mage_journeyman } change_temporary_variable = { name = mana_gain add = 18 } }
+		if = { limit = { has_trait = mage_expert } change_temporary_variable = { name = mana_gain add = 28 } }
+		if = { limit = { has_trait = mage_master } change_temporary_variable = { name = mana_gain add = 40 } }
+		if = { limit = { has_trait = archmage } change_temporary_variable = { name = mana_gain add = 60 } }
+		if = { limit = { has_trait = demon_low } change_temporary_variable = { name = mana_gain add = 8 } }
+		if = { limit = { has_trait = demon_mid } change_temporary_variable = { name = mana_gain add = 18 } }
+		if = { limit = { has_trait = demon_high } change_temporary_variable = { name = mana_gain add = 35 } }
+		if = { limit = { has_trait = demon_legendary } change_temporary_variable = { name = mana_gain add = 70 } }
+		if = { limit = { has_trait = angel_lesser } change_temporary_variable = { name = mana_gain add = 8 } }
+		if = { limit = { has_trait = angel_greater } change_temporary_variable = { name = mana_gain add = 20 } }
+		if = { limit = { has_trait = angel_archangel } change_temporary_variable = { name = mana_gain add = 40 } }
+		if = { limit = { has_trait = celestial_ascended } change_temporary_variable = { name = mana_gain add = 80 } }
+
+		# Bonus from learning stat (scaled)
+		if = {
+			limit = { learning >= 20 }
+			change_temporary_variable = { name = mana_gain add = 10 }
+		}
+		else_if = {
+			limit = { learning >= 15 }
+			change_temporary_variable = { name = mana_gain add = 6 }
+		}
+		else_if = {
+			limit = { learning >= 10 }
+			change_temporary_variable = { name = mana_gain add = 3 }
+		}
+
+		# Bonus from ley line trait
+		if = {
+			limit = { has_trait = ley_line_attuned }
+			change_temporary_variable = { name = mana_gain add = 15 }
+		}
+
+		# Bonus from magic laboratory buildings
+		if = {
+			limit = {
+				capital_county = { has_building = magic_laboratory_tier_4 }
+			}
+			change_temporary_variable = { name = mana_gain add = 20 }
+		}
+		else_if = {
+			limit = {
+				capital_county = { has_building = magic_laboratory_tier_3 }
+			}
+			change_temporary_variable = { name = mana_gain add = 12 }
+		}
+		else_if = {
+			limit = {
+				capital_county = { has_building = magic_laboratory }
+			}
+			change_temporary_variable = { name = mana_gain add = 5 }
+		}
+
+		# Penalty if mana_starved
+		if = {
+			limit = { has_trait = mana_starved }
+			change_temporary_variable = { name = mana_gain add = -20 }
+		}
+
+		# Apply regen (capped at max)
+		change_variable = { name = arcane_mana add = scope:mana_gain }
+
+		# Cap at max mana
+		if = {
+			limit = {
+				var:arcane_mana > var:arcane_mana_max
+			}
+			set_variable = {
+				name = arcane_mana
+				value = var:arcane_mana_max
+			}
+		}
+
+		# Never below 0
+		if = {
+			limit = { var:arcane_mana < 0 }
+			set_variable = { name = arcane_mana value = 0 }
+		}
+
+		# Arcane overload check - too much mana
+		if = {
+			limit = {
+				var:arcane_mana >= var:arcane_mana_max
+				random <= 5
+			}
+			trigger_event = arcane.0400
+		}
+
+		# Low mana warning event (mana starved)
+		if = {
+			limit = {
+				var:arcane_mana < 10
+				NOT = { has_trait = mana_starved }
+			}
+			trigger_event = arcane.0410
+		}
+	}
+}
+
+# ============================================================
+# MANA SPEND EFFECTS
+# ============================================================
+
+spend_mana_25 = {
+	if = {
+		limit = { var:arcane_mana >= 25 }
+		change_variable = { name = arcane_mana add = -25 }
+	}
+}
+
+spend_mana_30 = {
+	if = {
+		limit = { var:arcane_mana >= 30 }
+		change_variable = { name = arcane_mana add = -30 }
+	}
+}
+
+spend_mana_40 = {
+	if = {
+		limit = { var:arcane_mana >= 40 }
+		change_variable = { name = arcane_mana add = -40 }
+	}
+}
+
+spend_mana_50 = {
+	if = {
+		limit = { var:arcane_mana >= 50 }
+		change_variable = { name = arcane_mana add = -50 }
+	}
+}
+
+spend_mana_60 = {
+	if = {
+		limit = { var:arcane_mana >= 60 }
+		change_variable = { name = arcane_mana add = -60 }
+	}
+}
+
+spend_mana_80 = {
+	if = {
+		limit = { var:arcane_mana >= 80 }
+		change_variable = { name = arcane_mana add = -80 }
+	}
+}
+
+spend_mana_100 = {
+	if = {
+		limit = { var:arcane_mana >= 100 }
+		change_variable = { name = arcane_mana add = -100 }
+	}
+}
+
+spend_mana_200 = {
+	if = {
+		limit = { var:arcane_mana >= 200 }
+		change_variable = { name = arcane_mana add = -200 }
+	}
+}
+
+spend_mana_300 = {
+	if = {
+		limit = { var:arcane_mana >= 300 }
+		change_variable = { name = arcane_mana add = -300 }
+	}
+}
+
+# ============================================================
+# MANA GAIN EFFECTS (external sources)
+# ============================================================
+
+gain_mana_30 = {
+	if = {
+		limit = { has_variable = arcane_mana }
+		change_variable = { name = arcane_mana add = 30 }
+	}
+}
+
+gain_mana_50 = {
+	if = {
+		limit = { has_variable = arcane_mana }
+		change_variable = { name = arcane_mana add = 50 }
+	}
+}
+
+gain_mana_100 = {
+	if = {
+		limit = { has_variable = arcane_mana }
+		change_variable = { name = arcane_mana add = 100 }
+	}
+}
+
+# ============================================================
+# ARCANE XP MANAGEMENT
+# ============================================================
+
+gain_arcane_xp = {
+	if = {
+		limit = { NOT = { has_variable = arcane_xp } }
+		set_variable = { name = arcane_xp value = 0 }
+	}
+	change_variable = { name = arcane_xp add = $VALUE$ }
+	check_mage_tier_upgrade = yes
+}
+
+check_mage_tier_upgrade = {
+	# Tier progression - hard XP thresholds
+	if = {
+		limit = {
+			has_trait = arcane_spark
+			var:arcane_xp >= 200
+		}
+		remove_trait = arcane_spark
+		add_trait = mage_initiate
+		initialize_mana_system = yes
+		trigger_event = arcane.0050
+	}
+	else_if = {
+		limit = {
+			has_trait = mage_initiate
+			var:arcane_xp >= 500
+		}
+		remove_trait = mage_initiate
+		add_trait = mage_adept
+		initialize_mana_system = yes
+		trigger_event = arcane.0010
+	}
+	else_if = {
+		limit = {
+			has_trait = mage_adept
+			var:arcane_xp >= 1000
+		}
+		remove_trait = mage_adept
+		add_trait = mage_journeyman
+		trigger_event = arcane.0015
+	}
+	else_if = {
+		limit = {
+			has_trait = mage_journeyman
+			var:arcane_xp >= 2000
+		}
+		remove_trait = mage_journeyman
+		add_trait = mage_expert
+		trigger_event = arcane.0018
+	}
+	else_if = {
+		limit = {
+			has_trait = mage_expert
+			var:arcane_xp >= 4000
+		}
+		remove_trait = mage_expert
+		add_trait = mage_master
+		trigger_event = arcane.0020
+	}
+	else_if = {
+		limit = {
+			has_trait = mage_master
+			var:arcane_xp >= 8000
+		}
+		remove_trait = mage_master
+		add_trait = archmage
+		trigger_event = arcane.0030
+	}
+}
+
+# ============================================================
+# ON_ACTIONS PULSE (monthly)
+# ============================================================
+# These effects are called from on_actions file
+
+arcane_monthly_pulse = {
+	monthly_mana_regen = yes
+
+	# Random events
+	if = {
+		limit = {
+			has_variable = arcane_mana
+			random <= 3
+		}
+		trigger_event = { id = arcane.0500 months = { 1 36 } }
+	}
+}

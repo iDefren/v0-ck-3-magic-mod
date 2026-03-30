@@ -1,0 +1,427 @@
+# ============================================================
+# ARCANE DOMINION - events/angel_events.txt
+# Angel tier events, blessings, celestial ascension
+# ============================================================
+
+namespace = angel
+
+# ============================================================
+# ANGEL 0010 - REACHED GREATER ANGEL
+# ============================================================
+angel.0010 = {
+	type = character_event
+	title = angel.0010.t
+	desc = angel.0010.desc
+	picture = "gfx/event_illustrations/angel_greater.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0010.a
+		add_piety = 1000
+		add_prestige = 300
+		gain_arcane_xp = { VALUE = 80 }
+		trigger_event = angel.0011
+	}
+}
+
+angel.0011 = {
+	type = character_event
+	title = angel.0011.t
+	desc = angel.0011.desc
+	picture = "gfx/event_illustrations/angel_spec.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0011.a  # Guardian path
+		add_trait = angel_guardian
+	}
+	option = {
+		name = angel.0011.b  # Healer path
+		add_trait = angel_healer
+	}
+	option = {
+		name = angel.0011.c  # Prophet path
+		add_trait = angel_prophet
+	}
+	option = {
+		name = angel.0011.d  # Warlord path
+		add_trait = angel_warlord
+	}
+}
+
+# ============================================================
+# ANGEL 0020 - REACHED ARCHANGEL
+# ============================================================
+angel.0020 = {
+	type = character_event
+	title = angel.0020.t
+	desc = angel.0020.desc
+	picture = "gfx/event_illustrations/archangel.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0020.a
+		add_piety = 3000
+		add_prestige = 800
+		gain_arcane_xp = { VALUE = 150 }
+		gain_mana_100 = yes
+	}
+}
+
+# ============================================================
+# ANGEL 0030 - CELESTIAL ASCENDED
+# ============================================================
+angel.0030 = {
+	type = character_event
+	title = angel.0030.t
+	desc = angel.0030.desc
+	picture = "gfx/event_illustrations/celestial_ascended.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0030.a
+		add_piety = 10000
+		add_prestige = 3000
+		gain_arcane_xp = { VALUE = 400 }
+		gain_mana_100 = yes
+		gain_mana_100 = yes
+		# Every demon takes notice
+		trigger_event = angel.0031
+	}
+}
+
+angel.0031 = {
+	type = character_event
+	title = angel.0031.t
+	desc = angel.0031.desc
+	picture = "gfx/event_illustrations/celestial_known.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0031.a
+		# Demons worldwide gain negative opinion
+		every_known_character = {
+			limit = {
+				OR = {
+					has_trait = demon_mid
+					has_trait = demon_high
+					has_trait = demon_legendary
+				}
+			}
+			add_opinion = {
+				modifier = celestial_enemy
+				target = prev
+				opinion = -80
+			}
+		}
+		add_prestige = 500
+	}
+}
+
+# ============================================================
+# ANGEL 0100-0110 - DIVINE PROTECTION TREE EVENTS
+# ============================================================
+angel.0100 = {
+	type = character_event
+	title = angel.0100.t
+	desc = angel.0100.desc
+	picture = "gfx/event_illustrations/divine_intervention.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0100.a  # Accept divine protection
+		add_character_modifier = {
+			modifier = divine_intervention_active
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 50 }
+		add_piety = 500
+	}
+}
+
+angel.0110 = {
+	type = character_event
+	title = angel.0110.t
+	desc = angel.0110.desc
+	picture = "gfx/event_illustrations/holy_smite.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0110.a  # Channel holy smite
+		trigger = {
+			any_known_character = {
+				OR = {
+					has_trait = demon_low
+					has_trait = demon_mid
+					has_trait = demon_high
+					has_trait = demon_legendary
+				}
+			}
+		}
+		add_character_modifier = {
+			modifier = holy_smite_ready
+			months = 12
+		}
+		gain_arcane_xp = { VALUE = 60 }
+	}
+}
+
+# ============================================================
+# ANGEL 0200 - AVATAR OF LIGHT CAPSTONE
+# ============================================================
+angel.0200 = {
+	type = character_event
+	title = angel.0200.t
+	desc = angel.0200.desc
+	picture = "gfx/event_illustrations/avatar_of_light.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0200.a
+		add_character_modifier = {
+			modifier = avatar_of_light_aura
+			years = -1
+		}
+		add_piety = 5000
+		add_prestige = 2000
+		gain_arcane_xp = { VALUE = 300 }
+	}
+}
+
+# ============================================================
+# ANGEL 0300-0310 - PROPHECY FOCUS EVENTS
+# ============================================================
+angel.0300 = {
+	type = character_event
+	title = angel.0300.t
+	desc = angel.0300.desc
+	picture = "gfx/event_illustrations/oracle_vision.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0300.a  # A warning of war
+		trigger = {
+			any_neighbor_ruler = { always = yes }
+		}
+		add_character_modifier = {
+			modifier = prophetic_warning_war
+			months = 24
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = angel.0300.b  # A vision of abundance
+		add_character_modifier = {
+			modifier = prophetic_blessing_wealth
+			months = 24
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = angel.0300.c  # A magical crisis approaches
+		add_character_modifier = {
+			modifier = prophetic_crisis_warning
+			months = 12
+		}
+		gain_arcane_xp = { VALUE = 60 }
+	}
+}
+
+angel.0310 = {
+	type = character_event
+	title = angel.0310.t
+	desc = angel.0310.desc
+	picture = "gfx/event_illustrations/divine_mandate.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0310.a  # Declare holy mandate
+		add_character_modifier = {
+			modifier = divine_mandate_active
+			years = 5
+		}
+		add_piety = 2000
+		add_prestige = 1000
+		gain_arcane_xp = { VALUE = 100 }
+	}
+}
+
+# ============================================================
+# ANGEL 0400 - VOICE OF DIVINE CAPSTONE
+# ============================================================
+angel.0400 = {
+	type = character_event
+	title = angel.0400.t
+	desc = angel.0400.desc
+	picture = "gfx/event_illustrations/voice_divine.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0400.a
+		add_character_modifier = {
+			modifier = voice_divine_aura
+			years = -1
+		}
+		add_piety = 8000
+		add_prestige = 3000
+		gain_arcane_xp = { VALUE = 400 }
+	}
+}
+
+# ============================================================
+# ANGEL 0500-0520 - DIVINE SOVEREIGNTY TREE EVENTS
+# ============================================================
+angel.0500 = {
+	type = character_event
+	title = angel.0500.t
+	desc = angel.0500.desc
+	picture = "gfx/event_illustrations/angelic_blessing.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0500.a  # Bless a vassal
+		trigger = { any_vassal = { always = yes } }
+		random_vassal = {
+			save_scope_as = blessed_target
+			add_character_modifier = {
+				modifier = celestial_blessed
+				months = 24
+			}
+			add_piety = 500
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_piety = 300
+	}
+	option = {
+		name = angel.0500.b  # Bless a child
+		trigger = { any_child = { always = yes } }
+		random_child = {
+			add_character_modifier = {
+				modifier = celestial_blessed
+				months = 36
+			}
+			add_trait = half_angel
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+}
+
+angel.0510 = {
+	type = character_event
+	title = angel.0510.t
+	desc = angel.0510.desc
+	picture = "gfx/event_illustrations/holy_dynasty.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0510.a  # Consecrate the bloodline
+		every_child = {
+			add_character_modifier = {
+				modifier = celestial_heritage
+				years = -1
+			}
+		}
+		gain_arcane_xp = { VALUE = 80 }
+		add_piety = 1000
+	}
+}
+
+angel.0520 = {
+	type = character_event
+	title = angel.0520.t
+	desc = angel.0520.desc
+	picture = "gfx/event_illustrations/heaven_on_earth.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0520.a  # Bless your capital province
+		capital_county = {
+			add_county_modifier = {
+				modifier = celestial_land_blessing
+				years = 10
+			}
+		}
+		add_piety = 2000
+		gain_arcane_xp = { VALUE = 100 }
+	}
+}
+
+# ============================================================
+# ANGEL 0600 - DIVINE SOVEREIGN CAPSTONE
+# ============================================================
+angel.0600 = {
+	type = character_event
+	title = angel.0600.t
+	desc = angel.0600.desc
+	picture = "gfx/event_illustrations/divine_sovereign.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0600.a
+		add_character_modifier = {
+			modifier = divine_sovereign_aura
+			years = -1
+		}
+		add_piety = 15000
+		add_prestige = 5000
+		gain_arcane_xp = { VALUE = 600 }
+	}
+}
+
+# ============================================================
+# ANGEL 0700 - BLESSING DECISION EVENT
+# ============================================================
+angel.0700 = {
+	type = character_event
+	title = angel.0700.t
+	desc = angel.0700.desc
+	picture = "gfx/event_illustrations/angel_blessing_choice.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = angel.0700.a  # Bless a specific character
+		random_known_character = {
+			limit = {
+				NOT = { has_character_modifier = celestial_blessed }
+				is_alive = yes
+			}
+			save_scope_as = bless_target
+			add_character_modifier = {
+				modifier = celestial_blessed
+				months = 24
+			}
+		}
+		spend_mana_40 = yes
+		gain_arcane_xp = { VALUE = 20 }
+		add_piety = 200
+	}
+	option = {
+		name = angel.0700.b  # Bless an entire county
+		trigger = { prestige >= 500 }
+		capital_county = {
+			add_county_modifier = {
+				modifier = minor_celestial_blessing
+				years = 5
+			}
+		}
+		spend_mana_80 = yes
+		gain_arcane_xp = { VALUE = 40 }
+		add_piety = 500
+	}
+}

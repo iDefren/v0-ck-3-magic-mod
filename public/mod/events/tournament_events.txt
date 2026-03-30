@@ -1,0 +1,297 @@
+# ============================================================
+# ARCANE DOMINION - events/tournament_events.txt
+# Magical Tournament system
+# ============================================================
+
+namespace = tournament
+
+tournament.0001 = {
+	type = character_event
+	title = tournament.0001.t
+	desc = tournament.0001.desc
+	picture = "gfx/event_illustrations/magical_tournament.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0001.a  # Enter the duel bracket
+		trigger_event = tournament.0010
+	}
+	option = {
+		name = tournament.0001.b  # Enter the arcane challenge
+		trigger_event = tournament.0020
+	}
+	option = {
+		name = tournament.0001.c  # Enter both brackets
+		trigger = { var:arcane_mana >= 80 }
+		spend_mana_50 = yes
+		trigger_event = tournament.0030
+	}
+	option = {
+		name = tournament.0001.d  # Just observe
+		gain_arcane_xp = { VALUE = 10 }
+		add_prestige = 20
+	}
+}
+
+# ============================================================
+# DUEL BRACKET
+# ============================================================
+tournament.0010 = {
+	type = character_event
+	title = tournament.0010.t
+	desc = tournament.0010.desc
+	picture = "gfx/event_illustrations/tournament_duel.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0010.a  # Channel magic for advantage
+		trigger = {
+			OR = {
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+			}
+			var:arcane_mana >= 40
+		}
+		spend_mana_40 = yes
+		# Success based on prowess + magic experience
+		random_list = {
+			40 = {
+				modifier = {
+					add = 20
+					has_trait = mage_master
+				}
+				modifier = {
+					add = 30
+					has_trait = archmage
+				}
+				modifier = {
+					add = 15
+					has_trait = mage_expert
+				}
+				trigger_event = tournament.0011  # Win
+			}
+			60 = {
+				trigger_event = tournament.0012  # Lose
+			}
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+	option = {
+		name = tournament.0010.b  # Fight with skill alone
+		trigger = { prowess >= 16 }
+		random_list = {
+			55 = { trigger_event = tournament.0011 }
+			45 = { trigger_event = tournament.0012 }
+		}
+	}
+}
+
+tournament.0011 = {
+	type = character_event
+	title = tournament.0011.t
+	desc = tournament.0011.desc
+	picture = "gfx/event_illustrations/tournament_duel_win.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0011.a
+		add_prestige = 300
+		gain_arcane_xp = { VALUE = 30 }
+		gain_mana_50 = yes
+		# Chance to win a magical artifact as prize
+		random_list = {
+			30 = { trigger_event = artifact_events.0200 }
+			70 = { add_gold = 150 }
+		}
+	}
+}
+
+tournament.0012 = {
+	type = character_event
+	title = tournament.0012.t
+	desc = tournament.0012.desc
+	picture = "gfx/event_illustrations/tournament_duel_loss.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0012.a  # Accept defeat gracefully
+		gain_arcane_xp = { VALUE = 15 }
+		add_prestige = -50
+		health_impact_add = -0.2
+	}
+	option = {
+		name = tournament.0012.b  # Learn from defeat
+		gain_arcane_xp = { VALUE = 25 }
+		add_prestige = -100
+	}
+}
+
+# ============================================================
+# ARCANE CHALLENGE BRACKET
+# ============================================================
+tournament.0020 = {
+	type = character_event
+	title = tournament.0020.t
+	desc = tournament.0020.desc
+	picture = "gfx/event_illustrations/arcane_challenge.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0020.a  # Spellcasting accuracy test
+		random_list = {
+			40 = {
+				modifier = {
+					add = 20
+					has_trait = archmage
+				}
+				modifier = {
+					add = 15
+					has_trait = mage_master
+				}
+				modifier = {
+					add = 10
+					has_trait = mage_expert
+				}
+				trigger_event = tournament.0021
+			}
+			60 = { trigger_event = tournament.0022 }
+		}
+		spend_mana_60 = yes
+		gain_arcane_xp = { VALUE = 25 }
+	}
+	option = {
+		name = tournament.0020.b  # Knowledge test
+		trigger = { learning >= 16 }
+		random_list = {
+			60 = {
+				modifier = {
+					add = 20
+					learning >= 22
+				}
+				trigger_event = tournament.0021
+			}
+			40 = { trigger_event = tournament.0022 }
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+tournament.0021 = {
+	type = character_event
+	title = tournament.0021.t
+	desc = tournament.0021.desc
+	picture = "gfx/event_illustrations/arcane_challenge_win.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0021.a
+		add_prestige = 400
+		add_piety = 200
+		gain_arcane_xp = { VALUE = 50 }
+		# Major recognition - other mages learn of you
+		every_known_character = {
+			limit = {
+				OR = {
+					has_trait = mage_master
+					has_trait = archmage
+				}
+			}
+			add_opinion = {
+				modifier = tournament_champion_opinion
+				target = prev
+				opinion = 20
+			}
+		}
+	}
+}
+
+tournament.0022 = {
+	type = character_event
+	title = tournament.0022.t
+	desc = tournament.0022.desc
+	picture = "gfx/event_illustrations/arcane_challenge_fail.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0022.a  # Accept the defeat
+		gain_arcane_xp = { VALUE = 20 }
+		add_prestige = -80
+	}
+}
+
+# ============================================================
+# BOTH BRACKETS (Grand Champion)
+# ============================================================
+tournament.0030 = {
+	type = character_event
+	title = tournament.0030.t
+	desc = tournament.0030.desc
+	picture = "gfx/event_illustrations/grand_champion.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0030.a  # Enter as Grand Challenger
+		random_list = {
+			25 = {
+				modifier = {
+					add = 20
+					has_trait = archmage
+				}
+				modifier = {
+					add = 10
+					has_trait = mage_master
+				}
+				trigger_event = tournament.0031  # Grand champion!
+			}
+			75 = {
+				trigger_event = tournament.0032  # Partial success
+			}
+		}
+		spend_mana_80 = yes
+		gain_arcane_xp = { VALUE = 40 }
+	}
+}
+
+tournament.0031 = {
+	type = character_event
+	title = tournament.0031.t
+	desc = tournament.0031.desc
+	picture = "gfx/event_illustrations/tournament_grand_win.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0031.a
+		add_prestige = 1000
+		add_piety = 500
+		gain_arcane_xp = { VALUE = 100 }
+		gain_mana_100 = yes
+		add_gold = 300
+		trigger_event = artifact_events.0200  # Legendary artifact prize
+	}
+}
+
+tournament.0032 = {
+	type = character_event
+	title = tournament.0032.t
+	desc = tournament.0032.desc
+	picture = "gfx/event_illustrations/tournament_partial.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = tournament.0032.a
+		add_prestige = 300
+		gain_arcane_xp = { VALUE = 40 }
+		add_gold = 100
+	}
+}

@@ -1,0 +1,325 @@
+# ============================================================
+# ARCANE DOMINION - common/lifestyles/demonic_lifestyle.txt
+# Demonic Lifestyle with three focus trees
+# ============================================================
+
+demonic_lifestyle = {
+	desc = demonic_lifestyle_desc
+	is_valid = {
+		OR = {
+			has_trait = demon_low
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+		}
+	}
+	xp_per_level = {
+		200 450 900 1500 2500 4500 8000
+	}
+
+	focuses = {
+		# ---- FOCUS: DEMONIC CORRUPTION ----
+		corruption_focus = {
+			desc = corruption_focus_desc
+			lifestyle = demonic_lifestyle
+			is_valid = { always = yes }
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				corrupt_whispers = {
+					desc = corrupt_whispers_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = corrupt_whispers_mod years = -1 }
+					}
+					# Intrigue +3, corruption spread +10
+				}
+				demonic_charm = {
+					desc = demonic_charm_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = demonic_charm_mod years = -1 }
+					}
+					# Diplomacy +3, seduction success +20
+				}
+
+				# TIER 2
+				soul_harvest = {
+					desc = soul_harvest_desc
+					tier = 2
+					prerequisites = { corrupt_whispers }
+					position = { x = 0 y = 1 }
+					effect = {
+						trigger_event = demon.0100
+					}
+					# Gain mana from corrupting targets
+				}
+				demonic_pact = {
+					desc = demonic_pact_desc
+					tier = 2
+					prerequisites = { demonic_charm }
+					position = { x = 1 y = 1 }
+					effect = {
+						trigger_event = demon.0110
+					}
+					# Offer contracts to humans for power
+				}
+
+				# TIER 3
+				mass_corruption = {
+					desc = mass_corruption_desc
+					tier = 3
+					prerequisites = { soul_harvest demonic_pact }
+					position = { x = 0 y = 2 }
+					effect = {
+						add_character_modifier = { modifier = mass_corruption_mod years = -1 }
+					}
+					# Province corruption spread, rebellion risks reduced
+				}
+				infernal_network = {
+					desc = infernal_network_desc
+					tier = 3
+					prerequisites = { demonic_pact }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = demon.0120
+					}
+					# Spy network in neighboring courts
+				}
+
+				# TIER 4
+				lord_of_sin = {
+					desc = lord_of_sin_desc
+					tier = 4
+					prerequisites = { mass_corruption infernal_network }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = lord_of_sin_mod years = -1 }
+					}
+					# Major intrigue and corruption buffs
+				}
+
+				# TIER 5 - CAPSTONE
+				corruption_incarnate = {
+					desc = corruption_incarnate_desc
+					tier = 5
+					prerequisites = { lord_of_sin }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = demon.0200
+					}
+					# Devastating corruption aura event chain
+				}
+			}
+		}
+
+		# ---- FOCUS: INFERNAL POWER ----
+		infernal_power_focus = {
+			desc = infernal_power_focus_desc
+			lifestyle = demonic_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = demon_mid
+					has_trait = demon_high
+					has_trait = demon_legendary
+				}
+			}
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				hellfire_mastery = {
+					desc = hellfire_mastery_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = hellfire_mastery_mod years = -1 }
+					}
+					# Prowess +5, fire damage in combat
+				}
+				demonic_resilience = {
+					desc = demonic_resilience_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = demonic_resilience_mod years = -1 }
+					}
+					# Health +2, arcane resist +15
+				}
+
+				# TIER 2
+				void_summon = {
+					desc = void_summon_desc
+					tier = 2
+					prerequisites = { hellfire_mastery }
+					position = { x = 0 y = 1 }
+					effect = {
+						trigger_event = demon.0300
+					}
+					# Summon lesser demons as troops
+				}
+				infernal_aura = {
+					desc = infernal_aura_desc
+					tier = 2
+					prerequisites = { demonic_resilience }
+					position = { x = 1 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = infernal_aura_mod years = -1 }
+					}
+					# Enemy opinion penalty, fear mechanic
+				}
+
+				# TIER 3
+				hellstorm = {
+					desc = hellstorm_desc
+					tier = 3
+					prerequisites = { void_summon infernal_aura }
+					position = { x = 0 y = 2 }
+					effect = {
+						trigger_event = demon.0310
+					}
+					# Special battle event - devastating spell
+				}
+				demonic_ascension_prep = {
+					desc = demonic_ascension_prep_desc
+					tier = 3
+					prerequisites = { infernal_aura }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = demon.0320
+					}
+					# Step toward higher demon tier
+				}
+
+				# TIER 4
+				lord_of_destruction = {
+					desc = lord_of_destruction_desc
+					tier = 4
+					prerequisites = { hellstorm demonic_ascension_prep }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = lord_of_destruction_mod years = -1 }
+					}
+				}
+
+				# TIER 5
+				demon_sovereign = {
+					desc = demon_sovereign_desc
+					tier = 5
+					prerequisites = { lord_of_destruction }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = demon.0400
+					}
+					# Achieve legendary demon status event
+				}
+			}
+		}
+
+		# ---- FOCUS: DEMONIC DOMINION ----
+		demonic_dominion_focus = {
+			desc = demonic_dominion_focus_desc
+			lifestyle = demonic_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = demon_mid
+					has_trait = demon_high
+					has_trait = demon_legendary
+				}
+			}
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				soul_binding = {
+					desc = soul_binding_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = soul_binding_mod years = -1 }
+					}
+					# Better control over contracted souls
+				}
+				dark_court = {
+					desc = dark_court_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = dark_court_mod years = -1 }
+					}
+					# Opinion bonuses among demons and corrupt courtiers
+				}
+
+				# TIER 2
+				puppet_demon = {
+					desc = puppet_demon_desc
+					tier = 2
+					prerequisites = { soul_binding }
+					position = { x = 0 y = 1 }
+					effect = {
+						trigger_event = demon.0500
+					}
+					# Dominate lower-tier demons
+				}
+				infernal_economy = {
+					desc = infernal_economy_desc
+					tier = 2
+					prerequisites = { dark_court }
+					position = { x = 1 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = infernal_economy_mod years = -1 }
+					}
+					# Gold from soul trades and magical economy
+				}
+
+				# TIER 3
+				demonic_dynasty = {
+					desc = demonic_dynasty_desc
+					tier = 3
+					prerequisites = { puppet_demon infernal_economy }
+					position = { x = 0 y = 2 }
+					effect = {
+						trigger_event = demon.0510
+					}
+					# Children inherit demonic potential
+				}
+				dark_covenant = {
+					desc = dark_covenant_desc
+					tier = 3
+					prerequisites = { infernal_economy }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = demon.0520
+					}
+					# Alliance with demon god faction
+				}
+
+				# TIER 4
+				herald_of_darkness = {
+					desc = herald_of_darkness_desc
+					tier = 4
+					prerequisites = { demonic_dynasty dark_covenant }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = herald_of_darkness_mod years = -1 }
+					}
+				}
+
+				# TIER 5
+				dark_lord = {
+					desc = dark_lord_desc
+					tier = 5
+					prerequisites = { herald_of_darkness }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = demon.0600
+					}
+					# Become true Dark Lord - massive event
+				}
+			}
+		}
+	}
+}

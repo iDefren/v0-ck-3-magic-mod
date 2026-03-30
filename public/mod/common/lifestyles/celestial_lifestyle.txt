@@ -1,0 +1,322 @@
+# ============================================================
+# ARCANE DOMINION - common/lifestyles/celestial_lifestyle.txt
+# Angel/Celestial Lifestyle with three focus trees
+# ============================================================
+
+celestial_lifestyle = {
+	desc = celestial_lifestyle_desc
+	is_valid = {
+		OR = {
+			has_trait = angel_lesser
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
+	xp_per_level = {
+		200 450 900 1500 2500 4500 8000
+	}
+
+	focuses = {
+		# ---- FOCUS: DIVINE PROTECTION ----
+		divine_protection_focus = {
+			desc = divine_protection_focus_desc
+			lifestyle = celestial_lifestyle
+			is_valid = { always = yes }
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				holy_ward = {
+					desc = holy_ward_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = holy_ward_mod years = -1 }
+					}
+					# Arcane resist +15, health +0.5
+				}
+				blessed_aura = {
+					desc = blessed_aura_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = blessed_aura_mod years = -1 }
+					}
+					# Ally opinion +15, piety +0.5
+				}
+
+				# TIER 2
+				celestial_armor = {
+					desc = celestial_armor_desc
+					tier = 2
+					prerequisites = { holy_ward }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = celestial_armor_mod years = -1 }
+					}
+					# Prowess +4, arcane resist +20, health +1.5
+				}
+				divine_intervention = {
+					desc = divine_intervention_desc
+					tier = 2
+					prerequisites = { blessed_aura }
+					position = { x = 1 y = 1 }
+					effect = {
+						trigger_event = angel.0100
+					}
+					# Rare save from death chance
+				}
+
+				# TIER 3
+				guardian_angel = {
+					desc = guardian_angel_desc
+					tier = 3
+					prerequisites = { celestial_armor divine_intervention }
+					position = { x = 0 y = 2 }
+					effect = {
+						add_character_modifier = { modifier = guardian_angel_mod years = -1 }
+					}
+					# Protect ruler and allies
+				}
+				holy_smite = {
+					desc = holy_smite_desc
+					tier = 3
+					prerequisites = { celestial_armor }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = angel.0110
+					}
+					# Devastating strike vs demons in duels
+				}
+
+				# TIER 4
+				divine_champion = {
+					desc = divine_champion_desc
+					tier = 4
+					prerequisites = { guardian_angel holy_smite }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = divine_champion_mod years = -1 }
+					}
+				}
+
+				# TIER 5 - CAPSTONE
+				avatar_of_light = {
+					desc = avatar_of_light_desc
+					tier = 5
+					prerequisites = { divine_champion }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = angel.0200
+					}
+					# Become avatar - huge event chain
+				}
+			}
+		}
+
+		# ---- FOCUS: CELESTIAL PROPHECY ----
+		celestial_prophecy_focus = {
+			desc = celestial_prophecy_focus_desc
+			lifestyle = celestial_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = angel_greater
+					has_trait = angel_archangel
+					has_trait = celestial_ascended
+				}
+			}
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				divine_sight = {
+					desc = divine_sight_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = divine_sight_mod years = -1 }
+					}
+					# Spy network strength, learning +4
+				}
+				oracle_vision = {
+					desc = oracle_vision_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						trigger_event = angel.0300
+					}
+					# Prophetic event - foreknowledge of crises
+				}
+
+				# TIER 2
+				fated_ruler = {
+					desc = fated_ruler_desc
+					tier = 2
+					prerequisites = { divine_sight }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = fated_ruler_mod years = -1 }
+					}
+					# Monthly prestige +1, diplomacy +3
+				}
+				blessing_of_foresight = {
+					desc = blessing_of_foresight_desc
+					tier = 2
+					prerequisites = { oracle_vision }
+					position = { x = 1 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = blessing_of_foresight_mod years = -1 }
+					}
+					# War success chance +10%, enemy surprise bonus reduced
+				}
+
+				# TIER 3
+				divine_mandate = {
+					desc = divine_mandate_desc
+					tier = 3
+					prerequisites = { fated_ruler blessing_of_foresight }
+					position = { x = 0 y = 2 }
+					effect = {
+						trigger_event = angel.0310
+					}
+					# Declare holy war powered by celestial authority
+				}
+				prophets_words = {
+					desc = prophets_words_desc
+					tier = 3
+					prerequisites = { oracle_vision }
+					position = { x = 1 y = 2 }
+					effect = {
+						add_character_modifier = { modifier = prophets_words_mod years = -1 }
+					}
+					# Opinion +20 to religious leaders
+				}
+
+				# TIER 4
+				chosen_of_heaven = {
+					desc = chosen_of_heaven_desc
+					tier = 4
+					prerequisites = { divine_mandate prophets_words }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = chosen_of_heaven_mod years = -1 }
+					}
+				}
+
+				# TIER 5
+				voice_of_the_divine = {
+					desc = voice_of_the_divine_desc
+					tier = 5
+					prerequisites = { chosen_of_heaven }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = angel.0400
+					}
+				}
+			}
+		}
+
+		# ---- FOCUS: DIVINE SOVEREIGNTY ----
+		divine_sovereignty_focus = {
+			desc = divine_sovereignty_focus_desc
+			lifestyle = celestial_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = angel_greater
+					has_trait = angel_archangel
+					has_trait = celestial_ascended
+				}
+			}
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				heavenly_court = {
+					desc = heavenly_court_desc
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = { modifier = heavenly_court_mod years = -1 }
+					}
+					# Vassal opinion +15, diplomat strength
+				}
+				angelic_blessing = {
+					desc = angelic_blessing_desc
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						trigger_event = angel.0500
+					}
+					# Bless a character with powerful buff
+				}
+
+				# TIER 2
+				celestial_economy = {
+					desc = celestial_economy_desc
+					tier = 2
+					prerequisites = { heavenly_court }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = { modifier = celestial_economy_mod years = -1 }
+					}
+					# Gold from divine trades
+				}
+				holy_dynasty = {
+					desc = holy_dynasty_desc
+					tier = 2
+					prerequisites = { angelic_blessing }
+					position = { x = 1 y = 1 }
+					effect = {
+						trigger_event = angel.0510
+					}
+					# Children inherit celestial potential
+				}
+
+				# TIER 3
+				angelic_dominion = {
+					desc = angelic_dominion_desc
+					tier = 3
+					prerequisites = { celestial_economy holy_dynasty }
+					position = { x = 0 y = 2 }
+					effect = {
+						add_character_modifier = { modifier = angelic_dominion_mod years = -1 }
+					}
+				}
+				heaven_on_earth = {
+					desc = heaven_on_earth_desc
+					tier = 3
+					prerequisites = { holy_dynasty }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = angel.0520
+					}
+					# Province happiness event chain
+				}
+
+				# TIER 4
+				herald_of_heaven = {
+					desc = herald_of_heaven_desc
+					tier = 4
+					prerequisites = { angelic_dominion heaven_on_earth }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = { modifier = herald_of_heaven_mod years = -1 }
+					}
+				}
+
+				# TIER 5
+				divine_sovereign = {
+					desc = divine_sovereign_desc
+					tier = 5
+					prerequisites = { herald_of_heaven }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = angel.0600
+					}
+					# Achieve celestial ascension
+				}
+			}
+		}
+	}
+}

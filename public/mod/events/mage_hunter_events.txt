@@ -1,0 +1,337 @@
+# ============================================================
+# ARCANE DOMINION - events/mage_hunter_events.txt
+# Mage hunter training, tools, hunts, and special events
+# ============================================================
+
+namespace = mage_hunter
+
+# ============================================================
+# MAGE_HUNTER 0001 - BECOME A MAGE HUNTER
+# ============================================================
+mage_hunter.0001 = {
+	type = character_event
+	title = mage_hunter.0001.t
+	desc = mage_hunter.0001.desc
+	picture = "gfx/event_illustrations/mage_hunter_initiation.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = mage_hunter.0001.a  # Train with a veteran hunter
+		trigger = {
+			any_court_character = {
+				has_trait = mage_hunter_master
+			}
+		}
+		random_court_character = {
+			limit = { has_trait = mage_hunter_master }
+			save_scope_as = hunter_teacher
+		}
+		add_trait = mage_hunter_initiate
+		remove_character_modifier = hunter_training_active
+		gain_arcane_xp = { VALUE = 10 }
+		scope:hunter_teacher = {
+			add_opinion = {
+				modifier = trained_together
+				target = prev
+				opinion = 15
+			}
+		}
+	}
+	option = {
+		name = mage_hunter.0001.b  # Self-train through trial
+		add_trait = mage_hunter_initiate
+		remove_character_modifier = hunter_training_active
+		health_impact_add = -0.3
+	}
+	option = {
+		name = mage_hunter.0001.c  # Abandon the path
+		remove_character_modifier = hunter_training_active
+		add_prestige = -50
+	}
+}
+
+# ============================================================
+# MAGE_HUNTER 0010 - REACHED MASTER MAGE HUNTER
+# ============================================================
+mage_hunter.0010 = {
+	type = character_event
+	title = mage_hunter.0010.t
+	desc = mage_hunter.0010.desc
+	picture = "gfx/event_illustrations/mage_hunter_master.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = mage_hunter.0010.a
+		add_prestige = 400
+		add_character_modifier = {
+			modifier = mage_hunter_renown
+			years = -1
+		}
+		# Other mage hunters hear of you
+		every_known_character = {
+			limit = { has_trait = mage_hunter_adept }
+			add_opinion = {
+				modifier = respected_hunter
+				target = prev
+				opinion = 25
+			}
+		}
+		# Mages become wary
+		every_known_character = {
+			limit = {
+				OR = {
+					has_trait = mage_expert
+					has_trait = mage_master
+					has_trait = archmage
+				}
+			}
+			add_opinion = {
+				modifier = fears_mage_hunter
+				target = prev
+				opinion = -30
+			}
+		}
+	}
+}
+
+# ============================================================
+# MAGE_HUNTER 0100 - DUEL AGAINST A MAGE
+# ============================================================
+mage_hunter.0100 = {
+	type = character_event
+	title = mage_hunter.0100.t
+	desc = mage_hunter.0100.desc
+	picture = "gfx/event_illustrations/hunter_vs_mage_duel.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = mage_hunter.0100.a  # Use anti-magic tools
+		trigger = { has_trait = witch_hunter_tools }
+		add_character_modifier = {
+			modifier = hunter_duel_tools_active
+			months = 1
+		}
+		gain_arcane_xp = { VALUE = 10 }
+	}
+	option = {
+		name = mage_hunter.0100.b  # Exploit their mana weakness
+		trigger = {
+			has_trait = mage_hunter_master
+		}
+		add_character_modifier = {
+			modifier = hunter_exploit_mana
+			months = 1
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+	option = {
+		name = mage_hunter.0100.c  # Fight normally
+		add_character_modifier = {
+			modifier = arcane_resist_active
+			months = 1
+		}
+	}
+}
+
+# ============================================================
+# MAGE_HUNTER 0200 - RARE EVENT: NON-MAGE GETS HUNTER CALLING
+# ============================================================
+mage_hunter.0200 = {
+	type = character_event
+	title = mage_hunter.0200.t
+	desc = mage_hunter.0200.desc
+	picture = "gfx/event_illustrations/hunter_calling.dds"
+
+	trigger = {
+		NOT = {
+			OR = {
+				has_trait = mage_initiate
+				has_trait = mage_adept
+				has_trait = mage_journeyman
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+			}
+		}
+		NOT = { has_trait = mage_hunter_initiate }
+		prowess >= 12
+		intrigue >= 8
+		random <= 1  # Very rare 1% chance per year
+	}
+
+	option = {
+		name = mage_hunter.0200.a  # Accept the calling
+		add_trait = mage_hunter_initiate
+		add_prestige = 100
+	}
+	option = {
+		name = mage_hunter.0200.b  # Decline
+		custom_tooltip = mage_hunter.0200.b.tt
+	}
+}
+
+# ============================================================
+# MAGE_HUNTER 0300 - HUNT EVENT (hunt a specific mage)
+# ============================================================
+mage_hunter.0300 = {
+	type = character_event
+	title = mage_hunter.0300.t
+	desc = mage_hunter.0300.desc
+	picture = "gfx/event_illustrations/mage_hunt.dds"
+
+	is_triggered_only = yes
+
+	trigger = {
+		any_known_character = {
+			OR = {
+				has_trait = mage_adept
+				has_trait = mage_journeyman
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+			}
+			is_alive = yes
+		}
+	}
+
+	option = {
+		name = mage_hunter.0300.a  # Track the mage
+		trigger = { intrigue >= 14 }
+		random_known_character = {
+			limit = {
+				OR = {
+					has_trait = mage_adept
+					has_trait = mage_journeyman
+					has_trait = mage_expert
+				}
+			}
+			save_scope_as = hunt_target
+		}
+		random_list = {
+			50 = {
+				modifier = {
+					add = 20
+					has_trait = mage_hunter_master
+				}
+				modifier = {
+					add = 10
+					has_trait = witch_hunter_tools
+				}
+				trigger_event = mage_hunter.0301  # Successful capture
+			}
+			50 = {
+				trigger_event = mage_hunter.0302  # Failed hunt
+			}
+		}
+	}
+	option = {
+		name = mage_hunter.0300.b  # Lay a trap
+		trigger = { intrigue >= 16 }
+		random_list = {
+			60 = { trigger_event = mage_hunter.0301 }
+			40 = { trigger_event = mage_hunter.0302 }
+		}
+		add_gold = -50  # Cost for trap equipment
+	}
+}
+
+mage_hunter.0301 = {
+	type = character_event
+	title = mage_hunter.0301.t
+	desc = mage_hunter.0301.desc
+	picture = "gfx/event_illustrations/mage_captured.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = mage_hunter.0301.a  # Imprison the mage
+		scope:hunt_target = {
+			imprison = prev
+		}
+		add_prestige = 300
+		gain_arcane_xp = { VALUE = 40 }
+		# Hunter gains experience from the hunt
+		add_character_modifier = {
+			modifier = successful_hunt_buff
+			months = 12
+		}
+	}
+	option = {
+		name = mage_hunter.0301.b  # Destroy them
+		trigger = { has_trait = mage_hunter_master }
+		scope:hunt_target = {
+			death = { death_reason = death_hunting }
+		}
+		add_prestige = 500
+		gain_arcane_xp = { VALUE = 60 }
+	}
+}
+
+mage_hunter.0302 = {
+	type = character_event
+	title = mage_hunter.0302.t
+	desc = mage_hunter.0302.desc
+	picture = "gfx/event_illustrations/hunt_failed.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = mage_hunter.0302.a  # They escaped
+		health_impact_add = -0.3
+		add_prestige = -50
+		gain_arcane_xp = { VALUE = 15 }
+	}
+	option = {
+		name = mage_hunter.0302.b  # Regroup and learn
+		gain_arcane_xp = { VALUE = 25 }
+		add_character_modifier = {
+			modifier = mage_hunter_drive
+			months = 6
+		}
+	}
+}
+
+# ============================================================
+# MAGE_HUNTER 0400 - SPECIAL ANTI-MAGIC TOOLS ACQUISITION
+# ============================================================
+mage_hunter.0400 = {
+	type = character_event
+	title = mage_hunter.0400.t
+	desc = mage_hunter.0400.desc
+	picture = "gfx/event_illustrations/hunter_tools.dds"
+
+	trigger = {
+		has_trait = mage_hunter_adept
+		NOT = { has_trait = witch_hunter_tools }
+		gold >= 150
+		random <= 5  # 5% chance per year
+	}
+
+	option = {
+		name = mage_hunter.0400.a  # Commission the tools
+		add_gold = -150
+		add_trait = witch_hunter_tools
+		add_prestige = 100
+	}
+	option = {
+		name = mage_hunter.0400.b  # Steal arcane components
+		trigger = { intrigue >= 16 }
+		random_list = {
+			60 = {
+				add_trait = witch_hunter_tools
+				add_prestige = 50
+			}
+			40 = {
+				add_prestige = -200
+				# Caught stealing - crime
+			}
+		}
+	}
+	option = {
+		name = mage_hunter.0400.c  # Not now
+		custom_tooltip = mage_hunter.0400.c.tt
+	}
+}

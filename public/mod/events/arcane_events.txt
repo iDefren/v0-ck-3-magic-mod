@@ -1,0 +1,837 @@
+# ============================================================
+# ARCANE DOMINION - events/arcane_events.txt
+# Core mage events: awakening, tier-up, study, random events
+# ============================================================
+
+namespace = arcane
+
+# ============================================================
+# EVENT 0001 - RANDOM AWAKENING (rare for non-mages)
+# ============================================================
+arcane.0001 = {
+	type = character_event
+	title = arcane.0001.t
+	desc = arcane.0001.desc
+	picture = "gfx/event_illustrations/arcane_awakening.dds"
+
+	trigger = {
+		NOT = { has_trait = arcane_spark }
+		NOT = { has_trait = mage_initiate }
+		NOT = { has_trait = mundane_soul }
+		learning >= 6
+		random <= 3  # Very rare 3% chance per year
+	}
+
+	option = {
+		name = arcane.0001.a
+		desc = arcane.0001.a.desc
+		add_trait = arcane_spark
+		initialize_mana_system = yes
+		gain_arcane_xp = { VALUE = 10 }
+		show_as_tooltip = { add_trait = arcane_spark }
+	}
+
+	option = {
+		name = arcane.0001.b
+		desc = arcane.0001.b.desc
+		add_trait = mundane_soul
+		add_character_modifier = {
+			modifier = mana_starved
+			years = 2
+		}
+	}
+}
+
+# ============================================================
+# EVENT 0010 - REACHED MAGE ADEPT TIER
+# ============================================================
+arcane.0010 = {
+	type = character_event
+	title = arcane.0010.t
+	desc = arcane.0010.desc
+	picture = "gfx/event_illustrations/mage_adept.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0010.a
+		add_prestige = 100
+		gain_arcane_xp = { VALUE = 20 }
+		# Choose a specialization direction
+		custom_tooltip = arcane.0010.a.tt
+		trigger_event = arcane.0011
+	}
+}
+
+arcane.0011 = {
+	type = character_event
+	title = arcane.0011.t
+	desc = arcane.0011.desc
+	picture = "gfx/event_illustrations/mage_choose_path.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0011.a  # Pyromancy
+		add_trait = spec_pyromancer
+	}
+	option = {
+		name = arcane.0011.b  # Cryomancy
+		add_trait = spec_cryomancer
+	}
+	option = {
+		name = arcane.0011.c  # Healing
+		add_trait = spec_healer
+	}
+	option = {
+		name = arcane.0011.d  # Divination
+		add_trait = spec_diviner
+	}
+	option = {
+		name = arcane.0011.e  # Storm Calling
+		add_trait = spec_storm_caller
+	}
+	option = {
+		name = arcane.0011.f  # I choose my own path later
+		custom_tooltip = arcane.0011.f.tt
+	}
+}
+
+# ============================================================
+# EVENT 0020 - REACHED MAGE MASTER TIER
+# ============================================================
+arcane.0020 = {
+	type = character_event
+	title = arcane.0020.t
+	desc = arcane.0020.desc
+	picture = "gfx/event_illustrations/mage_master.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0020.a
+		add_prestige = 500
+		add_piety = 200
+		gain_arcane_xp = { VALUE = 50 }
+		custom_tooltip = arcane.0020.a.tt
+	}
+}
+
+# ============================================================
+# EVENT 0030 - REACHED ARCHMAGE
+# ============================================================
+arcane.0030 = {
+	type = character_event
+	title = arcane.0030.t
+	desc = arcane.0030.desc
+	picture = "gfx/event_illustrations/archmage.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0030.a
+		add_prestige = 1000
+		add_piety = 500
+		gain_arcane_xp = { VALUE = 100 }
+		# May choose advanced specialization
+		if = {
+			limit = { NOT = { has_trait = spec_void_walker } }
+			custom_tooltip = arcane.0030.a.tt
+			trigger_event = arcane.0031
+		}
+	}
+}
+
+arcane.0031 = {
+	type = character_event
+	title = arcane.0031.t
+	desc = arcane.0031.desc
+	picture = "gfx/event_illustrations/archmage_choice.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0031.a  # Necromancy (dark)
+		add_trait = spec_necromancer
+		add_piety = -500
+	}
+	option = {
+		name = arcane.0031.b  # Void Walking (extremely rare)
+		add_trait = spec_void_walker
+		add_piety = -800
+		add_prestige = 300
+	}
+	option = {
+		name = arcane.0031.c  # Golemancy
+		add_trait = spec_golemancer
+	}
+	option = {
+		name = arcane.0031.d  # Blood Magic (dangerous)
+		add_trait = spec_blood_mage
+		add_piety = -400
+	}
+	option = {
+		name = arcane.0031.e  # Illusion
+		add_trait = spec_illusionist
+	}
+	option = {
+		name = arcane.0031.f  # I am complete
+		add_prestige = 200
+	}
+}
+
+# ============================================================
+# EVENT 0050 - FIRST ARCANE SPARK NOTICED
+# ============================================================
+arcane.0050 = {
+	type = character_event
+	title = arcane.0050.t
+	desc = arcane.0050.desc
+	picture = "gfx/event_illustrations/arcane_spark.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0050.a  # Study harder
+		add_character_modifier = {
+			modifier = student_of_magic_drive
+			months = 24
+		}
+		gain_arcane_xp = { VALUE = 30 }
+	}
+	option = {
+		name = arcane.0050.b  # Seek a teacher
+		trigger_event = arcane.0051
+	}
+	option = {
+		name = arcane.0050.c  # Ignore and suppress
+		add_trait = mundane_soul
+		remove_trait = arcane_spark
+	}
+}
+
+arcane.0051 = {
+	type = character_event
+	title = arcane.0051.t
+	desc = arcane.0051.desc
+	picture = "gfx/event_illustrations/seek_teacher.dds"
+
+	is_triggered_only = yes
+
+	# Teacher found in court?
+	trigger = {
+		any_court_character = {
+			OR = {
+				has_trait = mage_master
+				has_trait = archmage
+			}
+		}
+	}
+
+	option = {
+		name = arcane.0051.a  # Accept teacher
+		random_court_character = {
+			limit = {
+				OR = {
+					has_trait = mage_master
+					has_trait = archmage
+				}
+			}
+			save_scope_as = teacher_mage
+		}
+		add_character_modifier = {
+			modifier = student_of_magic
+			years = 3
+		}
+		gain_arcane_xp = { VALUE = 50 }
+		scope:teacher_mage = {
+			add_trait_xp = {
+				trait = arcane_teacher
+				value = 20
+			}
+		}
+	}
+	option = {
+		name = arcane.0051.b  # Study alone
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+# ============================================================
+# EVENTS 0100-0120 - RESEARCH TREE EVENTS
+# ============================================================
+arcane.0100 = {
+	type = character_event
+	title = arcane.0100.t
+	desc = arcane.0100.desc
+	picture = "gfx/event_illustrations/elemental_theory.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0100.a  # Fire path
+		add_trait = spec_pyromancer
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = arcane.0100.b  # Ice path
+		add_trait = spec_cryomancer
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = arcane.0100.c  # Storm path
+		add_trait = spec_storm_caller
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = arcane.0100.d  # Void theory (dangerous)
+		trigger_event = arcane.0101
+		gain_arcane_xp = { VALUE = 60 }
+	}
+}
+
+arcane.0101 = {
+	type = character_event
+	title = arcane.0101.t
+	desc = arcane.0101.desc
+	picture = "gfx/event_illustrations/void_theory.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0101.a  # Embrace void study
+		add_trait = spec_void_walker
+		add_piety = -300
+		gain_arcane_xp = { VALUE = 80 }
+	}
+	option = {
+		name = arcane.0101.b  # Pull back
+		add_character_modifier = {
+			modifier = arcane_overload
+			months = 6
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+arcane.0110 = {
+	type = character_event
+	title = arcane.0110.t
+	desc = arcane.0110.desc
+	picture = "gfx/event_illustrations/arcane_breakthrough.dds"
+
+	is_triggered_only = yes
+
+	# Random success based on learning
+	option = {
+		name = arcane.0110.a  # Breakthrough!
+		trigger = { learning >= 15 }
+		check_mage_tier_upgrade = yes
+		gain_arcane_xp = { VALUE = 100 }
+		add_prestige = 200
+	}
+	option = {
+		name = arcane.0110.b  # Partial progress
+		gain_arcane_xp = { VALUE = 60 }
+	}
+	option = {
+		name = arcane.0110.c  # Setback
+		trigger = { learning < 10 }
+		add_character_modifier = {
+			modifier = mana_starved
+			months = 3
+		}
+	}
+}
+
+arcane.0120 = {
+	type = character_event
+	title = arcane.0120.t
+	desc = arcane.0120.desc
+	picture = "gfx/event_illustrations/arcane_enlightenment.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0120.a
+		gain_arcane_xp = { VALUE = 200 }
+		add_prestige = 500
+		add_piety = 300
+		gain_mana_100 = yes
+		gain_mana_100 = yes
+		# Major xp event - might push to archmage
+		check_mage_tier_upgrade = yes
+	}
+}
+
+# ============================================================
+# EVENTS 0200-0210 - COMBAT MAGIC TREE EVENTS
+# ============================================================
+arcane.0200 = {
+	type = character_event
+	title = arcane.0200.t
+	desc = arcane.0200.desc
+	picture = "gfx/event_illustrations/mage_duelist.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0200.a  # Challenge a rival
+		add_character_modifier = {
+			modifier = battle_channeling_modifier
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = mage_duelist_active
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+	option = {
+		name = arcane.0200.b  # Train alone
+		add_character_modifier = {
+			modifier = elemental_strike_modifier
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 25 }
+	}
+}
+
+arcane.0210 = {
+	type = character_event
+	title = arcane.0210.t
+	desc = arcane.0210.desc
+	picture = "gfx/event_illustrations/arcane_warlord.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0210.a
+		add_character_modifier = {
+			modifier = arcane_warlord_modifier
+			years = -1
+		}
+		add_prestige = 600
+		gain_arcane_xp = { VALUE = 80 }
+	}
+}
+
+# ============================================================
+# EVENTS 0300-0310 - HIDDEN ARTS TREE EVENTS
+# ============================================================
+arcane.0300 = {
+	type = character_event
+	title = arcane.0300.t
+	desc = arcane.0300.desc
+	picture = "gfx/event_illustrations/puppet_strings.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0300.a  # Unlock domination
+		add_character_modifier = {
+			modifier = puppet_strings_active
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+}
+
+arcane.0310 = {
+	type = character_event
+	title = arcane.0310.t
+	desc = arcane.0310.desc
+	picture = "gfx/event_illustrations/shadow_archmage.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0310.a
+		add_character_modifier = {
+			modifier = shadow_archmage_modifier
+			years = -1
+		}
+		add_prestige = 800
+		add_piety = -400
+		gain_arcane_xp = { VALUE = 150 }
+	}
+}
+
+# ============================================================
+# EVENTS 0400-0410 - MANA SYSTEM EVENTS
+# ============================================================
+arcane.0400 = {
+	type = character_event
+	title = arcane.0400.t
+	desc = arcane.0400.desc
+	picture = "gfx/event_illustrations/arcane_overload.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0400.a  # Release the energy
+		add_character_modifier = {
+			modifier = arcane_overload
+			months = 3
+		}
+		spend_mana_100 = yes
+		health_impact_add = -0.5
+	}
+	option = {
+		name = arcane.0400.b  # Contain it (high learning required)
+		trigger = { learning >= 18 }
+		gain_arcane_xp = { VALUE = 30 }
+		# No negative effect if successful
+	}
+	option = {
+		name = arcane.0400.c  # Channel into a spell (dangerous)
+		trigger = {
+			OR = { has_trait = mage_master has_trait = archmage }
+		}
+		trigger_event = arcane.0401
+	}
+}
+
+arcane.0401 = {
+	type = character_event
+	title = arcane.0401.t
+	desc = arcane.0401.desc
+	picture = "gfx/event_illustrations/mana_surge.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0401.a  # Success
+		trigger = { learning >= 22 }
+		gain_arcane_xp = { VALUE = 50 }
+		add_prestige = 200
+		spend_mana_100 = yes
+	}
+	option = {
+		name = arcane.0401.b  # Failure
+		trigger = { learning < 22 }
+		add_character_modifier = {
+			modifier = arcane_overload
+			months = 6
+		}
+		health_impact_add = -1.0
+		spend_mana_200 = yes
+	}
+}
+
+arcane.0410 = {
+	type = character_event
+	title = arcane.0410.t
+	desc = arcane.0410.desc
+	picture = "gfx/event_illustrations/mana_exhaustion.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0410.a  # Rest and recover
+		add_character_modifier = {
+			modifier = mana_starved
+			months = 2
+		}
+	}
+	option = {
+		name = arcane.0410.b  # Push through
+		health_impact_add = -0.5
+		gain_arcane_xp = { VALUE = 10 }
+	}
+}
+
+# ============================================================
+# EVENTS 0500+ - RANDOM MAGICAL EVENTS
+# ============================================================
+arcane.0500 = {
+	type = character_event
+	title = arcane.0500.t
+	desc = arcane.0500.desc
+	picture = "gfx/event_illustrations/magical_discovery.dds"
+
+	trigger = {
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+	}
+
+	option = {
+		name = arcane.0500.a  # A new magical insight
+		gain_arcane_xp = { VALUE = 15 }
+		gain_mana_30 = yes
+	}
+	option = {
+		name = arcane.0500.b  # A strange vision
+		trigger_event = arcane.0501
+	}
+	option = {
+		name = arcane.0500.c  # A visitor seeks your wisdom
+		trigger_event = arcane.0502
+	}
+}
+
+arcane.0501 = {
+	type = character_event
+	title = arcane.0501.t
+	desc = arcane.0501.desc
+	picture = "gfx/event_illustrations/arcane_vision.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0501.a  # Interpret the vision
+		trigger = { learning >= 12 }
+		gain_arcane_xp = { VALUE = 25 }
+		add_prestige = 50
+	}
+	option = {
+		name = arcane.0501.b  # Disturbing portent
+		add_character_modifier = {
+			modifier = arcane_unsettled
+			months = 3
+		}
+	}
+}
+
+arcane.0502 = {
+	type = character_event
+	title = arcane.0502.t
+	desc = arcane.0502.desc
+	picture = "gfx/event_illustrations/mage_visitor.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0502.a  # Teach them
+		trigger = { has_trait = arcane_teacher }
+		random_courtier = {
+			limit = { learning >= 8 }
+			gain_arcane_xp = { VALUE = 40 }
+			add_trait = arcane_spark
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+	option = {
+		name = arcane.0502.b  # Exchange knowledge
+		gain_arcane_xp = { VALUE = 30 }
+		gain_mana_30 = yes
+	}
+	option = {
+		name = arcane.0502.c  # Turn them away
+		add_prestige = -30
+	}
+}
+
+# ============================================================
+# EVENTS 0600 - MONTHLY PULSE MANA EVENT
+# ============================================================
+arcane.0600 = {
+	type = character_event
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_player = {
+			arcane_monthly_pulse = yes
+		}
+	}
+}
+
+# ============================================================
+# EVENTS 0700 - DUEL MAGIC MODIFIER
+# ============================================================
+arcane.0700 = {
+	type = character_event
+	title = arcane.0700.t
+	desc = arcane.0700.desc
+	picture = "gfx/event_illustrations/mage_duel.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0700.a  # Channel magic into the duel
+		trigger = { var:arcane_mana >= 30 }
+		spend_mana_30 = yes
+		add_character_modifier = {
+			modifier = magic_duel_boost
+			months = 1
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+	option = {
+		name = arcane.0700.b  # Fight normally
+		custom_tooltip = arcane.0700.b.tt
+	}
+}
+
+# ============================================================
+# EVENTS 0800 - RANDOM YEARLY MAGIC EVENTS
+# ============================================================
+arcane.0800 = {
+	type = character_event
+	title = arcane.0800.t
+	desc = arcane.0800.desc
+	picture = "gfx/event_illustrations/magical_event.dds"
+
+	is_triggered_only = yes
+
+	# A chain of random flavor events
+	random_list = {
+		30 = {
+			# Mundane magical research progress
+			gain_arcane_xp = { VALUE = 20 }
+			gain_mana_30 = yes
+		}
+		20 = {
+			# Unusual magical phenomenon
+			trigger_event = arcane.0801
+		}
+		15 = {
+			# Magical accident
+			trigger_event = arcane.0802
+		}
+		15 = {
+			# Discovery of a hidden magical cache
+			trigger_event = arcane.0803
+		}
+		10 = {
+			# Contact from another mage
+			trigger_event = arcane.0804
+		}
+		10 = {
+			# Vision from beyond
+			trigger_event = arcane.0501
+		}
+	}
+}
+
+arcane.0801 = {
+	type = character_event
+	title = arcane.0801.t
+	desc = arcane.0801.desc
+	picture = "gfx/event_illustrations/strange_magic.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0801.a  # Investigate
+		trigger = { learning >= 14 }
+		gain_arcane_xp = { VALUE = 35 }
+		gain_mana_50 = yes
+	}
+	option = {
+		name = arcane.0801.b  # Leave it alone
+		custom_tooltip = arcane.0801.b.tt
+	}
+}
+
+arcane.0802 = {
+	type = character_event
+	title = arcane.0802.t
+	desc = arcane.0802.desc
+	picture = "gfx/event_illustrations/magical_accident.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0802.a  # You learn from it
+		health_impact_add = -0.3
+		gain_arcane_xp = { VALUE = 20 }
+		# Painful but educational
+	}
+	option = {
+		name = arcane.0802.b  # Serious injury
+		health_impact_add = -1.0
+		add_character_modifier = {
+			modifier = mana_starved
+			months = 3
+		}
+	}
+}
+
+arcane.0803 = {
+	type = character_event
+	title = arcane.0803.t
+	desc = arcane.0803.desc
+	picture = "gfx/event_illustrations/hidden_cache.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0803.a  # A trove of magical texts
+		gain_arcane_xp = { VALUE = 50 }
+		add_gold = 50
+	}
+	option = {
+		name = arcane.0803.b  # Ancient artifact inside
+		trigger_event = artifact_events.0200
+	}
+}
+
+arcane.0804 = {
+	type = character_event
+	title = arcane.0804.t
+	desc = arcane.0804.desc
+	picture = "gfx/event_illustrations/mage_contact.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = arcane.0804.a  # Exchange knowledge
+		gain_arcane_xp = { VALUE = 30 }
+		gain_mana_30 = yes
+	}
+	option = {
+		name = arcane.0804.b  # They join your court
+		trigger = {
+			prestige >= 500
+			has_trait = mage_master
+		}
+		create_character = {
+			gender = random
+			age = { 25 45 }
+			trait = mage_adept
+			trait = magical_scholar
+			location = capital
+		}
+	}
+	option = {
+		name = arcane.0804.c  # Decline
+		custom_tooltip = arcane.0804.c.tt
+	}
+}
+
+# ============================================================
+# EVENT 9000 - MAGICAL CRISIS CHECK
+# ============================================================
+arcane.9000 = {
+	type = character_event
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ai = no
+		OR = {
+			has_trait = archmage
+			has_trait = demon_legendary
+			has_trait = celestial_ascended
+		}
+	}
+
+	# Trigger magical crisis if world has too much arcane power
+	immediate = {
+		if = {
+			limit = {
+				global_var:total_arcane_power >= 5000
+				NOT = { has_global_flag = magical_crisis_active }
+			}
+			set_global_flag = magical_crisis_active
+			trigger_event = crisis_events.0001
+		}
+	}
+}

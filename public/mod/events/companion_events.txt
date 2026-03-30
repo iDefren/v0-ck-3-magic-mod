@@ -1,0 +1,446 @@
+# ============================================================
+# ARCANE DOMINION - events/companion_events.txt
+# Magical Companion hunting, taming, bonding events
+# ============================================================
+
+namespace = companion
+
+# ============================================================
+# COMPANION HUNT START
+# ============================================================
+companion.0001 = {
+	type = character_event
+	title = companion.0001.t
+	desc = companion.0001.desc
+	picture = "gfx/event_illustrations/companion_hunt.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0001.a  # Hunt a Pegasus
+		trigger_event = companion.0010
+	}
+	option = {
+		name = companion.0001.b  # Seek a Cerberus
+		trigger_event = companion.0020
+	}
+	option = {
+		name = companion.0001.c  # Find a Phoenix
+		trigger = { var:arcane_mana >= 100 }
+		trigger_event = companion.0030
+	}
+	option = {
+		name = companion.0001.d  # Seek a Familiar Spirit
+		trigger_event = companion.0040
+	}
+	option = {
+		name = companion.0001.e  # A Dragon Hatchling (extremely rare)
+		trigger = {
+			has_trait = archmage
+			var:arcane_mana >= 200
+		}
+		trigger_event = companion.0050
+	}
+	option = {
+		name = companion.0001.f  # A Leviathan Serpent
+		trigger = {
+			OR = { has_trait = mage_master has_trait = archmage }
+		}
+		trigger_event = companion.0060
+	}
+}
+
+# ============================================================
+# PEGASUS HUNT
+# ============================================================
+companion.0010 = {
+	type = character_event
+	title = companion.0010.t
+	desc = companion.0010.desc
+	picture = "gfx/event_illustrations/pegasus.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0010.a  # Approach with magic
+		trigger = { var:arcane_mana >= 50 }
+		spend_mana_50 = yes
+		random_list = {
+			60 = { trigger_event = companion.0011 }  # Success
+			40 = { trigger_event = companion.0012 }  # Fail
+		}
+	}
+	option = {
+		name = companion.0010.b  # Use martial skill
+		trigger = { prowess >= 14 }
+		random_list = {
+			40 = { trigger_event = companion.0011 }
+			60 = { trigger_event = companion.0012 }
+		}
+	}
+	option = {
+		name = companion.0010.c  # Abandon the hunt
+		remove_character_modifier = companion_hunt_active
+	}
+}
+
+companion.0011 = {
+	type = character_event
+	title = companion.0011.t
+	desc = companion.0011.desc
+	picture = "gfx/event_illustrations/pegasus_tamed.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0011.a  # Bond with the Pegasus
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = pegasus_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 40 }
+		add_prestige = 200
+	}
+}
+
+companion.0012 = {
+	type = character_event
+	title = companion.0012.t
+	desc = companion.0012.desc
+	picture = "gfx/event_illustrations/pegasus_fled.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0012.a  # It escaped
+		remove_character_modifier = companion_hunt_active
+		health_impact_add = -0.2
+	}
+	option = {
+		name = companion.0012.b  # Try again next year
+		add_character_modifier = {
+			modifier = companion_hunt_active
+			months = 12
+		}
+	}
+}
+
+# ============================================================
+# CERBERUS HUNT
+# ============================================================
+companion.0020 = {
+	type = character_event
+	title = companion.0020.t
+	desc = companion.0020.desc
+	picture = "gfx/event_illustrations/cerberus.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0020.a  # Bind it with demonic magic
+		trigger = {
+			OR = {
+				has_trait = demon_mid
+				has_trait = demon_high
+				has_trait = demon_legendary
+				has_trait = spec_void_walker
+			}
+		}
+		spend_mana_80 = yes
+		random_list = {
+			70 = { trigger_event = companion.0021 }
+			30 = {
+				health_impact_add = -1.0
+				gain_arcane_xp = { VALUE = 20 }
+			}
+		}
+	}
+	option = {
+		name = companion.0020.b  # Fight it into submission
+		trigger = { prowess >= 20 }
+		random_list = {
+			35 = { trigger_event = companion.0021 }
+			65 = {
+				health_impact_add = -1.5
+				remove_character_modifier = companion_hunt_active
+			}
+		}
+	}
+}
+
+companion.0021 = {
+	type = character_event
+	title = companion.0021.t
+	desc = companion.0021.desc
+	picture = "gfx/event_illustrations/cerberus_bound.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0021.a
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = cerberus_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 60 }
+		add_prestige = 300
+	}
+}
+
+# ============================================================
+# PHOENIX HUNT
+# ============================================================
+companion.0030 = {
+	type = character_event
+	title = companion.0030.t
+	desc = companion.0030.desc
+	picture = "gfx/event_illustrations/phoenix.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0030.a  # Offer your mana as a gift
+		spend_mana_100 = yes
+		random_list = {
+			50 = { trigger_event = companion.0031 }
+			50 = {
+				add_character_modifier = {
+					modifier = mana_starved
+					months = 4
+				}
+			}
+		}
+	}
+}
+
+companion.0031 = {
+	type = character_event
+	title = companion.0031.t
+	desc = companion.0031.desc
+	picture = "gfx/event_illustrations/phoenix_bonded.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0031.a
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = phoenix_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 80 }
+		add_prestige = 400
+	}
+}
+
+# ============================================================
+# FAMILIAR SPIRIT (Random find)
+# ============================================================
+companion.0040 = {
+	type = character_event
+	title = companion.0040.t
+	desc = companion.0040.desc
+	picture = "gfx/event_illustrations/familiar.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0040.a  # Bond the spirit
+		spend_mana_40 = yes
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = familiar_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 30 }
+		add_prestige = 100
+	}
+	option = {
+		name = companion.0040.b  # Dismiss it
+		remove_character_modifier = companion_hunt_active
+	}
+}
+
+# ============================================================
+# DRAGON HATCHLING (Extreme Rarity)
+# ============================================================
+companion.0050 = {
+	type = character_event
+	title = companion.0050.t
+	desc = companion.0050.desc
+	picture = "gfx/event_illustrations/dragon_hatchling.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0050.a  # Attempt to bond
+		trigger = {
+			var:arcane_mana >= 200
+			learning >= 24
+		}
+		spend_mana_200 = yes
+		random_list = {
+			30 = { trigger_event = companion.0051 }  # Rare success
+			70 = {
+				health_impact_add = -2.0
+				remove_character_modifier = companion_hunt_active
+				trigger_event = companion.0052
+			}
+		}
+	}
+}
+
+companion.0051 = {
+	type = character_event
+	title = companion.0051.t
+	desc = companion.0051.desc
+	picture = "gfx/event_illustrations/dragon_bonded.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0051.a  # The dragon is yours
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = dragon_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 200 }
+		add_prestige = 1000
+		add_piety = 200
+	}
+}
+
+companion.0052 = {
+	type = character_event
+	title = companion.0052.t
+	desc = companion.0052.desc
+	picture = "gfx/event_illustrations/dragon_reject.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0052.a  # It was not meant to be
+		gain_arcane_xp = { VALUE = 50 }
+		# Rare chance to try again later
+	}
+}
+
+# ============================================================
+# LEVIATHAN SERPENT
+# ============================================================
+companion.0060 = {
+	type = character_event
+	title = companion.0060.t
+	desc = companion.0060.desc
+	picture = "gfx/event_illustrations/leviathan.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0060.a  # Bind it with void magic
+		trigger = {
+			OR = {
+				has_trait = spec_void_walker
+				has_trait = spec_blood_mage
+			}
+			var:arcane_mana >= 120
+		}
+		spend_mana_100 = yes
+		random_list = {
+			40 = { trigger_event = companion.0061 }
+			60 = {
+				health_impact_add = -1.5
+				remove_character_modifier = companion_hunt_active
+			}
+		}
+	}
+}
+
+companion.0061 = {
+	type = character_event
+	title = companion.0061.t
+	desc = companion.0061.desc
+	picture = "gfx/event_illustrations/leviathan_bound.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = companion.0061.a
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		add_character_modifier = {
+			modifier = leviathan_companion
+			years = -1
+		}
+		remove_character_modifier = companion_hunt_active
+		gain_arcane_xp = { VALUE = 100 }
+		add_prestige = 600
+	}
+}
+
+# ============================================================
+# RANDOM COMPANION FIND EVENT (very rare, no hunt needed)
+# ============================================================
+companion.0200 = {
+	type = character_event
+	title = companion.0200.t
+	desc = companion.0200.desc
+	picture = "gfx/event_illustrations/unexpected_companion.dds"
+
+	trigger = {
+		NOT = { has_character_modifier = has_companion }
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		random <= 1  # 1% chance per year
+	}
+
+	option = {
+		name = companion.0200.a  # Accept it
+		add_character_modifier = {
+			modifier = has_companion
+			years = -1
+		}
+		random_list = {
+			40 = { add_character_modifier = { modifier = familiar_companion years = -1 } }
+			30 = { add_character_modifier = { modifier = pegasus_companion years = -1 } }
+			20 = { add_character_modifier = { modifier = phoenix_companion years = -1 } }
+			10 = { add_character_modifier = { modifier = cerberus_companion years = -1 } }
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_prestige = 100
+	}
+	option = {
+		name = companion.0200.b  # Turn it away
+		custom_tooltip = companion.0200.b.tt
+	}
+}

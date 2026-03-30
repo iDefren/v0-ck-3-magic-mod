@@ -1,0 +1,570 @@
+# ============================================================
+# ARCANE DOMINION MOD - common/traits/00_magic_traits.txt
+# Core magic awakening, mana, and base magical traits
+# ============================================================
+
+# ---- MAGICAL AWAKENING TIERS ----
+
+arcane_spark = {
+	category = personality
+	description = arcane_spark_desc
+	opposites = { mundane_soul }
+	group = magic_awakening
+	index = 0
+
+	monthly_character_modifier = {
+		learning = 1
+		arcane_mana_regen = 2
+	}
+
+	triggered_opinion = {
+		modifier = opinion_fellow_mage
+		trigger = {
+			has_trait = arcane_spark
+		}
+	}
+	ai_energy = 10
+	cost = 0
+	icon = arcane_spark
+}
+
+mage_initiate = {
+	category = lifestyle
+	description = mage_initiate_desc
+	group = magic_awakening
+	index = 1
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 2
+		arcane_mana_regen = 5
+		monthly_arcane_xp = 3
+		arcane_spell_success_chance_add = 5
+	}
+
+	triggered_opinion = {
+		modifier = opinion_fellow_mage
+		trigger = {
+			has_trait = mage_initiate
+		}
+	}
+	cost = 0
+	icon = mage_initiate
+}
+
+mage_adept = {
+	category = lifestyle
+	description = mage_adept_desc
+	group = magic_awakening
+	index = 2
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 3
+		arcane_mana_regen = 10
+		monthly_arcane_xp = 5
+		arcane_spell_success_chance_add = 10
+		monthly_prestige = 0.3
+		prowess = 2
+	}
+
+	on_gain = {
+		trigger_event = arcane.0010
+	}
+	cost = 0
+	icon = mage_adept
+}
+
+mage_journeyman = {
+	category = lifestyle
+	description = mage_journeyman_desc
+	group = magic_awakening
+	index = 3
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 4
+		arcane_mana_regen = 18
+		monthly_arcane_xp = 7
+		arcane_spell_success_chance_add = 15
+		monthly_prestige = 0.5
+		monthly_piety = 0.2
+		prowess = 3
+	}
+	cost = 0
+	icon = mage_journeyman
+}
+
+mage_expert = {
+	category = lifestyle
+	description = mage_expert_desc
+	group = magic_awakening
+	index = 4
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 5
+		arcane_mana_regen = 28
+		monthly_arcane_xp = 10
+		arcane_spell_success_chance_add = 22
+		monthly_prestige = 0.8
+		monthly_piety = 0.4
+		prowess = 4
+		health = 0.5
+	}
+	cost = 0
+	icon = mage_expert
+}
+
+mage_master = {
+	category = lifestyle
+	description = mage_master_desc
+	group = magic_awakening
+	index = 5
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 7
+		arcane_mana_regen = 40
+		monthly_arcane_xp = 14
+		arcane_spell_success_chance_add = 32
+		monthly_prestige = 1.2
+		monthly_piety = 0.7
+		prowess = 5
+		health = 1.0
+		diplomacy = 2
+	}
+
+	on_gain = {
+		trigger_event = arcane.0020
+	}
+	cost = 0
+	icon = mage_master
+}
+
+archmage = {
+	category = lifestyle
+	description = archmage_desc
+	group = magic_awakening
+	index = 6
+	opposites = { mundane_soul }
+
+	monthly_character_modifier = {
+		learning = 10
+		arcane_mana_regen = 60
+		monthly_arcane_xp = 20
+		arcane_spell_success_chance_add = 45
+		monthly_prestige = 2.0
+		monthly_piety = 1.0
+		prowess = 7
+		health = 1.5
+		diplomacy = 3
+		intrigue = 2
+	}
+
+	on_gain = {
+		trigger_event = arcane.0030
+	}
+	cost = 0
+	icon = archmage
+}
+
+mundane_soul = {
+	category = personality
+	description = mundane_soul_desc
+	opposites = {
+		arcane_spark mage_initiate mage_adept mage_journeyman
+		mage_expert mage_master archmage
+	}
+	monthly_character_modifier = {
+		arcane_mana_regen = -99
+	}
+	cost = 0
+	icon = mundane_soul
+}
+
+# ---- MAGICAL SPECIALIZATION TRAITS ----
+
+spec_pyromancer = {
+	category = lifestyle
+	description = spec_pyromancer_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 2
+		arcane_mana_regen = 5
+		arcane_spell_success_chance_add = 8
+		prowess = 3
+		monthly_arcane_xp = 2
+		fire_magic_power = 15
+	}
+	cost = 0
+	icon = spec_pyromancer
+}
+
+spec_cryomancer = {
+	category = lifestyle
+	description = spec_cryomancer_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 2
+		arcane_mana_regen = 5
+		arcane_spell_success_chance_add = 8
+		prowess = 2
+		monthly_arcane_xp = 2
+		frost_magic_power = 15
+	}
+	cost = 0
+	icon = spec_cryomancer
+}
+
+spec_necromancer = {
+	category = lifestyle
+	description = spec_necromancer_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 3
+		arcane_mana_regen = 6
+		arcane_spell_success_chance_add = 6
+		prowess = 1
+		monthly_arcane_xp = 3
+		necro_power = 20
+		monthly_piety = -0.5
+	}
+	cost = 0
+	icon = spec_necromancer
+}
+
+spec_golemancer = {
+	category = lifestyle
+	description = spec_golemancer_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 4
+		arcane_mana_regen = 4
+		arcane_spell_success_chance_add = 5
+		monthly_arcane_xp = 2
+		construct_power = 20
+	}
+	cost = 0
+	icon = spec_golemancer
+}
+
+spec_healer = {
+	category = lifestyle
+	description = spec_healer_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 3
+		arcane_mana_regen = 6
+		arcane_spell_success_chance_add = 10
+		health = 2.0
+		monthly_piety = 0.5
+		healing_power = 20
+		monthly_arcane_xp = 2
+	}
+	cost = 0
+	icon = spec_healer
+}
+
+spec_diviner = {
+	category = lifestyle
+	description = spec_diviner_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 5
+		intrigue = 3
+		diplomacy = 2
+		arcane_mana_regen = 4
+		arcane_spell_success_chance_add = 12
+		divination_power = 20
+		monthly_arcane_xp = 2
+	}
+	cost = 0
+	icon = spec_diviner
+}
+
+spec_illusionist = {
+	category = lifestyle
+	description = spec_illusionist_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		intrigue = 4
+		diplomacy = 2
+		arcane_mana_regen = 5
+		arcane_spell_success_chance_add = 10
+		illusion_power = 20
+		monthly_arcane_xp = 2
+	}
+	cost = 0
+	icon = spec_illusionist
+}
+
+spec_storm_caller = {
+	category = lifestyle
+	description = spec_storm_caller_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 2
+		prowess = 4
+		arcane_mana_regen = 7
+		arcane_spell_success_chance_add = 8
+		storm_power = 20
+		monthly_arcane_xp = 2
+	}
+	cost = 0
+	icon = spec_storm_caller
+}
+
+spec_blood_mage = {
+	category = lifestyle
+	description = spec_blood_mage_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 2
+		intrigue = 3
+		prowess = 2
+		arcane_mana_regen = 8
+		arcane_spell_success_chance_add = 7
+		blood_power = 20
+		monthly_piety = -0.8
+		monthly_arcane_xp = 2
+	}
+	cost = 0
+	icon = spec_blood_mage
+}
+
+spec_void_walker = {
+	category = lifestyle
+	description = spec_void_walker_desc
+	group = mage_specialization
+	monthly_character_modifier = {
+		learning = 3
+		intrigue = 4
+		arcane_mana_regen = 10
+		arcane_spell_success_chance_add = 12
+		void_power = 25
+		monthly_piety = -1.0
+		monthly_arcane_xp = 3
+	}
+	cost = 0
+	icon = spec_void_walker
+}
+
+# ---- ARCANE STUDY TRAITS ----
+
+magical_scholar = {
+	category = personality
+	description = magical_scholar_desc
+	monthly_character_modifier = {
+		learning = 2
+		monthly_arcane_xp = 4
+		arcane_spell_success_chance_add = 5
+	}
+	cost = 0
+	icon = magical_scholar
+}
+
+ley_line_attuned = {
+	category = lifestyle
+	description = ley_line_attuned_desc
+	monthly_character_modifier = {
+		arcane_mana_regen = 15
+		monthly_arcane_xp = 2
+		health = 0.5
+	}
+	cost = 0
+	icon = ley_line_attuned
+}
+
+ritual_master = {
+	category = lifestyle
+	description = ritual_master_desc
+	monthly_character_modifier = {
+		learning = 2
+		arcane_spell_success_chance_add = 10
+		monthly_arcane_xp = 3
+	}
+	cost = 0
+	icon = ritual_master
+}
+
+arcane_teacher = {
+	category = personality
+	description = arcane_teacher_desc
+	monthly_character_modifier = {
+		learning = 3
+		monthly_arcane_xp = 5
+		diplomacy = 1
+	}
+	# Teacher can teach students - grants bonus to student's xp gain
+	cost = 0
+	icon = arcane_teacher
+}
+
+student_of_magic = {
+	category = personality
+	description = student_of_magic_desc
+	monthly_character_modifier = {
+		monthly_arcane_xp = 8
+		learning = 2
+		arcane_spell_success_chance_add = 3
+	}
+	cost = 0
+	icon = student_of_magic
+}
+
+# ---- CURSE/AFFLICTION TRAITS ----
+
+mana_starved = {
+	category = lifestyle
+	description = mana_starved_desc
+	monthly_character_modifier = {
+		arcane_mana_regen = -20
+		learning = -2
+		health = -0.5
+	}
+	cost = 0
+	icon = mana_starved
+}
+
+arcane_overload = {
+	category = lifestyle
+	description = arcane_overload_desc
+	monthly_character_modifier = {
+		arcane_mana_regen = -10
+		health = -1.0
+		prowess = -2
+	}
+	cost = 0
+	icon = arcane_overload
+}
+
+cursed_bloodline = {
+	category = personality
+	description = cursed_bloodline_desc
+	monthly_character_modifier = {
+		monthly_piety = -0.5
+		health = -0.5
+		monthly_prestige = -0.3
+	}
+	inherit_chance = 25
+	cost = 0
+	icon = cursed_bloodline
+}
+
+soul_tainted = {
+	category = lifestyle
+	description = soul_tainted_desc
+	monthly_character_modifier = {
+		monthly_piety = -1.0
+		health = -1.0
+		intrigue = 3
+	}
+	cost = 0
+	icon = soul_tainted
+}
+
+# ---- MAGE HUNTER TRAITS ----
+
+mage_hunter_initiate = {
+	category = lifestyle
+	description = mage_hunter_initiate_desc
+	group = mage_hunter
+	index = 0
+	monthly_character_modifier = {
+		prowess = 2
+		intrigue = 1
+		arcane_resist = 5
+		mage_hunter_xp_gain = 3
+	}
+	cost = 0
+	icon = mage_hunter_initiate
+}
+
+mage_hunter_adept = {
+	category = lifestyle
+	description = mage_hunter_adept_desc
+	group = mage_hunter
+	index = 1
+	monthly_character_modifier = {
+		prowess = 3
+		intrigue = 2
+		arcane_resist = 12
+		mage_hunter_xp_gain = 5
+		monthly_prestige = 0.3
+	}
+	cost = 0
+	icon = mage_hunter_adept
+}
+
+mage_hunter_master = {
+	category = lifestyle
+	description = mage_hunter_master_desc
+	group = mage_hunter
+	index = 2
+	monthly_character_modifier = {
+		prowess = 5
+		intrigue = 4
+		arcane_resist = 25
+		mage_hunter_xp_gain = 8
+		monthly_prestige = 0.6
+		health = 0.5
+	}
+	on_gain = {
+		trigger_event = mage_hunter.0010
+	}
+	cost = 0
+	icon = mage_hunter_master
+}
+
+witch_hunter_tools = {
+	category = lifestyle
+	description = witch_hunter_tools_desc
+	monthly_character_modifier = {
+		prowess = 2
+		arcane_resist = 8
+		mage_hunter_xp_gain = 2
+	}
+	cost = 0
+	icon = witch_hunter_tools
+}
+
+# ---- SPECIAL PERSONALITY MODIFIERS FOR MAGIC ----
+
+diligent_mage_bonus = {
+	category = personality
+	description = diligent_mage_bonus_desc
+	monthly_character_modifier = {
+		monthly_arcane_xp = 3
+		monthly_magestyle_xp = 10 # 10% bonus to lifestyle xp
+	}
+	cost = 0
+	icon = diligent_mage_bonus
+}
+
+eccentric_mage_bonus = {
+	category = personality
+	description = eccentric_mage_bonus_desc
+	monthly_character_modifier = {
+		monthly_arcane_xp = 4
+		monthly_magestyle_xp = 8
+		arcane_spell_success_chance_add = 5
+		diplomacy = -1
+	}
+	cost = 0
+	icon = eccentric_mage_bonus
+}
+
+erudite_oracle = {
+	category = lifestyle
+	description = erudite_oracle_desc
+	monthly_character_modifier = {
+		learning = 5
+		monthly_arcane_xp = 6
+		monthly_magestyle_xp = 12
+		arcane_spell_success_chance_add = 8
+		divination_power = 10
+	}
+	cost = 0
+	icon = erudite_oracle
+}

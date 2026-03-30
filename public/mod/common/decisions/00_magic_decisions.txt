@@ -1,0 +1,751 @@
+# ============================================================
+# ARCANE DOMINION - common/decisions/00_magic_decisions.txt
+# Spells, Curses, Ritual Decisions
+# ============================================================
+
+# ============================================================
+# MANA SPENDING / SPELL DECISIONS
+# ============================================================
+
+cast_fireball = {
+	title = cast_fireball_title
+	desc = cast_fireball_desc
+	picture = "gfx/interface/illustrations/decisions/decision_arcane.dds"
+
+	is_shown = {
+		has_trait = spec_pyromancer
+		OR = { has_trait = mage_adept has_trait = mage_journeyman has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		custom_description = {
+			text = need_mana_25
+			has_character_modifier = arcane_mana_reserve
+			arcane_mana_value >= 25
+		}
+	}
+
+	effect = {
+		trigger_event = spell_events.0001
+	}
+	ai_check_interval = 36
+}
+
+cast_frost_nova = {
+	title = cast_frost_nova_title
+	desc = cast_frost_nova_desc
+	picture = "gfx/interface/illustrations/decisions/decision_arcane.dds"
+
+	is_shown = {
+		has_trait = spec_cryomancer
+		OR = { has_trait = mage_adept has_trait = mage_journeyman has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 30
+	}
+	effect = {
+		trigger_event = spell_events.0010
+	}
+	ai_check_interval = 36
+}
+
+cast_lightning_storm = {
+	title = cast_lightning_storm_title
+	desc = cast_lightning_storm_desc
+	picture = "gfx/interface/illustrations/decisions/decision_arcane.dds"
+
+	is_shown = {
+		has_trait = spec_storm_caller
+		OR = { has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 50
+	}
+	effect = {
+		trigger_event = spell_events.0020
+	}
+	ai_check_interval = 60
+}
+
+cast_necromantic_wave = {
+	title = cast_necromantic_wave_title
+	desc = cast_necromantic_wave_desc
+	picture = "gfx/interface/illustrations/decisions/decision_necro.dds"
+
+	is_shown = {
+		has_trait = spec_necromancer
+		OR = { has_trait = mage_adept has_trait = mage_journeyman has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 40
+		NOT = { has_trait = angel_lesser }
+	}
+	effect = {
+		trigger_event = spell_events.0030
+	}
+	ai_check_interval = 48
+}
+
+summon_golem_construct = {
+	title = summon_golem_title
+	desc = summon_golem_desc
+	picture = "gfx/interface/illustrations/decisions/decision_arcane.dds"
+
+	is_shown = {
+		has_trait = spec_golemancer
+		OR = { has_trait = mage_journeyman has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 60
+		gold >= 100
+	}
+	effect = {
+		trigger_event = spell_events.0040
+	}
+	ai_check_interval = 60
+}
+
+healing_light = {
+	title = healing_light_title
+	desc = healing_light_desc
+	picture = "gfx/interface/illustrations/decisions/decision_celestial.dds"
+
+	is_shown = {
+		has_trait = spec_healer
+	}
+	is_valid = {
+		arcane_mana_value >= 20
+	}
+	effect = {
+		trigger_event = spell_events.0050
+	}
+	ai_check_interval = 24
+}
+
+divine_shield = {
+	title = divine_shield_title
+	desc = divine_shield_desc
+
+	is_shown = {
+		OR = {
+			has_trait = angel_lesser
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 30
+	}
+	effect = {
+		add_character_modifier = {
+			modifier = divine_shield_active
+			months = 12
+		}
+		arcane_mana_value = -30
+	}
+	ai_check_interval = 24
+}
+
+infernal_burst = {
+	title = infernal_burst_title
+	desc = infernal_burst_desc
+
+	is_shown = {
+		OR = {
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 40
+	}
+	effect = {
+		trigger_event = spell_events.0060
+	}
+	ai_check_interval = 36
+}
+
+mind_control_attempt = {
+	title = mind_control_title
+	desc = mind_control_desc
+
+	is_shown = {
+		OR = {
+			has_lifestyle_perk = puppet_strings
+			has_trait = spec_illusionist
+		}
+		OR = { has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 80
+		NOT = { has_character_modifier = domination_cooldown }
+	}
+	effect = {
+		trigger_event = spell_events.0070
+	}
+	ai_check_interval = 120
+}
+
+blood_sacrifice = {
+	title = blood_sacrifice_title
+	desc = blood_sacrifice_desc
+
+	is_shown = {
+		has_trait = spec_blood_mage
+		OR = { has_trait = mage_journeyman has_trait = mage_expert has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 20
+		any_prisoner = { always = yes }
+	}
+	effect = {
+		trigger_event = spell_events.0080
+	}
+	ai_check_interval = 48
+}
+
+void_step = {
+	title = void_step_title
+	desc = void_step_desc
+
+	is_shown = {
+		has_trait = spec_void_walker
+		OR = { has_trait = mage_master has_trait = archmage }
+	}
+	is_valid = {
+		arcane_mana_value >= 70
+		NOT = { has_character_modifier = void_step_cooldown }
+	}
+	effect = {
+		trigger_event = spell_events.0090
+	}
+	ai_check_interval = 60
+}
+
+# ============================================================
+# CURSE DECISIONS
+# ============================================================
+
+curse_misfortune = {
+	title = curse_misfortune_title
+	desc = curse_misfortune_desc
+
+	is_shown = {
+		OR = {
+			has_lifestyle_perk = curse_weaver
+			has_trait = spec_blood_mage
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 35
+		any_known_character = { always = yes }
+	}
+	effect = {
+		trigger_event = curse_events.0001
+	}
+	ai_check_interval = 60
+}
+
+curse_withering = {
+	title = curse_withering_title
+	desc = curse_withering_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		has_lifestyle_perk = curse_weaver
+	}
+	is_valid = {
+		arcane_mana_value >= 55
+	}
+	effect = {
+		trigger_event = curse_events.0010
+	}
+	ai_check_interval = 72
+}
+
+demonic_curse = {
+	title = demonic_curse_title
+	desc = demonic_curse_desc
+
+	is_shown = {
+		OR = {
+			has_trait = demon_high
+			has_trait = demon_legendary
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 70
+	}
+	effect = {
+		trigger_event = curse_events.0020
+	}
+	ai_check_interval = 84
+}
+
+celestial_curse = {
+	title = celestial_curse_title
+	desc = celestial_curse_desc
+
+	is_shown = {
+		OR = {
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 60
+	}
+	effect = {
+		trigger_event = curse_events.0030
+	}
+	ai_check_interval = 84
+}
+
+# ============================================================
+# RITUAL DECISIONS
+# ============================================================
+
+perform_awakening_ritual = {
+	title = perform_awakening_ritual_title
+	desc = perform_awakening_ritual_desc
+
+	is_shown = {
+		NOT = {
+			OR = {
+				has_trait = arcane_spark
+				has_trait = mage_initiate
+				has_trait = mage_adept
+				has_trait = mage_journeyman
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+			}
+		}
+	}
+	is_valid = {
+		gold >= 200
+		learning >= 8
+		NOT = { has_character_modifier = awakening_attempted }
+	}
+	effect = {
+		trigger_event = ritual_events.0001
+		add_character_modifier = {
+			modifier = awakening_attempted
+			years = 5
+		}
+	}
+	ai_check_interval = 120
+}
+
+upgrade_magic_laboratory = {
+	title = upgrade_magic_laboratory_title
+	desc = upgrade_magic_laboratory_desc
+	picture = "gfx/interface/illustrations/decisions/decision_laboratory.dds"
+
+	is_shown = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		capital_county = {
+			has_building = magic_laboratory
+		}
+	}
+	is_valid = {
+		gold >= 300
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+	}
+	effect = {
+		trigger_event = laboratory_events.0001
+	}
+	ai_check_interval = 60
+}
+
+found_mage_cult = {
+	title = found_mage_cult_title
+	desc = found_mage_cult_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		NOT = { has_character_modifier = mage_cult_founded }
+	}
+	is_valid = {
+		gold >= 500
+		prestige >= 500
+		monthly_character_xp >= 0
+	}
+	effect = {
+		trigger_event = cult_events.0001
+		add_character_modifier = {
+			modifier = mage_cult_founded
+			years = -1
+		}
+	}
+	ai_check_interval = 120
+}
+
+demonic_contract_offer = {
+	title = demonic_contract_offer_title
+	desc = demonic_contract_offer_desc
+
+	is_shown = {
+		OR = {
+			has_trait = demon_low
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+		}
+	}
+	is_valid = {
+		any_known_character = {
+			NOT = { has_trait = bound_by_contract }
+			learning >= 5
+		}
+		arcane_mana_value >= 50
+	}
+	effect = {
+		trigger_event = demon.0700
+	}
+	ai_check_interval = 72
+}
+
+angel_blessing_decision = {
+	title = angel_blessing_decision_title
+	desc = angel_blessing_decision_desc
+
+	is_shown = {
+		OR = {
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
+	is_valid = {
+		arcane_mana_value >= 40
+		any_known_character = {
+			NOT = { has_character_modifier = celestial_blessed }
+		}
+	}
+	effect = {
+		trigger_event = angel.0700
+	}
+	ai_check_interval = 48
+}
+
+craft_magical_artifact = {
+	title = craft_magical_artifact_title
+	desc = craft_magical_artifact_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		capital_county = {
+			has_building = magic_laboratory_tier_3
+		}
+	}
+	is_valid = {
+		gold >= 600
+		arcane_mana_value >= 100
+		NOT = { has_character_modifier = crafting_artifact }
+	}
+	effect = {
+		trigger_event = artifact_events.0001
+		add_character_modifier = {
+			modifier = crafting_artifact
+			months = 6
+		}
+	}
+	ai_check_interval = 120
+}
+
+enhance_artifact_ritual = {
+	title = enhance_artifact_ritual_title
+	desc = enhance_artifact_ritual_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_master
+			has_trait = archmage
+			has_trait = demon_high
+			has_trait = demon_legendary
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+		any_artifact = {
+			has_artifact_modifier = arcane_artifact
+			NOT = { has_artifact_modifier = artifact_tier_max }
+		}
+	}
+	is_valid = {
+		gold >= 400
+		arcane_mana_value >= 80
+		NOT = { has_character_modifier = enhancing_artifact }
+	}
+	effect = {
+		trigger_event = artifact_events.0050
+		add_character_modifier = {
+			modifier = enhancing_artifact
+			months = 3
+		}
+	}
+	ai_check_interval = 72
+}
+
+feed_artifact_prisoner = {
+	title = feed_artifact_prisoner_title
+	desc = feed_artifact_prisoner_desc
+
+	is_shown = {
+		any_artifact = {
+			has_artifact_modifier = soul_hungry
+		}
+		any_prisoner = { always = yes }
+	}
+	is_valid = {
+		any_prisoner = { always = yes }
+	}
+	effect = {
+		trigger_event = artifact_events.0100
+	}
+	ai_check_interval = 36
+}
+
+research_eternal_life = {
+	title = research_eternal_life_title
+	desc = research_eternal_life_desc
+
+	is_shown = {
+		OR = {
+			has_trait = archmage
+			has_trait = spec_necromancer
+		}
+		capital_county = {
+			has_building = magic_laboratory_tier_4
+		}
+	}
+	is_valid = {
+		gold >= 1000
+		arcane_mana_value >= 200
+		learning >= 25
+		monthly_arcane_xp >= 0
+		NOT = { has_character_modifier = immortality_quest }
+	}
+	effect = {
+		trigger_event = ritual_events.0100
+		add_character_modifier = {
+			modifier = immortality_quest
+			years = -1
+		}
+	}
+	ai_check_interval = 120
+}
+
+mage_ascend_to_demon = {
+	title = mage_ascend_to_demon_title
+	desc = mage_ascend_to_demon_desc
+
+	is_shown = {
+		has_trait = archmage
+		NOT = {
+			OR = {
+				has_trait = demon_low
+				has_trait = demon_mid
+				has_trait = demon_high
+				has_trait = demon_legendary
+			}
+		}
+	}
+	is_valid = {
+		gold >= 1500
+		arcane_mana_value >= 300
+		monthly_piety_gain_mult <= 0
+		NOT = { has_trait = angel_lesser }
+		NOT = { has_character_modifier = ascension_attempted }
+		# Very hard - requires dark alignment
+		monthly_piety < 0
+	}
+	effect = {
+		trigger_event = transformation_events.0001
+		add_character_modifier = {
+			modifier = ascension_attempted
+			years = 10
+		}
+	}
+	ai_check_interval = 0
+}
+
+mage_ascend_to_angel = {
+	title = mage_ascend_to_angel_title
+	desc = mage_ascend_to_angel_desc
+
+	is_shown = {
+		has_trait = archmage
+		NOT = {
+			OR = {
+				has_trait = angel_lesser
+				has_trait = angel_greater
+				has_trait = angel_archangel
+				has_trait = celestial_ascended
+			}
+		}
+	}
+	is_valid = {
+		gold >= 1500
+		arcane_mana_value >= 300
+		monthly_piety > 3.0
+		NOT = { has_trait = demon_low }
+		NOT = { has_character_modifier = ascension_attempted }
+		piety >= 5000
+	}
+	effect = {
+		trigger_event = transformation_events.0010
+		add_character_modifier = {
+			modifier = ascension_attempted
+			years = 10
+		}
+	}
+	ai_check_interval = 0
+}
+
+attend_magical_tournament = {
+	title = attend_magical_tournament_title
+	desc = attend_magical_tournament_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+	}
+	is_valid = {
+		gold >= 150
+		NOT = { has_character_modifier = tournament_cooldown }
+		prestige >= 200
+	}
+	effect = {
+		trigger_event = tournament_events.0001
+		add_character_modifier = {
+			modifier = tournament_cooldown
+			years = 3
+		}
+	}
+	ai_check_interval = 72
+}
+
+visit_ley_line = {
+	title = visit_ley_line_title
+	desc = visit_ley_line_desc
+
+	is_shown = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+	}
+	is_valid = {
+		NOT = { has_character_modifier = ley_line_visited }
+	}
+	effect = {
+		trigger_event = exploration_events.0001
+		add_character_modifier = {
+			modifier = ley_line_visited
+			years = 2
+		}
+	}
+	ai_check_interval = 48
+}
+
+summon_magical_companion = {
+	title = summon_magical_companion_title
+	desc = summon_magical_companion_desc
+
+	is_shown = {
+		OR = {
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		NOT = { has_character_modifier = has_companion }
+	}
+	is_valid = {
+		arcane_mana_value >= 80
+		gold >= 200
+		NOT = { has_character_modifier = companion_hunt_active }
+	}
+	effect = {
+		trigger_event = companion_events.0001
+		add_character_modifier = {
+			modifier = companion_hunt_active
+			months = 6
+		}
+	}
+	ai_check_interval = 120
+}
+
+become_mage_hunter = {
+	title = become_mage_hunter_title
+	desc = become_mage_hunter_desc
+
+	is_shown = {
+		NOT = {
+			OR = {
+				has_trait = mage_initiate
+				has_trait = mage_adept
+				has_trait = mage_journeyman
+				has_trait = mage_expert
+				has_trait = mage_master
+				has_trait = archmage
+			}
+		}
+		prowess >= 12
+		intrigue >= 10
+		NOT = { has_trait = mage_hunter_initiate }
+	}
+	is_valid = {
+		gold >= 100
+		prowess >= 14
+		intrigue >= 12
+		NOT = { has_character_modifier = hunter_training_active }
+	}
+	effect = {
+		trigger_event = mage_hunter.0001
+		add_character_modifier = {
+			modifier = hunter_training_active
+			months = 12
+		}
+	}
+	ai_check_interval = 120
+}

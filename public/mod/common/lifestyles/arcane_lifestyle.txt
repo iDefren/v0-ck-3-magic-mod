@@ -1,0 +1,434 @@
+# ============================================================
+# ARCANE DOMINION MOD - common/lifestyles/arcane_lifestyle.txt
+# Mage Lifestyle with three focus trees
+# ============================================================
+
+arcane_lifestyle = {
+	desc = arcane_lifestyle_desc
+	is_valid = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+	}
+	xp_per_level = {
+		150 350 700 1200 2000 3500 6000
+	}
+
+	# Focus Trees
+	focuses = {
+		# ---- FOCUS: ARCANE RESEARCH ----
+		arcane_research_focus = {
+			desc = arcane_research_focus_desc
+			lifestyle = arcane_lifestyle
+			is_valid = { always = yes }
+
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				basic_mana_control = {
+					desc = basic_mana_control_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = basic_mana_control_modifier
+							years = -1
+						}
+					}
+					# Mana regen +5, monthly xp +2
+				}
+				arcane_library_access = {
+					desc = arcane_library_access_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = arcane_library_modifier
+							years = -1
+						}
+					}
+					# Learning +2, monthly xp +3
+				}
+
+				# TIER 2
+				mana_attunement = {
+					desc = mana_attunement_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 2
+					prerequisites = { basic_mana_control }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = {
+							modifier = mana_attunement_modifier
+							years = -1
+						}
+					}
+					# Mana regen +12, arcane xp +4
+				}
+				elemental_theory = {
+					desc = elemental_theory_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 2
+					prerequisites = { arcane_library_access }
+					position = { x = 1 y = 1 }
+					effect = {
+						trigger_event = arcane.0100
+					}
+					# Unlocks specialization choices
+				}
+
+				# TIER 3
+				advanced_ritual_mastery = {
+					desc = advanced_ritual_mastery_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 3
+					prerequisites = { mana_attunement elemental_theory }
+					position = { x = 0 y = 2 }
+					effect = {
+						add_trait = ritual_master
+					}
+					# Gain Ritual Master trait
+				}
+				arcane_breakthrough = {
+					desc = arcane_breakthrough_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 3
+					prerequisites = { elemental_theory }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = arcane.0110
+					}
+					# Chance to advance to next mage tier
+				}
+
+				# TIER 4
+				master_theorist = {
+					desc = master_theorist_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 4
+					prerequisites = { advanced_ritual_mastery arcane_breakthrough }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = {
+							modifier = master_theorist_modifier
+							years = -1
+						}
+					}
+					# Significant boosts to all magical research
+				}
+
+				# TIER 5 - CAPSTONE
+				arcane_enlightenment = {
+					desc = arcane_enlightenment_desc
+					lifestyle = arcane_lifestyle
+					focus = arcane_research_focus
+					tier = 5
+					prerequisites = { master_theorist }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = arcane.0120
+					}
+					# Major event - significant power and knowledge
+				}
+			}
+		}
+
+		# ---- FOCUS: COMBAT MAGIC ----
+		combat_magic_focus = {
+			desc = combat_magic_focus_desc
+			lifestyle = arcane_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = mage_adept
+					has_trait = mage_journeyman
+					has_trait = mage_expert
+					has_trait = mage_master
+					has_trait = archmage
+				}
+			}
+
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				battle_channeling = {
+					desc = battle_channeling_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = battle_channeling_modifier
+							years = -1
+						}
+					}
+					# Prowess +3, spell success in duels +10
+				}
+				arcane_armor = {
+					desc = arcane_armor_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = arcane_armor_modifier
+							years = -1
+						}
+					}
+					# Health +0.5, arcane resist +10
+				}
+
+				# TIER 2
+				elemental_strike = {
+					desc = elemental_strike_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 2
+					prerequisites = { battle_channeling }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = {
+							modifier = elemental_strike_modifier
+							years = -1
+						}
+					}
+					# Prowess +5, mana cost for combat spells -20%
+				}
+				ward_of_power = {
+					desc = ward_of_power_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 2
+					prerequisites = { arcane_armor }
+					position = { x = 1 y = 1 }
+					effect = {
+						add_character_modifier = {
+							modifier = ward_of_power_modifier
+							years = -1
+						}
+					}
+					# Arcane resist +20, health +1
+				}
+
+				# TIER 3
+				battlefield_mage = {
+					desc = battlefield_mage_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 3
+					prerequisites = { elemental_strike ward_of_power }
+					position = { x = 0 y = 2 }
+					effect = {
+						add_character_modifier = {
+							modifier = battlefield_mage_modifier
+							years = -1
+						}
+					}
+					# Army bonuses, special battle event chances
+				}
+				mage_duelist = {
+					desc = mage_duelist_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 3
+					prerequisites = { elemental_strike }
+					position = { x = 1 y = 2 }
+					effect = {
+						trigger_event = arcane.0200
+					}
+					# Duel prowess massively boosted by magic experience
+				}
+
+				# TIER 4
+				siege_magic = {
+					desc = siege_magic_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 4
+					prerequisites = { battlefield_mage }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = {
+							modifier = siege_magic_modifier
+							years = -1
+						}
+					}
+					# Siege bonuses, defender bonuses
+				}
+
+				# TIER 5 - CAPSTONE
+				arcane_warlord = {
+					desc = arcane_warlord_desc
+					lifestyle = arcane_lifestyle
+					focus = combat_magic_focus
+					tier = 5
+					prerequisites = { siege_magic mage_duelist }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = arcane.0210
+					}
+					# Become feared as a magical general
+				}
+			}
+		}
+
+		# ---- FOCUS: HIDDEN ARTS ----
+		hidden_arts_focus = {
+			desc = hidden_arts_focus_desc
+			lifestyle = arcane_lifestyle
+			is_valid = {
+				OR = {
+					has_trait = mage_adept
+					has_trait = mage_journeyman
+					has_trait = mage_expert
+					has_trait = mage_master
+					has_trait = archmage
+				}
+			}
+
+			perk_points = 1
+
+			perks = {
+				# TIER 1
+				arcane_deception = {
+					desc = arcane_deception_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 1
+					position = { x = 0 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = arcane_deception_modifier
+							years = -1
+						}
+					}
+					# Intrigue +3, illusion power +10
+				}
+				shadow_step = {
+					desc = shadow_step_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 1
+					position = { x = 1 y = 0 }
+					effect = {
+						add_character_modifier = {
+							modifier = shadow_step_modifier
+							years = -1
+						}
+					}
+					# Scheme resistance +15, escape chance +20
+				}
+
+				# TIER 2
+				curse_weaver = {
+					desc = curse_weaver_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 2
+					prerequisites = { arcane_deception }
+					position = { x = 0 y = 1 }
+					effect = {
+						add_character_modifier = {
+							modifier = curse_weaver_modifier
+							years = -1
+						}
+					}
+					# More curse options, curse success +15%
+				}
+				mind_veil = {
+					desc = mind_veil_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 2
+					prerequisites = { shadow_step }
+					position = { x = 1 y = 1 }
+					effect = {
+						add_character_modifier = {
+							modifier = mind_veil_modifier
+							years = -1
+						}
+					}
+					# Scheme discovery chance -25%, intrigue +3
+				}
+
+				# TIER 3
+				puppet_strings = {
+					desc = puppet_strings_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 3
+					prerequisites = { curse_weaver mind_veil }
+					position = { x = 0 y = 2 }
+					effect = {
+						trigger_event = arcane.0300
+					}
+					# Unlocks domination/puppet decision
+				}
+				arcane_assassin = {
+					desc = arcane_assassin_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 3
+					prerequisites = { curse_weaver }
+					position = { x = 1 y = 2 }
+					effect = {
+						add_character_modifier = {
+							modifier = arcane_assassin_modifier
+							years = -1
+						}
+					}
+					# Kill schemes boosted by magic
+				}
+
+				# TIER 4
+				grand_manipulator = {
+					desc = grand_manipulator_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 4
+					prerequisites = { puppet_strings arcane_assassin }
+					position = { x = 0 y = 3 }
+					effect = {
+						add_character_modifier = {
+							modifier = grand_manipulator_modifier
+							years = -1
+						}
+					}
+					# Diplomacy +4, intrigue +5
+				}
+
+				# TIER 5 - CAPSTONE
+				shadow_archmage = {
+					desc = shadow_archmage_desc
+					lifestyle = arcane_lifestyle
+					focus = hidden_arts_focus
+					tier = 5
+					prerequisites = { grand_manipulator }
+					position = { x = 0 y = 4 }
+					effect = {
+						trigger_event = arcane.0310
+					}
+					# Feared secret lord of magic
+				}
+			}
+		}
+	}
+}

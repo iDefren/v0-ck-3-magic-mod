@@ -1,0 +1,542 @@
+# ============================================================
+# ARCANE DOMINION - events/demon_events.txt
+# Demon tier events, contracts, corruption, demon god
+# ============================================================
+
+namespace = demon
+
+# ============================================================
+# DEMON 0010 - REACHED MID DEMON
+# ============================================================
+demon.0010 = {
+	type = character_event
+	title = demon.0010.t
+	desc = demon.0010.desc
+	picture = "gfx/event_illustrations/demon_mid.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0010.a
+		add_prestige = 300
+		add_piety = -500
+		gain_arcane_xp = { VALUE = 60 }
+		trigger_event = demon.0011
+	}
+}
+
+demon.0011 = {
+	type = character_event
+	title = demon.0011.t
+	desc = demon.0011.desc
+	picture = "gfx/event_illustrations/demon_spec.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0011.a  # Corruptor path
+		add_trait = demon_corruptor
+	}
+	option = {
+		name = demon.0011.b  # Destroyer path
+		add_trait = demon_destroyer
+	}
+	option = {
+		name = demon.0011.c  # Deceiver path
+		add_trait = demon_deceiver
+	}
+	option = {
+		name = demon.0011.d  # Tempter path
+		add_trait = demon_tempter
+	}
+}
+
+# ============================================================
+# DEMON 0020 - REACHED HIGH DEMON
+# ============================================================
+demon.0020 = {
+	type = character_event
+	title = demon.0020.t
+	desc = demon.0020.desc
+	picture = "gfx/event_illustrations/demon_high.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0020.a
+		add_prestige = 800
+		add_piety = -1500
+		gain_arcane_xp = { VALUE = 120 }
+		gain_mana_100 = yes
+	}
+}
+
+# ============================================================
+# DEMON 0030 - REACHED LEGENDARY DEMON
+# ============================================================
+demon.0030 = {
+	type = character_event
+	title = demon.0030.t
+	desc = demon.0030.desc
+	picture = "gfx/event_illustrations/demon_legendary.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0030.a
+		add_prestige = 2000
+		add_piety = -5000
+		gain_arcane_xp = { VALUE = 300 }
+		gain_mana_100 = yes
+		gain_mana_100 = yes
+		# The demon god takes notice
+		trigger_event = demon.9001
+	}
+}
+
+# ============================================================
+# DEMON 0100-0120 - CORRUPTION FOCUS EVENTS
+# ============================================================
+demon.0100 = {
+	type = character_event
+	title = demon.0100.t
+	desc = demon.0100.desc
+	picture = "gfx/event_illustrations/soul_harvest.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0100.a  # Harvest a courtier's soul
+		trigger = {
+			any_court_character = {
+				NOT = { has_trait = angel_lesser }
+				NOT = { has_trait = demon_low }
+			}
+		}
+		random_court_character = {
+			limit = {
+				NOT = { has_trait = angel_lesser }
+				NOT = { has_trait = demon_low }
+				NOT = { has_trait = bound_by_contract }
+			}
+			save_scope_as = soul_target
+			add_trait = soul_tainted
+			add_opinion = {
+				modifier = horrified_opinion
+				target = prev
+				opinion = -40
+			}
+		}
+		gain_mana_50 = yes
+		gain_arcane_xp = { VALUE = 30 }
+	}
+	option = {
+		name = demon.0100.b  # Harvest from a prisoner
+		trigger = { any_prisoner = { always = yes } }
+		random_prisoner = {
+			add_trait = soul_tainted
+		}
+		gain_mana_100 = yes
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+demon.0110 = {
+	type = character_event
+	title = demon.0110.t
+	desc = demon.0110.desc
+	picture = "gfx/event_illustrations/demonic_pact.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0110.a  # Offer pact to a ruler
+		trigger = {
+			any_known_character = {
+				is_ruler = yes
+				NOT = { has_trait = bound_by_contract }
+				NOT = { has_trait = angel_lesser }
+				NOT = { has_trait = demon_low }
+			}
+		}
+		trigger_event = demon.0111
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+demon.0111 = {
+	type = character_event
+	title = demon.0111.t
+	desc = demon.0111.desc
+	picture = "gfx/event_illustrations/pact_offer.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0111.a  # They accept
+		# Target gains power but is bound
+		every_known_character = {
+			limit = {
+				is_ruler = yes
+				NOT = { has_trait = bound_by_contract }
+				NOT = { has_trait = angel_lesser }
+				random <= 40
+			}
+			add_trait = bound_by_contract
+			gain_mana_50 = yes
+		}
+		gain_mana_50 = yes
+		gain_arcane_xp = { VALUE = 40 }
+	}
+}
+
+demon.0120 = {
+	type = character_event
+	title = demon.0120.t
+	desc = demon.0120.desc
+	picture = "gfx/event_illustrations/infernal_network.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0120.a
+		add_character_modifier = {
+			modifier = infernal_spy_network
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+}
+
+# ============================================================
+# DEMON 0200 - CORRUPTION INCARNATE CAPSTONE
+# ============================================================
+demon.0200 = {
+	type = character_event
+	title = demon.0200.t
+	desc = demon.0200.desc
+	picture = "gfx/event_illustrations/corruption_incarnate.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0200.a  # Unleash the aura
+		add_character_modifier = {
+			modifier = corruption_incarnate_aura
+			years = -1
+		}
+		add_prestige = 1500
+		add_piety = -3000
+		gain_arcane_xp = { VALUE = 200 }
+		# Massive negative opinion from holy characters
+		every_known_character = {
+			limit = {
+				monthly_piety > 1.0
+			}
+			add_opinion = {
+				modifier = demonic_horror
+				target = prev
+				opinion = -60
+			}
+		}
+	}
+}
+
+# ============================================================
+# DEMON 0300-0320 - INFERNAL POWER TREE EVENTS
+# ============================================================
+demon.0300 = {
+	type = character_event
+	title = demon.0300.t
+	desc = demon.0300.desc
+	picture = "gfx/event_illustrations/void_summon.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0300.a  # Summon demonic troops
+		trigger = { var:arcane_mana >= 80 }
+		spend_mana_80 = yes
+		# Spawn lesser demon units
+		add_character_modifier = {
+			modifier = demon_troop_bonus
+			months = 12
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+}
+
+demon.0310 = {
+	type = character_event
+	title = demon.0310.t
+	desc = demon.0310.desc
+	picture = "gfx/event_illustrations/hellstorm.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0310.a  # Unleash the hellstorm in battle
+		trigger = { var:arcane_mana >= 100 }
+		spend_mana_100 = yes
+		add_character_modifier = {
+			modifier = hellstorm_active
+			months = 3
+		}
+		gain_arcane_xp = { VALUE = 60 }
+		add_prestige = 300
+	}
+}
+
+demon.0320 = {
+	type = character_event
+	title = demon.0320.t
+	desc = demon.0320.desc
+	picture = "gfx/event_illustrations/demonic_ascension.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0320.a  # Begin the ascension ritual
+		trigger = {
+			has_trait = demon_mid
+			var:arcane_mana >= 200
+		}
+		spend_mana_200 = yes
+		random_list = {
+			50 = {
+				trigger = { learning >= 18 }
+				remove_trait = demon_mid
+				add_trait = demon_high
+				trigger_event = demon.0020
+			}
+			50 = {
+				add_character_modifier = {
+					modifier = ascension_failed
+					months = 12
+				}
+				health_impact_add = -1.0
+			}
+		}
+		gain_arcane_xp = { VALUE = 100 }
+	}
+}
+
+# ============================================================
+# DEMON 0400 - DEMON SOVEREIGN CAPSTONE
+# ============================================================
+demon.0400 = {
+	type = character_event
+	title = demon.0400.t
+	desc = demon.0400.desc
+	picture = "gfx/event_illustrations/demon_sovereign.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0400.a
+		add_character_modifier = {
+			modifier = demon_sovereign_aura
+			years = -1
+		}
+		add_prestige = 2000
+		add_piety = -8000
+		gain_arcane_xp = { VALUE = 300 }
+	}
+}
+
+# ============================================================
+# DEMON 0500-0520 - DEMONIC DOMINION TREE EVENTS
+# ============================================================
+demon.0500 = {
+	type = character_event
+	title = demon.0500.t
+	desc = demon.0500.desc
+	picture = "gfx/event_illustrations/puppet_demon.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0500.a  # Dominate a low demon
+		trigger = {
+			any_known_character = {
+				has_trait = demon_low
+				NOT = { has_trait = magically_dominated }
+			}
+			var:arcane_mana >= 80
+		}
+		trigger_event = spell_events.0070
+	}
+}
+
+demon.0510 = {
+	type = character_event
+	title = demon.0510.t
+	desc = demon.0510.desc
+	picture = "gfx/event_illustrations/demonic_dynasty.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0510.a  # Bless your bloodline
+		every_child = {
+			add_character_modifier = {
+				modifier = demonic_heritage
+				years = -1
+			}
+		}
+		gain_arcane_xp = { VALUE = 60 }
+	}
+}
+
+demon.0520 = {
+	type = character_event
+	title = demon.0520.t
+	desc = demon.0520.desc
+	picture = "gfx/event_illustrations/dark_covenant.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0520.a  # Enter dark covenant
+		add_character_modifier = {
+			modifier = dark_covenant_active
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 80 }
+		add_prestige = 500
+		add_piety = -2000
+	}
+}
+
+# ============================================================
+# DEMON 0600 - DARK LORD CAPSTONE
+# ============================================================
+demon.0600 = {
+	type = character_event
+	title = demon.0600.t
+	desc = demon.0600.desc
+	picture = "gfx/event_illustrations/dark_lord.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0600.a
+		add_character_modifier = {
+			modifier = dark_lord_aura
+			years = -1
+		}
+		add_prestige = 3000
+		add_piety = -10000
+		gain_arcane_xp = { VALUE = 500 }
+	}
+}
+
+# ============================================================
+# DEMON 0700 - CONTRACT OFFER DECISION
+# ============================================================
+demon.0700 = {
+	type = character_event
+	title = demon.0700.t
+	desc = demon.0700.desc
+	picture = "gfx/event_illustrations/contract_offer.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0700.a  # Choose a target
+		trigger = {
+			any_known_character = {
+				NOT = { has_trait = bound_by_contract }
+				NOT = { has_trait = angel_lesser }
+			}
+		}
+		random_known_character = {
+			limit = {
+				NOT = { has_trait = bound_by_contract }
+				NOT = { has_trait = angel_lesser }
+				NOT = { has_trait = demon_low }
+				learning >= 6
+			}
+			save_scope_as = contract_target
+		}
+		trigger_event = demon.0701
+	}
+}
+
+demon.0701 = {
+	type = character_event
+	title = demon.0701.t
+	desc = demon.0701.desc
+	picture = "gfx/event_illustrations/contract_signing.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.0701.a  # Target accepts
+		scope:contract_target = {
+			add_trait = bound_by_contract
+			gain_mana_100 = yes
+			add_prestige = 500
+			add_piety = -1000
+		}
+		gain_mana_50 = yes
+		gain_arcane_xp = { VALUE = 60 }
+	}
+	option = {
+		name = demon.0701.b  # Target refuses
+		scope:contract_target = {
+			add_opinion = {
+				modifier = refused_demon_contract
+				target = prev
+				opinion = -20
+			}
+		}
+	}
+}
+
+# ============================================================
+# DEMON 9001 - DEMON GOD TAKES NOTICE (very rare)
+# ============================================================
+demon.9001 = {
+	type = character_event
+	title = demon.9001.t
+	desc = demon.9001.desc
+	picture = "gfx/event_illustrations/demon_god_vision.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.9001.a  # Bow before the demon god
+		add_trait = demon_god_marked
+		add_prestige = 1000
+		add_piety = -10000
+		gain_mana_100 = yes
+		gain_mana_100 = yes
+		trigger_event = demon.9002
+	}
+	option = {
+		name = demon.9001.b  # Reject the demon god
+		add_prestige = 500
+		add_piety = 1000
+		health_impact_add = -2.0
+		# Demon god becomes enemy
+	}
+}
+
+demon.9002 = {
+	type = character_event
+	title = demon.9002.t
+	desc = demon.9002.desc
+	picture = "gfx/event_illustrations/demon_god_gift.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = demon.9002.a  # Accept the demon god's gift
+		add_character_modifier = {
+			modifier = demon_god_blessing
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 500 }
+	}
+}

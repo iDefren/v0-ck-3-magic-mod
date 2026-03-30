@@ -1,0 +1,420 @@
+# ============================================================
+# ARCANE DOMINION - common/character_modifiers/arcane_modifiers.txt
+# Mana system, modifiers used by spells, traits, buildings
+# ============================================================
+
+# ============================================================
+# MANA MODIFIERS
+# ============================================================
+
+# Active mana storage modifier (used as numeric tracker via scripted variables)
+arcane_mana_reserve = {
+	# Tracks current mana via arcane_mana_value scripted variable
+	icon = modifier_mana
+}
+
+# Regen modifiers applied from traits
+basic_mana_control_modifier = {
+	monthly_character_xp = 2
+	arcane_mana_regen = 5
+}
+
+arcane_library_modifier = {
+	monthly_character_xp = 3
+	learning = 2
+}
+
+mana_attunement_modifier = {
+	arcane_mana_regen = 12
+	monthly_character_xp = 4
+}
+
+master_theorist_modifier = {
+	arcane_mana_regen = 20
+	monthly_character_xp = 8
+	learning = 4
+	arcane_spell_success_chance_add = 10
+}
+
+# ============================================================
+# COMBAT / SPELL MODIFIERS
+# ============================================================
+
+battle_channeling_modifier = {
+	prowess = 3
+	arcane_spell_success_chance_add = 10
+}
+
+arcane_armor_modifier = {
+	health = 0.5
+	arcane_resist = 10
+}
+
+elemental_strike_modifier = {
+	prowess = 5
+}
+
+ward_of_power_modifier = {
+	arcane_resist = 20
+	health = 1.0
+}
+
+battlefield_mage_modifier = {
+	martial = 2
+	prowess = 3
+	arcane_mana_regen = 5
+}
+
+siege_magic_modifier = {
+	siege_weapon_effectiveness = 0.15
+	defender_advantage = 10
+}
+
+# ============================================================
+# ARCANE PROTECTION ACTIVE BUFFS
+# ============================================================
+
+divine_shield_active = {
+	arcane_resist = 30
+	health = 1.5
+	prowess = 3
+}
+
+holy_ward_mod = {
+	arcane_resist = 15
+	health = 0.5
+}
+
+blessed_aura_mod = {
+	monthly_piety = 0.5
+	diplomacy = 2
+}
+
+celestial_armor_mod = {
+	prowess = 4
+	arcane_resist = 20
+	health = 1.5
+}
+
+guardian_angel_mod = {
+	health = 2.0
+	arcane_resist = 25
+	prowess = 5
+}
+
+divine_champion_mod = {
+	prowess = 6
+	martial = 3
+	arcane_resist = 35
+	health = 2.5
+	monthly_piety = 1.0
+}
+
+# ============================================================
+# HIDDEN ARTS MODIFIERS
+# ============================================================
+
+arcane_deception_modifier = {
+	intrigue = 3
+	illusion_power = 10
+}
+
+shadow_step_modifier = {
+	scheme_secrecy_add = 15
+	hostile_scheme_resistance_add = 15
+}
+
+curse_weaver_modifier = {
+	arcane_spell_success_chance_add = 15
+}
+
+mind_veil_modifier = {
+	scheme_secrecy_add = 25
+	intrigue = 3
+}
+
+arcane_assassin_modifier = {
+	intrigue = 5
+	scheme_power_add = 10
+}
+
+grand_manipulator_modifier = {
+	diplomacy = 4
+	intrigue = 5
+	monthly_prestige = 0.5
+}
+
+# ============================================================
+# DEMON MODIFIERS
+# ============================================================
+
+corrupt_whispers_mod = {
+	intrigue = 3
+	corruption_power = 10
+}
+
+demonic_charm_mod = {
+	diplomacy = 3
+}
+
+mass_corruption_mod = {
+	monthly_piety = -1.0
+	intrigue = 5
+	corruption_power = 20
+}
+
+lord_of_sin_mod = {
+	intrigue = 8
+	corruption_power = 35
+	monthly_piety = -3.0
+	monthly_prestige = 1.5
+}
+
+hellfire_mastery_mod = {
+	prowess = 5
+	fire_magic_power = 20
+}
+
+demonic_resilience_mod = {
+	health = 2.0
+	arcane_resist = 15
+}
+
+infernal_aura_mod = {
+	monthly_piety = -1.5
+	prowess = 3
+}
+
+lord_of_destruction_mod = {
+	prowess = 10
+	martial = 4
+	monthly_prestige = 2.0
+}
+
+soul_binding_mod = {
+	intrigue = 3
+	arcane_mana_regen = 8
+}
+
+dark_court_mod = {
+	diplomacy = 3
+	monthly_prestige = 0.5
+}
+
+infernal_economy_mod = {
+	monthly_income = 2.0
+	arcane_mana_regen = 5
+}
+
+herald_of_darkness_mod = {
+	prowess = 6
+	intrigue = 6
+	monthly_prestige = 2.0
+	monthly_piety = -4.0
+}
+
+# ============================================================
+# ANGEL MODIFIERS
+# ============================================================
+
+divine_sight_mod = {
+	learning = 4
+	diplomacy = 2
+}
+
+fated_ruler_mod = {
+	monthly_prestige = 1.0
+	diplomacy = 3
+}
+
+blessing_of_foresight_mod = {
+	martial = 2
+	learning = 2
+}
+
+divine_mandate_mod = {
+	monthly_piety = 3.0
+	monthly_prestige = 2.0
+}
+
+prophets_words_mod = {
+	learning = 3
+	monthly_piety = 1.5
+}
+
+chosen_of_heaven_mod = {
+	diplomacy = 5
+	learning = 5
+	monthly_piety = 3.0
+	monthly_prestige = 2.0
+}
+
+heavenly_court_mod = {
+	diplomacy = 4
+	monthly_prestige = 1.0
+}
+
+celestial_economy_mod = {
+	monthly_income = 1.5
+	monthly_piety = 1.0
+}
+
+angelic_dominion_mod = {
+	diplomacy = 6
+	monthly_piety = 4.0
+	monthly_prestige = 2.5
+}
+
+herald_of_heaven_mod = {
+	diplomacy = 7
+	learning = 5
+	monthly_piety = 5.0
+	monthly_prestige = 3.0
+}
+
+# ============================================================
+# MAGE HUNTER MODIFIERS
+# ============================================================
+
+# ============================================================
+# COOLDOWN / STATUS MODIFIERS
+# ============================================================
+
+awakening_attempted = {
+	icon = modifier_ritual
+}
+
+domination_cooldown = {
+	icon = modifier_mind
+}
+
+void_step_cooldown = {
+	icon = modifier_void
+}
+
+tournament_cooldown = {
+	icon = modifier_tournament
+}
+
+ley_line_visited = {
+	arcane_mana_regen = 5
+	monthly_character_xp = 1
+}
+
+companion_hunt_active = {
+	icon = modifier_hunt
+}
+
+has_companion = {
+	icon = modifier_companion
+	health = 0.5
+	prowess = 2
+}
+
+hunter_training_active = {
+	icon = modifier_hunter
+}
+
+crafting_artifact = {
+	icon = modifier_craft
+}
+
+enhancing_artifact = {
+	icon = modifier_craft
+}
+
+immortality_quest = {
+	icon = modifier_immortal
+	learning = 3
+}
+
+ascension_attempted = {
+	icon = modifier_ritual
+}
+
+mage_cult_founded = {
+	monthly_prestige = 0.5
+	icon = modifier_cult
+}
+
+celestial_blessed = {
+	health = 1.0
+	monthly_piety = 1.0
+	months = 24
+}
+
+# ============================================================
+# SPECIALIZATION POWER MODIFIERS (percentage buffs)
+# ============================================================
+
+fire_magic_power = {
+	icon = modifier_fire
+}
+
+frost_magic_power = {
+	icon = modifier_frost
+}
+
+necro_power = {
+	icon = modifier_necro
+}
+
+construct_power = {
+	icon = modifier_golem
+}
+
+healing_power = {
+	icon = modifier_heal
+}
+
+divination_power = {
+	icon = modifier_divine
+}
+
+illusion_power = {
+	icon = modifier_illusion
+}
+
+storm_power = {
+	icon = modifier_storm
+}
+
+blood_power = {
+	icon = modifier_blood
+}
+
+void_power = {
+	icon = modifier_void
+}
+
+corruption_power = {
+	icon = modifier_corrupt
+}
+
+celestial_power = {
+	icon = modifier_celestial
+}
+
+arcane_resist = {
+	icon = modifier_shield
+}
+
+arcane_mana_regen = {
+	icon = modifier_mana
+}
+
+arcane_spell_success_chance_add = {
+	icon = modifier_spell
+}
+
+monthly_arcane_xp = {
+	icon = modifier_xp
+}
+
+mage_hunter_xp_gain = {
+	icon = modifier_hunter
+}
+
+monthly_magestyle_xp = {
+	icon = modifier_xp
+}
