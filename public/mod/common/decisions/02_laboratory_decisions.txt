@@ -1,273 +1,222 @@
-namespace = laboratory
+# ============================================================
+# ARCANE DOMINION - common/decisions/02_laboratory_decisions.txt
+# Laboratory Decisions
+# ============================================================
+
+decisions = {
 
 # Establish Magic Laboratory
 establish_laboratory = {
-	picture = "gfx/interface/illustrations/decisions/decision_laboratory.dds"
+	title = establish_laboratory_title
 	desc = establish_laboratory_desc
+	picture = "gfx/interface/illustrations/decisions/decision_laboratory.dds"
 	selection_tooltip = establish_laboratory_tooltip
 
 	is_shown = {
-		has_trait = mage
-		mana >= 10
-		location = { has_building = laboratory_building }
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		has_variable = arcane_mana
+		var:arcane_mana >= 10
+		is_landed = yes
+		NOT = { has_character_flag = laboratory_established }
 	}
 
 	is_valid = {
-		mana >= 10
-		is_location_valid = yes
-		has_capital = yes
-	}
-
-	is_valid_showing_failures_only = {
+		var:arcane_mana >= 10
 		is_capable_adult = yes
+		gold >= 200
 	}
 
 	effect = {
-		add_mana = -10
+		change_variable = { name = arcane_mana add = -10 }
+		remove_short_term_gold = 200
 		set_character_flag = laboratory_established
-		capital_county = {
-			add_county_modifier = {
-				modifier = magical_laboratory
-				years = 20
-			}
-		}
 		add_character_modifier = {
 			modifier = laboratory_owner
-			years = 20
+			years = -1
 		}
+		trigger_event = laboratory_events.0001
 	}
 
-	ai_chance = {
-		base = 30
-		modifier = {
-			add = 40
-			has_trait = scholar
-		}
+	ai_check_interval = 60
+	ai_potential = {
+		has_trait = scholar
 	}
 }
 
 # Conduct Research
 conduct_research = {
-	picture = "gfx/interface/illustrations/decisions/decision_research.dds"
+	title = conduct_research_title
 	desc = conduct_research_desc
+	picture = "gfx/interface/illustrations/decisions/decision_research.dds"
 	selection_tooltip = conduct_research_tooltip
 
 	is_shown = {
 		has_character_flag = laboratory_established
-		mana >= 15
+		has_variable = arcane_mana
+		var:arcane_mana >= 15
 	}
 
 	is_valid = {
-		mana >= 15
-		is_location_valid = yes
+		var:arcane_mana >= 15
 		learning >= 12
-	}
-
-	is_valid_showing_failures_only = {
 		is_capable_adult = yes
 	}
 
 	effect = {
-		add_mana = -15
-		add_mana = 25
+		change_variable = { name = arcane_mana add = -15 }
+		change_variable = { name = arcane_mana add = 25 }
 		add_character_modifier = {
 			modifier = arcane_research_boost
 			years = 3
 		}
+		trigger_event = laboratory_events.0010
 	}
 
-	ai_chance = {
-		base = 40
-		modifier = {
-			add = 60
-			has_trait = scholar
-		}
+	ai_check_interval = 48
+	ai_potential = {
+		has_trait = scholar
 	}
 }
 
 # Magical Experimentation
 magical_experimentation = {
-	picture = "gfx/interface/illustrations/decisions/decision_experimentation.dds"
+	title = magical_experimentation_title
 	desc = magical_experimentation_desc
+	picture = "gfx/interface/illustrations/decisions/decision_experimentation.dds"
 	selection_tooltip = magical_experimentation_tooltip
 
 	is_shown = {
 		has_character_flag = laboratory_established
-		mana >= 20
+		has_variable = arcane_mana
+		var:arcane_mana >= 20
 	}
 
 	is_valid = {
-		mana >= 20
-		is_location_valid = yes
-	}
-
-	is_valid_showing_failures_only = {
+		var:arcane_mana >= 20
 		is_capable_adult = yes
 	}
 
 	effect = {
-		add_mana = -20
-		random = {
-			chance = 30
-			effect = {
-				add_mana = 40
-				add_character_modifier = {
-					modifier = successful_experiment
-					years = 2
-				}
-			}
-		}
-		random = {
-			chance = 40
-			effect = {
-				add_character_modifier = {
-					modifier = failed_experiment
-					years = 2
-				}
-			}
-		}
-		random = {
-			chance = 30
-			effect = {
-				add_trait = maimed
-				add_character_modifier = {
-					modifier = experiment_mishap
-					years = 3
-				}
-			}
-		}
+		change_variable = { name = arcane_mana add = -20 }
+		trigger_event = laboratory_events.0020
 	}
 
-	ai_chance = {
-		base = 20
-		modifier = {
-			add = 50
-			has_trait = reckless
-		}
-		modifier = {
-			add = -40
-			has_trait = cautious
-		}
+	ai_check_interval = 60
+	ai_potential = {
+		NOT = { has_trait = craven }
 	}
 }
 
 # Create Magical Artifact
 create_artifact = {
-	picture = "gfx/interface/illustrations/decisions/decision_artifact.dds"
+	title = create_artifact_title
 	desc = create_artifact_desc
+	picture = "gfx/interface/illustrations/decisions/decision_artifact.dds"
 	selection_tooltip = create_artifact_tooltip
 
 	is_shown = {
 		has_character_flag = laboratory_established
-		mana >= 40
+		OR = {
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+		}
+		has_variable = arcane_mana
+		var:arcane_mana >= 40
 	}
 
 	is_valid = {
-		mana >= 40
-		is_location_valid = yes
+		var:arcane_mana >= 40
 		learning >= 15
-	}
-
-	is_valid_showing_failures_only = {
 		is_capable_adult = yes
+		gold >= 300
 	}
 
 	effect = {
-		add_mana = -40
-		create_character_artifact = {
-			name = random
-			description = magical_artifact_description
-		}
+		change_variable = { name = arcane_mana add = -40 }
+		remove_short_term_gold = 300
 		add_character_modifier = {
 			modifier = artifact_crafter
 			years = 10
 		}
+		trigger_event = artifact_events.0001
 	}
 
-	ai_chance = {
-		base = 20
-		modifier = {
-			add = 50
-			has_trait = scholar
-		}
+	ai_check_interval = 120
+	ai_potential = {
+		has_trait = scholar
 	}
 }
 
 # Enchant Item
 enchant_item = {
-	picture = "gfx/interface/illustrations/decisions/decision_enchant.dds"
+	title = enchant_item_title
 	desc = enchant_item_desc
+	picture = "gfx/interface/illustrations/decisions/decision_enchant.dds"
 	selection_tooltip = enchant_item_tooltip
 
 	is_shown = {
 		has_character_flag = laboratory_established
-		mana >= 15
+		has_variable = arcane_mana
+		var:arcane_mana >= 15
 	}
 
 	is_valid = {
-		mana >= 15
-		is_location_valid = yes
+		var:arcane_mana >= 15
 		learning >= 10
-	}
-
-	is_valid_showing_failures_only = {
 		is_capable_adult = yes
 	}
 
 	effect = {
-		add_mana = -15
+		change_variable = { name = arcane_mana add = -15 }
 		add_prestige = 20
-		random_courtier = {
-			add_artifact = {
-				type = enchanted_item
-				name = enchanted_weapon
-			}
-		}
+		trigger_event = laboratory_events.0030
 	}
 
-	ai_chance = {
-		base = 25
-		modifier = {
-			add = 40
-			has_trait = scholar
-		}
+	ai_check_interval = 72
+	ai_potential = {
+		has_trait = scholar
 	}
 }
 
 # Brew Magical Potion
 brew_potion = {
-	picture = "gfx/interface/illustrations/decisions/decision_potion.dds"
+	title = brew_potion_title
 	desc = brew_potion_desc
+	picture = "gfx/interface/illustrations/decisions/decision_potion.dds"
 	selection_tooltip = brew_potion_tooltip
 
 	is_shown = {
 		has_character_flag = laboratory_established
-		mana >= 10
+		has_variable = arcane_mana
+		var:arcane_mana >= 10
 	}
 
 	is_valid = {
-		mana >= 10
-		is_location_valid = yes
+		var:arcane_mana >= 10
 		learning >= 8
-	}
-
-	is_valid_showing_failures_only = {
 		is_capable_adult = yes
 	}
 
 	effect = {
-		add_mana = -10
+		change_variable = { name = arcane_mana add = -10 }
 		add_character_modifier = {
 			modifier = potion_effects
 			years = 2
 		}
+		trigger_event = laboratory_events.0040
 	}
 
-	ai_chance = {
-		base = 35
-		modifier = {
-			add = 50
-			has_trait = scholar
-		}
+	ai_check_interval = 48
+	ai_potential = {
+		has_trait = scholar
 	}
 }
+
+} # End of decisions block
