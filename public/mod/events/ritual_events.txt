@@ -1,0 +1,632 @@
+# ============================================================
+# ARCANE DOMINION - events/ritual_events.txt
+# Major ritual ceremonies and magical rites
+# ============================================================
+
+namespace = ritual_events
+
+# ============================================================
+# AWAKENING RITUAL (Non-mage attempts to gain magic)
+# ============================================================
+ritual_events.0001 = {
+	type = character_event
+	title = ritual_events.0001.t
+	desc = ritual_events.0001.desc
+	picture = "gfx/event_illustrations/awakening_ritual.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		add_gold = -200
+	}
+
+	random_list = {
+		25 = {
+			# Full success - awakened as mage
+			modifier = { factor = 2 learning >= 15 }
+			modifier = { factor = 1.5 any_close_family_member = { is_any_mage = yes } }
+			option = {
+				name = ritual_events.0001.a
+				add_trait = arcane_spark
+				initialize_mana_system = yes
+				gain_arcane_xp = { VALUE = 50 }
+				trigger_event = ritual_events.0002
+			}
+		}
+		35 = {
+			# Partial success - magical sensitivity
+			modifier = { factor = 1.5 learning >= 12 }
+			option = {
+				name = ritual_events.0001.b
+				add_character_modifier = {
+					modifier = magical_sensitivity
+					years = 5
+				}
+				add_learning_skill = 2
+			}
+		}
+		30 = {
+			# Failure - nothing happens
+			option = {
+				name = ritual_events.0001.c
+				stress_impact = { base = 20 }
+				add_prestige = -50
+			}
+		}
+		10 = {
+			# Catastrophic failure
+			option = {
+				name = ritual_events.0001.d
+				add_trait = mundane_soul
+				health_impact_add = -1.0
+				stress_impact = { base = 50 }
+			}
+		}
+	}
+}
+
+ritual_events.0002 = {
+	type = character_event
+	title = ritual_events.0002.t
+	desc = ritual_events.0002.desc
+	picture = "gfx/event_illustrations/first_magic.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0002.a  # Embrace the power
+		add_prestige = 100
+		custom_tooltip = ritual_events.0002.a.tt
+	}
+
+	option = {
+		name = ritual_events.0002.b  # Study carefully
+		add_character_modifier = {
+			modifier = careful_student
+			years = 3
+		}
+		gain_arcane_xp = { VALUE = 30 }
+	}
+}
+
+# ============================================================
+# GRAND SUMMONING RITUAL
+# ============================================================
+ritual_events.0010 = {
+	type = character_event
+	title = ritual_events.0010.t
+	desc = ritual_events.0010.desc
+	picture = "gfx/event_illustrations/summoning_ritual.dds"
+
+	is_triggered_only = yes
+
+	trigger = {
+		is_master_level_mage = yes
+		has_advanced_laboratory = yes
+	}
+
+	immediate = {
+		spend_mana_100 = yes
+		add_gold = -300
+	}
+
+	option = {
+		name = ritual_events.0010.a  # Summon elemental
+		trigger_event = ritual_events.0011
+	}
+
+	option = {
+		name = ritual_events.0010.b  # Summon demon (dangerous)
+		trigger = {
+			OR = {
+				has_dark_alignment = yes
+				has_trait = demon_corruptor
+			}
+		}
+		trigger_event = ritual_events.0012
+	}
+
+	option = {
+		name = ritual_events.0010.c  # Summon celestial (requires purity)
+		trigger = {
+			OR = {
+				has_light_alignment = yes
+				piety >= 2000
+			}
+		}
+		trigger_event = ritual_events.0013
+	}
+}
+
+ritual_events.0011 = {
+	type = character_event
+	title = ritual_events.0011.t
+	desc = ritual_events.0011.desc
+	picture = "gfx/event_illustrations/elemental_summon.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0011.a  # Fire elemental
+		add_character_modifier = {
+			modifier = fire_elemental_companion
+			years = 10
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+
+	option = {
+		name = ritual_events.0011.b  # Ice elemental
+		add_character_modifier = {
+			modifier = ice_elemental_companion
+			years = 10
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+
+	option = {
+		name = ritual_events.0011.c  # Storm elemental
+		add_character_modifier = {
+			modifier = storm_elemental_companion
+			years = 10
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+
+	option = {
+		name = ritual_events.0011.d  # Earth elemental
+		add_character_modifier = {
+			modifier = earth_elemental_companion
+			years = 10
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+}
+
+ritual_events.0012 = {
+	type = character_event
+	title = ritual_events.0012.t
+	desc = ritual_events.0012.desc
+	picture = "gfx/event_illustrations/demon_summon.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		40 = {
+			# Successful binding
+			modifier = { factor = 1.5 has_trait = spec_necromancer }
+			modifier = { factor = 2 is_any_demon = yes }
+			option = {
+				name = ritual_events.0012.a
+				add_character_modifier = {
+					modifier = bound_demon_servant
+					years = 10
+				}
+				gain_arcane_xp = { VALUE = 80 }
+				add_piety = -500
+				add_dread = 30
+			}
+		}
+		35 = {
+			# Demon demands payment
+			option = {
+				name = ritual_events.0012.b
+				add_trait = bound_by_contract
+				add_character_modifier = {
+					modifier = demonic_pact_active
+					years = 20
+				}
+				gain_arcane_xp = { VALUE = 60 }
+				add_piety = -800
+			}
+		}
+		25 = {
+			# Demon escapes control
+			option = {
+				name = ritual_events.0012.c
+				health_impact_add = -2.0
+				add_character_modifier = {
+					modifier = demonic_corruption
+					years = 5
+				}
+				add_piety = -300
+			}
+		}
+	}
+}
+
+ritual_events.0013 = {
+	type = character_event
+	title = ritual_events.0013.t
+	desc = ritual_events.0013.desc
+	picture = "gfx/event_illustrations/celestial_summon.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		50 = {
+			# Celestial appears
+			modifier = { factor = 1.5 piety >= 3000 }
+			modifier = { factor = 2 is_any_angel = yes }
+			option = {
+				name = ritual_events.0013.a
+				add_character_modifier = {
+					modifier = celestial_guardian
+					years = 10
+				}
+				gain_arcane_xp = { VALUE = 70 }
+				add_piety = 500
+			}
+		}
+		30 = {
+			# Celestial offers guidance
+			option = {
+				name = ritual_events.0013.b
+				add_learning_skill = 3
+				add_diplomacy_skill = 2
+				gain_arcane_xp = { VALUE = 50 }
+				add_piety = 300
+			}
+		}
+		20 = {
+			# Not worthy
+			option = {
+				name = ritual_events.0013.c
+				stress_impact = { base = 30 }
+				add_piety = -100
+			}
+		}
+	}
+}
+
+# ============================================================
+# IMMORTALITY RITUAL CHAIN
+# ============================================================
+ritual_events.0100 = {
+	type = character_event
+	title = ritual_events.0100.t
+	desc = ritual_events.0100.desc
+	picture = "gfx/event_illustrations/immortality_quest.dds"
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_trait = archmage
+		learning >= 25
+	}
+
+	immediate = {
+		add_gold = -1000
+		spend_mana_200 = yes
+		set_variable = {
+			name = immortality_progress
+			value = 0
+		}
+	}
+
+	option = {
+		name = ritual_events.0100.a  # Begin the quest
+		add_character_modifier = {
+			modifier = immortality_quest
+			years = -1
+		}
+		trigger_event = { id = ritual_events.0101 months = { 6 24 } }
+	}
+}
+
+ritual_events.0101 = {
+	type = character_event
+	title = ritual_events.0101.t
+	desc = ritual_events.0101.desc
+	picture = "gfx/event_illustrations/immortality_research.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0101.a  # Phylactery path (lich)
+		trigger = { has_trait = spec_necromancer }
+		trigger_event = ritual_events.0102
+	}
+
+	option = {
+		name = ritual_events.0101.b  # Life force absorption
+		trigger = { has_trait = spec_blood_mage }
+		trigger_event = ritual_events.0103
+	}
+
+	option = {
+		name = ritual_events.0101.c  # Pure magical preservation
+		trigger = {
+			learning >= 28
+			has_neutral_alignment = yes
+		}
+		trigger_event = ritual_events.0104
+	}
+
+	option = {
+		name = ritual_events.0101.d  # Celestial blessing (angel path)
+		trigger = { piety >= 5000 }
+		trigger_event = ritual_events.0105
+	}
+}
+
+ritual_events.0102 = {
+	type = character_event
+	title = ritual_events.0102.t
+	desc = ritual_events.0102.desc
+	picture = "gfx/event_illustrations/phylactery.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0102.a  # Create phylactery
+		trigger = {
+			any_prisoner = { always = yes }
+			gold >= 500
+		}
+		add_gold = -500
+		random_prisoner = {
+			death = { death_reason = death_sacrificed }
+		}
+		add_trait = phylactery_bound
+		add_trait = lich_touched
+		remove_character_modifier = immortality_quest
+		gain_arcane_xp = { VALUE = 200 }
+		add_piety = -2000
+		add_dread = 80
+	}
+
+	option = {
+		name = ritual_events.0102.b  # Not ready
+		change_variable = {
+			name = immortality_progress
+			add = 20
+		}
+		trigger_event = { id = ritual_events.0101 months = { 12 36 } }
+	}
+}
+
+ritual_events.0103 = {
+	type = character_event
+	title = ritual_events.0103.t
+	desc = ritual_events.0103.desc
+	picture = "gfx/event_illustrations/life_drain.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0103.a  # Perform the ritual
+		trigger = {
+			any_prisoner = { count >= 3 }
+		}
+		every_prisoner = {
+			limit = { count <= 3 }
+			death = { death_reason = death_sacrificed }
+		}
+		add_trait = ageless_mage
+		remove_character_modifier = immortality_quest
+		gain_arcane_xp = { VALUE = 250 }
+		add_piety = -3000
+		add_dread = 100
+	}
+}
+
+ritual_events.0104 = {
+	type = character_event
+	title = ritual_events.0104.t
+	desc = ritual_events.0104.desc
+	picture = "gfx/event_illustrations/pure_preservation.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		30 = {
+			# Success
+			modifier = { factor = 2 learning >= 30 }
+			option = {
+				name = ritual_events.0104.a
+				add_trait = ageless_mage
+				remove_character_modifier = immortality_quest
+				gain_arcane_xp = { VALUE = 300 }
+				add_prestige = 2000
+			}
+		}
+		50 = {
+			# Partial success
+			option = {
+				name = ritual_events.0104.b
+				add_character_modifier = {
+					modifier = slowed_aging
+					years = -1
+				}
+				change_variable = {
+					name = immortality_progress
+					add = 30
+				}
+				trigger_event = { id = ritual_events.0101 months = { 24 60 } }
+			}
+		}
+		20 = {
+			# Failure
+			option = {
+				name = ritual_events.0104.c
+				health_impact_add = -2.0
+				remove_character_modifier = immortality_quest
+				stress_impact = { base = 50 }
+			}
+		}
+	}
+}
+
+ritual_events.0105 = {
+	type = character_event
+	title = ritual_events.0105.t
+	desc = ritual_events.0105.desc
+	picture = "gfx/event_illustrations/celestial_ascension.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0105.a  # Ascend
+		add_trait = celestial_ascended
+		add_trait = ageless_mage
+		remove_character_modifier = immortality_quest
+		gain_arcane_xp = { VALUE = 250 }
+		add_piety = 2000
+		add_prestige = 1500
+	}
+}
+
+# ============================================================
+# BLOOD MOON RITUAL (Special)
+# ============================================================
+ritual_events.0200 = {
+	type = character_event
+	title = ritual_events.0200.t
+	desc = ritual_events.0200.desc
+	picture = "gfx/event_illustrations/blood_moon.dds"
+
+	trigger = {
+		is_powerful_mage = yes
+		has_dark_alignment = yes
+		NOR = {
+			has_character_modifier = blood_moon_ritual_done
+			month = 6
+			month = 7
+		}
+	}
+
+	mean_time_to_happen = {
+		years = 10
+	}
+
+	option = {
+		name = ritual_events.0200.a  # Perform the ritual
+		trigger = { gold >= 300 }
+		add_gold = -300
+		spend_mana_100 = yes
+		trigger_event = ritual_events.0201
+	}
+
+	option = {
+		name = ritual_events.0200.b  # Let it pass
+		add_character_modifier = {
+			modifier = blood_moon_ritual_done
+			years = 3
+		}
+	}
+}
+
+ritual_events.0201 = {
+	type = character_event
+	title = ritual_events.0201.t
+	desc = ritual_events.0201.desc
+	picture = "gfx/event_illustrations/blood_moon_power.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = ritual_events.0201.a  # Embrace dark power
+		add_character_modifier = {
+			modifier = blood_moon_empowered
+			years = 5
+		}
+		if = {
+			limit = { NOT = { is_any_demon = yes } }
+			add_trait = demon_low
+		}
+		else_if = {
+			limit = { has_trait = demon_low }
+			remove_trait = demon_low
+			add_trait = demon_mid
+		}
+		gain_arcane_xp = { VALUE = 100 }
+		add_piety = -1000
+		add_dread = 50
+		add_character_modifier = {
+			modifier = blood_moon_ritual_done
+			years = 10
+		}
+	}
+}
+
+# ============================================================
+# SOLSTICE RITUAL (Light magic boost)
+# ============================================================
+ritual_events.0300 = {
+	type = character_event
+	title = ritual_events.0300.t
+	desc = ritual_events.0300.desc
+	picture = "gfx/event_illustrations/solstice.dds"
+
+	trigger = {
+		is_practicing_mage = yes
+		has_light_alignment = yes
+		OR = {
+			month = 6
+			month = 12
+		}
+	}
+
+	mean_time_to_happen = {
+		years = 5
+	}
+
+	option = {
+		name = ritual_events.0300.a  # Perform solstice ritual
+		trigger = { gold >= 200 }
+		add_gold = -200
+		spend_mana_50 = yes
+		add_character_modifier = {
+			modifier = solstice_blessed
+			years = 2
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_piety = 300
+	}
+
+	option = {
+		name = ritual_events.0300.b  # Meditate alone
+		gain_arcane_xp = { VALUE = 15 }
+		add_piety = 100
+	}
+}
+
+# ============================================================
+# LEYLINE CONVERGENCE RITUAL
+# ============================================================
+ritual_events.0400 = {
+	type = character_event
+	title = ritual_events.0400.t
+	desc = ritual_events.0400.desc
+	picture = "gfx/event_illustrations/leyline.dds"
+
+	trigger = {
+		is_powerful_mage = yes
+		has_trait = ley_line_attuned
+	}
+
+	mean_time_to_happen = {
+		years = 15
+	}
+
+	option = {
+		name = ritual_events.0400.a  # Channel the convergence
+		trigger = { gold >= 500 }
+		add_gold = -500
+		spend_mana_100 = yes
+		add_character_modifier = {
+			modifier = leyline_convergence_power
+			years = 10
+		}
+		gain_mana_100 = yes
+		gain_mana_100 = yes
+		gain_arcane_xp = { VALUE = 80 }
+		check_mage_tier_upgrade = yes
+	}
+
+	option = {
+		name = ritual_events.0400.b  # Too dangerous
+		add_prestige = -50
+	}
+}

@@ -1,0 +1,881 @@
+# ============================================================
+# ARCANE DOMINION - events/spell_events.txt
+# Individual spell casting events
+# ============================================================
+
+namespace = spell_events
+
+# ============================================================
+# FIREBALL SPELL (Pyromancer)
+# ============================================================
+spell_events.0001 = {
+	type = character_event
+	title = spell_events.0001.t
+	desc = spell_events.0001.desc
+	picture = "gfx/event_illustrations/fireball.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_25 = yes
+	}
+
+	# Target selection
+	option = {
+		name = spell_events.0001.a  # Target enemy army
+		trigger = {
+			any_war_enemy = { always = yes }
+		}
+		random_war_enemy = {
+			save_scope_as = fireball_target
+		}
+		trigger_event = spell_events.0002
+	}
+
+	option = {
+		name = spell_events.0001.b  # Target a rival
+		trigger = {
+			any_relation = {
+				type = rival
+				always = yes
+			}
+		}
+		random_relation = {
+			type = rival
+			save_scope_as = fireball_target
+		}
+		trigger_event = spell_events.0002
+	}
+
+	option = {
+		name = spell_events.0001.c  # Display of power (prestige)
+		add_prestige = 100
+		gain_arcane_xp = { VALUE = 10 }
+		custom_tooltip = spell_events.0001.c.tt
+	}
+}
+
+spell_events.0002 = {
+	type = character_event
+	title = spell_events.0002.t
+	desc = spell_events.0002.desc
+	picture = "gfx/event_illustrations/fireball_impact.dds"
+
+	is_triggered_only = yes
+
+	# Success based on fire magic power and learning
+	option = {
+		name = spell_events.0002.a  # Direct hit!
+		trigger = {
+			learning >= 12
+			OR = {
+				has_trait = spec_pyromancer
+				has_trait = archmage
+			}
+		}
+		scope:fireball_target = {
+			health_impact_add = -2.0
+			add_character_modifier = {
+				modifier = badly_burned
+				months = 12
+			}
+		}
+		gain_arcane_xp = { VALUE = 25 }
+		add_prestige = 50
+	}
+
+	option = {
+		name = spell_events.0002.b  # Partial success
+		trigger = { learning >= 8 }
+		scope:fireball_target = {
+			health_impact_add = -0.8
+			add_character_modifier = {
+				modifier = minor_burns
+				months = 6
+			}
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+
+	option = {
+		name = spell_events.0002.c  # Failure
+		trigger = { learning < 8 }
+		add_character_modifier = {
+			modifier = spell_backfire
+			months = 3
+		}
+		health_impact_add = -0.5
+	}
+}
+
+# ============================================================
+# FROST NOVA SPELL (Cryomancer)
+# ============================================================
+spell_events.0010 = {
+	type = character_event
+	title = spell_events.0010.t
+	desc = spell_events.0010.desc
+	picture = "gfx/event_illustrations/frost_nova.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_30 = yes
+	}
+
+	option = {
+		name = spell_events.0010.a  # Freeze enemy forces
+		trigger = { any_war_enemy = { always = yes } }
+		random_war_enemy = {
+			add_character_modifier = {
+				modifier = frozen_in_place
+				months = 3
+			}
+		}
+		gain_arcane_xp = { VALUE = 20 }
+		add_prestige = 75
+	}
+
+	option = {
+		name = spell_events.0010.b  # Create ice barrier
+		add_character_modifier = {
+			modifier = ice_barrier_active
+			months = 12
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+
+	option = {
+		name = spell_events.0010.c  # Freeze the land (development impact)
+		trigger = { is_at_war = yes }
+		capital_county = {
+			add_county_modifier = {
+				modifier = frozen_battlefield
+				months = 6
+			}
+		}
+		gain_arcane_xp = { VALUE = 18 }
+	}
+}
+
+# ============================================================
+# LIGHTNING STORM (Storm Caller)
+# ============================================================
+spell_events.0020 = {
+	type = character_event
+	title = spell_events.0020.t
+	desc = spell_events.0020.desc
+	picture = "gfx/event_illustrations/lightning_storm.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_50 = yes
+	}
+
+	option = {
+		name = spell_events.0020.a  # Devastating strike
+		trigger = {
+			learning >= 18
+			has_trait = spec_storm_caller
+		}
+		random_war_enemy = {
+			limit = { is_commanding_army = yes }
+			health_impact_add = -3.0
+			add_character_modifier = {
+				modifier = struck_by_lightning
+				months = 6
+			}
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_prestige = 200
+	}
+
+	option = {
+		name = spell_events.0020.b  # Area denial
+		if = {
+			limit = { is_at_war = yes }
+			random_war_enemy = {
+				every_held_title = {
+					limit = { tier = tier_county }
+					add_county_modifier = {
+						modifier = storm_ravaged
+						months = 12
+					}
+				}
+			}
+		}
+		gain_arcane_xp = { VALUE = 30 }
+	}
+
+	option = {
+		name = spell_events.0020.c  # Dramatic entrance
+		add_prestige = 300
+		add_dread = 20
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+# ============================================================
+# NECROMANTIC WAVE (Necromancer)
+# ============================================================
+spell_events.0030 = {
+	type = character_event
+	title = spell_events.0030.t
+	desc = spell_events.0030.desc
+	picture = "gfx/event_illustrations/necromancy.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_40 = yes
+	}
+
+	option = {
+		name = spell_events.0030.a  # Raise undead soldiers
+		add_character_modifier = {
+			modifier = undead_army_raised
+			years = 2
+		}
+		add_trait = undead_commander
+		gain_arcane_xp = { VALUE = 35 }
+		add_piety = -200
+	}
+
+	option = {
+		name = spell_events.0030.b  # Drain life from enemies
+		if = {
+			limit = { any_war_enemy = { always = yes } }
+			random_war_enemy = {
+				health_impact_add = -1.5
+			}
+		}
+		health_impact_add = 1.0
+		gain_arcane_xp = { VALUE = 25 }
+		add_piety = -100
+	}
+
+	option = {
+		name = spell_events.0030.c  # Speak with dead
+		trigger = { any_dead_close_family_member = { always = yes } }
+		trigger_event = spell_events.0031
+	}
+}
+
+spell_events.0031 = {
+	type = character_event
+	title = spell_events.0031.t
+	desc = spell_events.0031.desc
+	picture = "gfx/event_illustrations/speak_dead.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = spell_events.0031.a  # Gain wisdom
+		random_dead_close_family_member = {
+			save_scope_as = dead_relative
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_learning_skill = 2
+		add_piety = -50
+	}
+
+	option = {
+		name = spell_events.0031.b  # Learn family secrets
+		add_intrigue_skill = 2
+		trigger_event = { id = spell_events.0032 days = 7 }
+	}
+}
+
+spell_events.0032 = {
+	type = character_event
+	title = spell_events.0032.t
+	desc = spell_events.0032.desc
+	picture = "gfx/event_illustrations/dark_secret.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = spell_events.0032.a  # Use the secret
+		random_close_family_member = {
+			limit = { is_alive = yes }
+			add_secret = { type = secret_murder }
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+
+	option = {
+		name = spell_events.0032.b  # Keep it buried
+		add_piety = 50
+	}
+}
+
+# ============================================================
+# SUMMON GOLEM (Golemancer)
+# ============================================================
+spell_events.0040 = {
+	type = character_event
+	title = spell_events.0040.t
+	desc = spell_events.0040.desc
+	picture = "gfx/event_illustrations/golem.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_60 = yes
+		add_gold = -100
+	}
+
+	option = {
+		name = spell_events.0040.a  # Stone golem (defensive)
+		add_character_modifier = {
+			modifier = stone_golem_guardian
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+
+	option = {
+		name = spell_events.0040.b  # Iron golem (offensive)
+		add_character_modifier = {
+			modifier = iron_golem_warrior
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 40 }
+	}
+
+	option = {
+		name = spell_events.0040.c  # Crystal golem (magical)
+		add_character_modifier = {
+			modifier = crystal_golem_amplifier
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+}
+
+# ============================================================
+# HEALING LIGHT (Healer)
+# ============================================================
+spell_events.0050 = {
+	type = character_event
+	title = spell_events.0050.t
+	desc = spell_events.0050.desc
+	picture = "gfx/event_illustrations/healing_light.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_25 = yes
+	}
+
+	option = {
+		name = spell_events.0050.a  # Heal yourself
+		health_impact_add = 2.0
+		if = {
+			limit = { has_trait = wounded }
+			remove_trait = wounded
+		}
+		if = {
+			limit = { has_trait = ill }
+			remove_trait = ill
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+
+	option = {
+		name = spell_events.0050.b  # Heal a family member
+		trigger = {
+			any_close_family_member = {
+				OR = {
+					has_trait = wounded
+					has_trait = ill
+					health < 3
+				}
+			}
+		}
+		random_close_family_member = {
+			limit = {
+				OR = {
+					has_trait = wounded
+					has_trait = ill
+					health < 3
+				}
+			}
+			health_impact_add = 2.0
+			remove_trait = wounded
+			remove_trait = ill
+		}
+		gain_arcane_xp = { VALUE = 20 }
+		add_piety = 50
+	}
+
+	option = {
+		name = spell_events.0050.c  # Heal a courtier (reputation)
+		random_courtier = {
+			limit = {
+				OR = {
+					has_trait = wounded
+					has_trait = ill
+				}
+			}
+			health_impact_add = 1.5
+			remove_trait = wounded
+			remove_trait = ill
+			add_opinion = {
+				target = root
+				modifier = healed_by_magic
+				years = 10
+			}
+		}
+		add_prestige = 50
+		add_piety = 100
+		gain_arcane_xp = { VALUE = 25 }
+	}
+}
+
+# ============================================================
+# INFERNAL BURST (Demon)
+# ============================================================
+spell_events.0060 = {
+	type = character_event
+	title = spell_events.0060.t
+	desc = spell_events.0060.desc
+	picture = "gfx/event_illustrations/infernal_burst.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_40 = yes
+	}
+
+	option = {
+		name = spell_events.0060.a  # Unleash hellfire
+		add_dread = 30
+		if = {
+			limit = { any_war_enemy = { always = yes } }
+			random_war_enemy = {
+				health_impact_add = -2.5
+				add_character_modifier = {
+					modifier = infernal_burns
+					years = 2
+				}
+			}
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_piety = -150
+	}
+
+	option = {
+		name = spell_events.0060.b  # Corrupt the land
+		capital_county = {
+			add_county_modifier = {
+				modifier = corrupted_land
+				years = 5
+			}
+		}
+		gain_arcane_xp = { VALUE = 25 }
+		add_piety = -200
+	}
+
+	option = {
+		name = spell_events.0060.c  # Intimidate vassals
+		every_vassal = {
+			add_opinion = {
+				target = root
+				modifier = terrified_of_demon
+				years = 5
+			}
+		}
+		add_dread = 50
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+# ============================================================
+# MIND CONTROL (Illusionist/Puppet Master)
+# ============================================================
+spell_events.0070 = {
+	type = character_event
+	title = spell_events.0070.t
+	desc = spell_events.0070.desc
+	picture = "gfx/event_illustrations/mind_control.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_80 = yes
+	}
+
+	option = {
+		name = spell_events.0070.a  # Target a courtier
+		random_courtier = {
+			limit = {
+				NOT = { is_any_mage = yes }
+				intrigue < root.intrigue
+			}
+			save_scope_as = mind_control_target
+		}
+		trigger_event = spell_events.0071
+	}
+
+	option = {
+		name = spell_events.0070.b  # Target a foreign ruler
+		trigger = {
+			any_neighboring_realm_ruler = {
+				NOT = { is_any_mage = yes }
+			}
+		}
+		random_neighboring_realm_ruler = {
+			limit = { NOT = { is_any_mage = yes } }
+			save_scope_as = mind_control_target
+		}
+		trigger_event = spell_events.0072
+	}
+}
+
+spell_events.0071 = {
+	type = character_event
+	title = spell_events.0071.t
+	desc = spell_events.0071.desc
+	picture = "gfx/event_illustrations/dominated.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = spell_events.0071.a  # Success
+		trigger = { learning >= 15 }
+		scope:mind_control_target = {
+			add_trait = magically_dominated
+			set_relation_rival = root
+		}
+		add_trait = puppet_master
+		gain_arcane_xp = { VALUE = 50 }
+		add_character_modifier = {
+			modifier = domination_cooldown
+			years = 5
+		}
+	}
+
+	option = {
+		name = spell_events.0071.b  # Failed
+		trigger = { learning < 15 }
+		scope:mind_control_target = {
+			add_opinion = {
+				target = root
+				modifier = attempted_mind_control
+				years = -1
+			}
+		}
+		add_character_modifier = {
+			modifier = domination_cooldown
+			years = 2
+		}
+	}
+}
+
+spell_events.0072 = {
+	type = character_event
+	title = spell_events.0072.t
+	desc = spell_events.0072.desc
+	picture = "gfx/event_illustrations/foreign_domination.dds"
+
+	is_triggered_only = yes
+
+	# Harder to dominate a ruler
+	option = {
+		name = spell_events.0072.a  # Success (very hard)
+		trigger = {
+			learning >= 22
+			has_trait = archmage
+		}
+		scope:mind_control_target = {
+			add_trait = magically_dominated
+			add_character_modifier = {
+				modifier = puppet_ruler
+				years = 3
+			}
+		}
+		add_trait = puppet_master
+		gain_arcane_xp = { VALUE = 100 }
+		add_character_modifier = {
+			modifier = domination_cooldown
+			years = 10
+		}
+	}
+
+	option = {
+		name = spell_events.0072.b  # Partial success
+		trigger = { learning >= 18 }
+		scope:mind_control_target = {
+			add_opinion = {
+				target = root
+				modifier = compelled_friendship
+				years = 5
+			}
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_character_modifier = {
+			modifier = domination_cooldown
+			years = 5
+		}
+	}
+
+	option = {
+		name = spell_events.0072.c  # Failure
+		trigger = { learning < 18 }
+		scope:mind_control_target = {
+			set_relation_nemesis = root
+		}
+		add_character_modifier = {
+			modifier = domination_cooldown
+			years = 3
+		}
+	}
+}
+
+# ============================================================
+# BLOOD SACRIFICE (Blood Mage)
+# ============================================================
+spell_events.0080 = {
+	type = character_event
+	title = spell_events.0080.t
+	desc = spell_events.0080.desc
+	picture = "gfx/event_illustrations/blood_sacrifice.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_25 = yes
+	}
+
+	option = {
+		name = spell_events.0080.a  # Sacrifice for mana
+		random_prisoner = {
+			limit = { always = yes }
+			death = { death_reason = death_sacrificed }
+		}
+		gain_mana_100 = yes
+		gain_arcane_xp = { VALUE = 35 }
+		add_piety = -300
+		add_dread = 25
+	}
+
+	option = {
+		name = spell_events.0080.b  # Sacrifice for power
+		random_prisoner = {
+			limit = { always = yes }
+			death = { death_reason = death_sacrificed }
+		}
+		add_character_modifier = {
+			modifier = blood_empowered
+			months = 24
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_piety = -400
+		add_dread = 35
+	}
+
+	option = {
+		name = spell_events.0080.c  # Sacrifice for immortality research
+		trigger = { has_character_modifier = immortality_quest }
+		random_prisoner = {
+			limit = { always = yes }
+			death = { death_reason = death_sacrificed }
+		}
+		change_variable = {
+			name = immortality_progress
+			add = 10
+		}
+		gain_arcane_xp = { VALUE = 50 }
+		add_piety = -500
+		add_dread = 40
+	}
+}
+
+# ============================================================
+# VOID STEP (Void Walker)
+# ============================================================
+spell_events.0090 = {
+	type = character_event
+	title = spell_events.0090.t
+	desc = spell_events.0090.desc
+	picture = "gfx/event_illustrations/void_step.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_80 = yes
+	}
+
+	option = {
+		name = spell_events.0090.a  # Escape danger
+		add_character_modifier = {
+			modifier = void_phased
+			months = 6
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_piety = -100
+	}
+
+	option = {
+		name = spell_events.0090.b  # Travel instantly
+		# Teleport to any held county
+		trigger = {
+			any_held_title = {
+				tier = tier_county
+				NOT = { this = root.capital_county }
+			}
+		}
+		random_held_title = {
+			limit = { tier = tier_county }
+			root = { set_location = prev }
+		}
+		gain_arcane_xp = { VALUE = 25 }
+		add_piety = -150
+	}
+
+	option = {
+		name = spell_events.0090.c  # Enter the void (risky)
+		trigger_event = spell_events.0091
+	}
+}
+
+spell_events.0091 = {
+	type = character_event
+	title = spell_events.0091.t
+	desc = spell_events.0091.desc
+	picture = "gfx/event_illustrations/void_realm.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = spell_events.0091.a  # Survive and gain power
+		trigger = { learning >= 25 }
+		gain_arcane_xp = { VALUE = 100 }
+		gain_mana_100 = yes
+		add_character_modifier = {
+			modifier = void_touched
+			years = -1
+		}
+		add_piety = -500
+	}
+
+	option = {
+		name = spell_events.0091.b  # Barely escape
+		trigger = { learning >= 18 }
+		gain_arcane_xp = { VALUE = 40 }
+		health_impact_add = -1.5
+		add_character_modifier = {
+			modifier = void_sickness
+			years = 2
+		}
+	}
+
+	option = {
+		name = spell_events.0091.c  # Lost in the void
+		trigger = { learning < 18 }
+		health_impact_add = -3.0
+		add_trait = soul_tainted
+		add_character_modifier = {
+			modifier = void_madness
+			years = 5
+		}
+	}
+}
+
+# ============================================================
+# DIVINATION (Diviner)
+# ============================================================
+spell_events.0100 = {
+	type = character_event
+	title = spell_events.0100.t
+	desc = spell_events.0100.desc
+	picture = "gfx/event_illustrations/divination.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_30 = yes
+	}
+
+	option = {
+		name = spell_events.0100.a  # See enemy plans
+		trigger = { any_war_enemy = { always = yes } }
+		add_character_modifier = {
+			modifier = enemy_plans_revealed
+			years = 2
+		}
+		gain_arcane_xp = { VALUE = 25 }
+	}
+
+	option = {
+		name = spell_events.0100.b  # See your own future
+		trigger_event = spell_events.0101
+	}
+
+	option = {
+		name = spell_events.0100.c  # Reveal hidden secrets
+		random_courtier = {
+			limit = { has_secret = yes }
+			random_secret = {
+				expose_secret = root
+			}
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+spell_events.0101 = {
+	type = character_event
+	title = spell_events.0101.t
+	desc = spell_events.0101.desc
+	picture = "gfx/event_illustrations/prophecy.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		30 = {
+			# Good fortune
+			option = {
+				name = spell_events.0101.a
+				add_character_modifier = {
+					modifier = blessed_future
+					years = 3
+				}
+				gain_arcane_xp = { VALUE = 30 }
+			}
+		}
+		30 = {
+			# Warning of danger
+			option = {
+				name = spell_events.0101.b
+				add_character_modifier = {
+					modifier = danger_foreseen
+					years = 2
+				}
+				gain_arcane_xp = { VALUE = 25 }
+			}
+		}
+		20 = {
+			# Glimpse of death
+			option = {
+				name = spell_events.0101.c
+				add_character_modifier = {
+					modifier = death_foreseen
+					years = 5
+				}
+				gain_arcane_xp = { VALUE = 35 }
+				stress_impact = { base = 30 }
+			}
+		}
+		20 = {
+			# Vision unclear
+			option = {
+				name = spell_events.0101.d
+				gain_arcane_xp = { VALUE = 15 }
+				add_piety = 50
+			}
+		}
+	}
+}

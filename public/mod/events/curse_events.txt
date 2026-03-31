@@ -1,0 +1,420 @@
+# ============================================================
+# ARCANE DOMINION - events/curse_events.txt
+# Curse casting and curse effect events
+# ============================================================
+
+namespace = curse_events
+
+# ============================================================
+# CURSE OF MISFORTUNE
+# ============================================================
+curse_events.0001 = {
+	type = character_event
+	title = curse_events.0001.t
+	desc = curse_events.0001.desc
+	picture = "gfx/event_illustrations/curse_casting.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_40 = yes
+	}
+
+	# Select target
+	option = {
+		name = curse_events.0001.a
+		open_interaction_window = {
+			interaction = curse_target_interaction
+		}
+	}
+}
+
+curse_events.0002 = {
+	type = character_event
+	title = curse_events.0002.t
+	desc = curse_events.0002.desc
+	picture = "gfx/event_illustrations/curse_misfortune.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = curse_events.0002.a  # Curse applied
+		scope:curse_target = {
+			add_character_modifier = {
+				modifier = cursed_misfortune
+				years = 5
+			}
+			trigger_event = curse_events.0003
+		}
+		gain_arcane_xp = { VALUE = 25 }
+		add_piety = -100
+	}
+}
+
+# Victim receives curse
+curse_events.0003 = {
+	type = character_event
+	title = curse_events.0003.t
+	desc = curse_events.0003.desc
+	picture = "gfx/event_illustrations/cursed.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = curse_events.0003.a  # Accept fate
+		stress_impact = { base = 20 }
+	}
+
+	option = {
+		name = curse_events.0003.b  # Seek a cure
+		trigger = { gold >= 100 }
+		add_gold = -100
+		trigger_event = { id = curse_events.0100 days = { 30 90 } }
+	}
+
+	option = {
+		name = curse_events.0003.c  # Blame the caster
+		trigger = {
+			knows_of_scheme = { scheme = curse_scheme target = root }
+		}
+		set_relation_nemesis = scope:curse_caster
+	}
+}
+
+# ============================================================
+# CURSE OF WITHERING
+# ============================================================
+curse_events.0010 = {
+	type = character_event
+	title = curse_events.0010.t
+	desc = curse_events.0010.desc
+	picture = "gfx/event_illustrations/curse_withering.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_60 = yes
+	}
+
+	option = {
+		name = curse_events.0010.a  # Cast the withering curse
+		random_known_character = {
+			limit = {
+				NOT = { this = root }
+				NOT = { is_any_angel = yes }
+			}
+			save_scope_as = wither_target
+		}
+		trigger_event = curse_events.0011
+	}
+}
+
+curse_events.0011 = {
+	type = character_event
+	title = curse_events.0011.t
+	desc = curse_events.0011.desc
+	picture = "gfx/event_illustrations/withering.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = curse_events.0011.a
+		scope:wither_target = {
+			add_character_modifier = {
+				modifier = cursed_withering
+				years = 10
+			}
+			health_impact_add = -1.0
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_piety = -250
+		add_dread = 15
+	}
+}
+
+# ============================================================
+# DEMONIC CURSE (Demon only)
+# ============================================================
+curse_events.0020 = {
+	type = character_event
+	title = curse_events.0020.t
+	desc = curse_events.0020.desc
+	picture = "gfx/event_illustrations/demonic_curse.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_80 = yes
+	}
+
+	option = {
+		name = curse_events.0020.a  # Soul corruption curse
+		random_known_character = {
+			limit = {
+				NOT = { this = root }
+				NOT = { is_any_demon = yes }
+			}
+			save_scope_as = demon_curse_target
+		}
+		scope:demon_curse_target = {
+			add_trait = cursed_bloodline
+			add_character_modifier = {
+				modifier = demonic_corruption
+				years = -1
+			}
+		}
+		gain_arcane_xp = { VALUE = 50 }
+		add_piety = -400
+		add_dread = 30
+	}
+
+	option = {
+		name = curse_events.0020.b  # Mark for collection
+		random_known_character = {
+			limit = {
+				NOT = { this = root }
+				NOT = { is_any_demon = yes }
+			}
+			save_scope_as = marked_target
+		}
+		scope:marked_target = {
+			add_character_modifier = {
+				modifier = demon_marked_for_death
+				years = 5
+			}
+		}
+		gain_arcane_xp = { VALUE = 45 }
+		add_piety = -350
+	}
+}
+
+# ============================================================
+# CELESTIAL CURSE (Angel only - divine punishment)
+# ============================================================
+curse_events.0030 = {
+	type = character_event
+	title = curse_events.0030.t
+	desc = curse_events.0030.desc
+	picture = "gfx/event_illustrations/celestial_curse.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_60 = yes
+	}
+
+	option = {
+		name = curse_events.0030.a  # Divine judgment
+		trigger = {
+			any_known_character = {
+				has_trait = murderer
+			}
+		}
+		random_known_character = {
+			limit = { has_trait = murderer }
+			add_character_modifier = {
+				modifier = divine_judgment
+				years = 10
+			}
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_piety = 200
+	}
+
+	option = {
+		name = curse_events.0030.b  # Mark the wicked
+		random_known_character = {
+			limit = {
+				OR = {
+					is_any_demon = yes
+					has_dark_alignment = yes
+				}
+			}
+			add_character_modifier = {
+				modifier = marked_by_heaven
+				years = -1
+			}
+		}
+		gain_arcane_xp = { VALUE = 35 }
+		add_piety = 150
+	}
+}
+
+# ============================================================
+# CURSE REMOVAL EVENTS
+# ============================================================
+curse_events.0100 = {
+	type = character_event
+	title = curse_events.0100.t
+	desc = curse_events.0100.desc
+	picture = "gfx/event_illustrations/curse_removal.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = curse_events.0100.a  # Found a healer
+		trigger = {
+			any_known_character = {
+				has_trait = spec_healer
+			}
+		}
+		random_known_character = {
+			limit = { has_trait = spec_healer }
+			save_scope_as = curse_healer
+		}
+		trigger_event = curse_events.0101
+	}
+
+	option = {
+		name = curse_events.0100.b  # Seek divine intervention
+		trigger = { piety >= 500 }
+		add_piety = -500
+		trigger_event = curse_events.0102
+	}
+
+	option = {
+		name = curse_events.0100.c  # No cure found
+		stress_impact = { base = 30 }
+	}
+}
+
+curse_events.0101 = {
+	type = character_event
+	title = curse_events.0101.t
+	desc = curse_events.0101.desc
+	picture = "gfx/event_illustrations/healer_cure.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = curse_events.0101.a  # Cure successful
+		trigger = {
+			scope:curse_healer = { learning >= 15 }
+		}
+		remove_character_modifier = cursed_misfortune
+		remove_character_modifier = cursed_withering
+		remove_character_modifier = demonic_corruption
+		add_gold = -200
+		add_opinion = {
+			target = scope:curse_healer
+			modifier = grateful_for_cure
+			years = 10
+		}
+	}
+
+	option = {
+		name = curse_events.0101.b  # Partial cure
+		trigger = {
+			scope:curse_healer = { learning < 15 }
+		}
+		add_character_modifier = {
+			modifier = curse_weakened
+			years = 2
+		}
+		add_gold = -100
+	}
+}
+
+curse_events.0102 = {
+	type = character_event
+	title = curse_events.0102.t
+	desc = curse_events.0102.desc
+	picture = "gfx/event_illustrations/divine_cure.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		40 = {
+			# Divine intervention succeeds
+			modifier = { factor = 1.5 piety >= 1000 }
+			option = {
+				name = curse_events.0102.a
+				remove_character_modifier = cursed_misfortune
+				remove_character_modifier = cursed_withering
+				remove_character_modifier = demonic_corruption
+				remove_trait = cursed_bloodline
+				add_piety = 100
+			}
+		}
+		40 = {
+			# Partial success
+			option = {
+				name = curse_events.0102.b
+				add_character_modifier = {
+					modifier = curse_weakened
+					years = 3
+				}
+			}
+		}
+		20 = {
+			# Failure
+			option = {
+				name = curse_events.0102.c
+				stress_impact = { base = 40 }
+			}
+		}
+	}
+}
+
+# ============================================================
+# CURSE OF BINDING (Magical Contract)
+# ============================================================
+curse_events.0200 = {
+	type = character_event
+	title = curse_events.0200.t
+	desc = curse_events.0200.desc
+	picture = "gfx/event_illustrations/binding_curse.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_100 = yes
+	}
+
+	option = {
+		name = curse_events.0200.a  # Bind their soul
+		scope:binding_target = {
+			add_trait = bound_by_contract
+			add_character_modifier = {
+				modifier = soul_bound_to_master
+				years = -1
+			}
+		}
+		add_character_modifier = {
+			modifier = soul_collector
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 60 }
+		add_piety = -500
+		add_dread = 40
+	}
+}
+
+# ============================================================
+# BLOODLINE CURSE (Hereditary)
+# ============================================================
+curse_events.0300 = {
+	type = character_event
+	title = curse_events.0300.t
+	desc = curse_events.0300.desc
+	picture = "gfx/event_illustrations/bloodline_curse.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_200 = yes
+	}
+
+	option = {
+		name = curse_events.0300.a  # Curse their bloodline forever
+		scope:bloodline_target = {
+			add_trait = cursed_bloodline
+			every_child = {
+				add_trait = cursed_bloodline
+			}
+		}
+		gain_arcane_xp = { VALUE = 100 }
+		add_piety = -1000
+		add_dread = 60
+	}
+}

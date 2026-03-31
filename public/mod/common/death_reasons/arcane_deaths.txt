@@ -1,0 +1,92 @@
+# ============================================================
+# ARCANE DOMINION - common/death_reasons/arcane_deaths.txt
+# Magical death causes
+# ============================================================
+
+death_magic = {
+	default = yes
+	natural_death_cause = no
+	icon = magic
+	public = yes
+	hostile = yes
+}
+
+death_sacrificed = {
+	default = yes
+	natural_death_cause = no
+	icon = murder
+	public = yes
+	hostile = yes
+}
+
+death_mana_overload = {
+	default = yes
+	natural_death_cause = no
+	icon = magic
+	public = yes
+	hostile = no
+}
+
+death_void_consumed = {
+	default = yes
+	natural_death_cause = no
+	icon = magic
+	public = yes
+	hostile = no
+}
+
+death_curse = {
+	default = yes
+	natural_death_cause = no
+	icon = murder
+	public = no
+	hostile = yes
+}
+
+death_demonic_pact = {
+	default = yes
+	natural_death_cause = no
+	icon = murder
+	public = yes
+	hostile = yes
+}
+
+death_celestial_smite = {
+	default = yes
+	natural_death_cause = no
+	icon = magic
+	public = yes
+	hostile = yes
+}
+
+death_magical_duel = {
+	default = yes
+	natural_death_cause = no
+	icon = duel
+	public = yes
+	hostile = yes
+}
+
+death_experiment_gone_wrong = {
+	default = yes
+	natural_death_cause = no
+	icon = magic
+	public = yes
+	hostile = no
+}
+
+death_soul_consumed = {
+	default = yes
+	natural_death_cause = no
+	icon = murder
+	public = no
+	hostile = yes
+}
+
+death_mage_hunter = {
+	default = yes
+	natural_death_cause = no
+	icon = murder
+	public = yes
+	hostile = yes
+}

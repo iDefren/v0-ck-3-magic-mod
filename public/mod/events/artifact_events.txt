@@ -1,0 +1,615 @@
+# ============================================================
+# ARCANE DOMINION - events/artifact_events.txt
+# Magical artifact creation, discovery, and enhancement
+# ============================================================
+
+namespace = artifact_events
+
+# ============================================================
+# ARTIFACT CRAFTING
+# ============================================================
+artifact_events.0001 = {
+	type = character_event
+	title = artifact_events.0001.t
+	desc = artifact_events.0001.desc
+	picture = "gfx/event_illustrations/artifact_crafting.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_100 = yes
+		add_gold = -600
+	}
+
+	option = {
+		name = artifact_events.0001.a  # Craft a weapon
+		trigger_event = artifact_events.0010
+	}
+
+	option = {
+		name = artifact_events.0001.b  # Craft armor/shield
+		trigger_event = artifact_events.0020
+	}
+
+	option = {
+		name = artifact_events.0001.c  # Craft a staff/wand
+		trigger_event = artifact_events.0030
+	}
+
+	option = {
+		name = artifact_events.0001.d  # Craft a ring/amulet
+		trigger_event = artifact_events.0040
+	}
+}
+
+# ---- WEAPON CRAFTING ----
+artifact_events.0010 = {
+	type = character_event
+	title = artifact_events.0010.t
+	desc = artifact_events.0010.desc
+	picture = "gfx/event_illustrations/forge_weapon.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0010.a  # Flaming sword
+		trigger = {
+			OR = {
+				has_trait = spec_pyromancer
+				has_trait = archmage
+			}
+		}
+		create_artifact = {
+			name = artifact_flame_blade
+			type = weapon
+			modifier = arcane_artifact
+			modifier = fire_enchanted
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 80 }
+	}
+
+	option = {
+		name = artifact_events.0010.b  # Frost blade
+		trigger = {
+			OR = {
+				has_trait = spec_cryomancer
+				has_trait = archmage
+			}
+		}
+		create_artifact = {
+			name = artifact_frost_blade
+			type = weapon
+			modifier = arcane_artifact
+			modifier = frost_enchanted
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 80 }
+	}
+
+	option = {
+		name = artifact_events.0010.c  # Soul reaper (dark)
+		trigger = { has_dark_alignment = yes }
+		create_artifact = {
+			name = artifact_soul_reaper
+			type = weapon
+			modifier = arcane_artifact
+			modifier = soul_hungry
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 100 }
+		add_piety = -300
+	}
+
+	option = {
+		name = artifact_events.0010.d  # Holy avenger (light)
+		trigger = { has_light_alignment = yes }
+		create_artifact = {
+			name = artifact_holy_avenger
+			type = weapon
+			modifier = arcane_artifact
+			modifier = holy_enchanted
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 100 }
+		add_piety = 300
+	}
+}
+
+# ---- ARMOR CRAFTING ----
+artifact_events.0020 = {
+	type = character_event
+	title = artifact_events.0020.t
+	desc = artifact_events.0020.desc
+	picture = "gfx/event_illustrations/forge_armor.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0020.a  # Mage robes
+		create_artifact = {
+			name = artifact_arcane_robes
+			type = armor
+			modifier = arcane_artifact
+			modifier = mana_woven
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 70 }
+	}
+
+	option = {
+		name = artifact_events.0020.b  # Enchanted plate
+		trigger = { martial >= 12 }
+		create_artifact = {
+			name = artifact_arcane_plate
+			type = armor
+			modifier = arcane_artifact
+			modifier = spell_resistant
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 75 }
+	}
+
+	option = {
+		name = artifact_events.0020.c  # Shadow cloak
+		trigger = { has_trait = spec_illusionist }
+		create_artifact = {
+			name = artifact_shadow_cloak
+			type = armor
+			modifier = arcane_artifact
+			modifier = invisibility_weave
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 90 }
+	}
+}
+
+# ---- STAFF CRAFTING ----
+artifact_events.0030 = {
+	type = character_event
+	title = artifact_events.0030.t
+	desc = artifact_events.0030.desc
+	picture = "gfx/event_illustrations/craft_staff.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0030.a  # Staff of power
+		create_artifact = {
+			name = artifact_staff_of_power
+			type = trinket
+			modifier = arcane_artifact
+			modifier = mana_battery
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 85 }
+	}
+
+	option = {
+		name = artifact_events.0030.b  # Necromancer's staff
+		trigger = { has_trait = spec_necromancer }
+		create_artifact = {
+			name = artifact_staff_of_undeath
+			type = trinket
+			modifier = arcane_artifact
+			modifier = necro_focus
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 100 }
+		add_piety = -200
+	}
+
+	option = {
+		name = artifact_events.0030.c  # Diviner's orb
+		trigger = { has_trait = spec_diviner }
+		create_artifact = {
+			name = artifact_crystal_orb
+			type = trinket
+			modifier = arcane_artifact
+			modifier = foresight_lens
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 95 }
+	}
+}
+
+# ---- JEWELRY CRAFTING ----
+artifact_events.0040 = {
+	type = character_event
+	title = artifact_events.0040.t
+	desc = artifact_events.0040.desc
+	picture = "gfx/event_illustrations/craft_jewelry.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0040.a  # Ring of protection
+		create_artifact = {
+			name = artifact_ring_protection
+			type = trinket
+			modifier = arcane_artifact
+			modifier = warding_enchant
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 60 }
+	}
+
+	option = {
+		name = artifact_events.0040.b  # Amulet of mana
+		create_artifact = {
+			name = artifact_amulet_mana
+			type = trinket
+			modifier = arcane_artifact
+			modifier = mana_battery
+			quality = masterwork
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 65 }
+	}
+
+	option = {
+		name = artifact_events.0040.c  # Crown of domination
+		trigger = {
+			has_lifestyle_perk = puppet_strings
+			tier >= tier_kingdom
+		}
+		create_artifact = {
+			name = artifact_crown_domination
+			type = crown
+			modifier = arcane_artifact
+			modifier = legendary_arcane_artifact
+			modifier = mind_control_focus
+			quality = legendary
+			save_scope_as = new_artifact
+		}
+		gain_arcane_xp = { VALUE = 120 }
+		add_piety = -500
+	}
+}
+
+# ============================================================
+# ARTIFACT ENHANCEMENT
+# ============================================================
+artifact_events.0050 = {
+	type = character_event
+	title = artifact_events.0050.t
+	desc = artifact_events.0050.desc
+	picture = "gfx/event_illustrations/enhance_artifact.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_80 = yes
+		add_gold = -400
+	}
+
+	option = {
+		name = artifact_events.0050.a  # Enhance with fire
+		trigger = { has_trait = spec_pyromancer }
+		random_artifact = {
+			limit = { has_artifact_modifier = arcane_artifact }
+			add_artifact_modifier = fire_enchanted
+		}
+		gain_arcane_xp = { VALUE = 50 }
+	}
+
+	option = {
+		name = artifact_events.0050.b  # Enhance with mana
+		random_artifact = {
+			limit = { has_artifact_modifier = arcane_artifact }
+			add_artifact_modifier = mana_battery
+		}
+		gain_arcane_xp = { VALUE = 45 }
+	}
+
+	option = {
+		name = artifact_events.0050.c  # Enhance with soul power
+		trigger = {
+			has_dark_alignment = yes
+			any_prisoner = { always = yes }
+		}
+		random_prisoner = {
+			death = { death_reason = death_sacrificed }
+		}
+		random_artifact = {
+			limit = { has_artifact_modifier = arcane_artifact }
+			add_artifact_modifier = soul_hungry
+		}
+		gain_arcane_xp = { VALUE = 70 }
+		add_piety = -400
+	}
+}
+
+# ============================================================
+# ARTIFACT FEEDING (Soul Hungry artifacts)
+# ============================================================
+artifact_events.0100 = {
+	type = character_event
+	title = artifact_events.0100.t
+	desc = artifact_events.0100.desc
+	picture = "gfx/event_illustrations/soul_feed.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0100.a  # Feed a prisoner
+		random_prisoner = {
+			death = { death_reason = death_sacrificed }
+		}
+		random_artifact = {
+			limit = { has_artifact_modifier = soul_hungry }
+			add_artifact_modifier = soul_sated
+		}
+		add_character_modifier = {
+			modifier = soul_artifact_empowered
+			years = 2
+		}
+		gain_arcane_xp = { VALUE = 30 }
+		add_piety = -200
+		add_dread = 20
+	}
+
+	option = {
+		name = artifact_events.0100.b  # Refuse to feed
+		random_artifact = {
+			limit = { has_artifact_modifier = soul_hungry }
+			add_artifact_modifier = soul_starving
+		}
+		# Artifact may turn on wielder
+		trigger_event = { id = artifact_events.0101 days = { 30 180 } }
+	}
+}
+
+artifact_events.0101 = {
+	type = character_event
+	title = artifact_events.0101.t
+	desc = artifact_events.0101.desc
+	picture = "gfx/event_illustrations/hungry_artifact.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0101.a  # The artifact strikes
+		health_impact_add = -1.5
+		add_character_modifier = {
+			modifier = artifact_curse
+			years = 3
+		}
+		random_artifact = {
+			limit = { has_artifact_modifier = soul_starving }
+			remove_artifact_modifier = soul_starving
+			add_artifact_modifier = soul_ravenous
+		}
+	}
+
+	option = {
+		name = artifact_events.0101.b  # Destroy the artifact
+		random_artifact = {
+			limit = { has_artifact_modifier = soul_starving }
+			destroy_artifact = yes
+		}
+		add_prestige = -100
+		gain_arcane_xp = { VALUE = 20 }
+	}
+}
+
+# ============================================================
+# ARTIFACT DISCOVERY
+# ============================================================
+artifact_events.0200 = {
+	type = character_event
+	title = artifact_events.0200.t
+	desc = artifact_events.0200.desc
+	picture = "gfx/event_illustrations/discover_artifact.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = artifact_events.0200.a  # Ancient mage's staff
+		create_artifact = {
+			name = artifact_ancient_staff
+			type = trinket
+			modifier = arcane_artifact
+			modifier = ancient_power
+			quality = masterwork
+			save_scope_as = found_artifact
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_prestige = 100
+	}
+
+	option = {
+		name = artifact_events.0200.b  # Mysterious ring
+		create_artifact = {
+			name = artifact_mysterious_ring
+			type = trinket
+			modifier = arcane_artifact
+			modifier = unknown_enchant
+			quality = famed
+			save_scope_as = found_artifact
+		}
+		trigger_event = { id = artifact_events.0201 days = 30 }
+	}
+
+	option = {
+		name = artifact_events.0200.c  # Cursed item
+		create_artifact = {
+			name = artifact_cursed_item
+			type = trinket
+			modifier = arcane_artifact
+			modifier = cursed_enchant
+			quality = famed
+			save_scope_as = found_artifact
+		}
+		add_character_modifier = {
+			modifier = cursed_by_artifact
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 30 }
+	}
+}
+
+artifact_events.0201 = {
+	type = character_event
+	title = artifact_events.0201.t
+	desc = artifact_events.0201.desc
+	picture = "gfx/event_illustrations/identify_artifact.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		40 = {
+			# Beneficial
+			option = {
+				name = artifact_events.0201.a
+				scope:found_artifact = {
+					remove_artifact_modifier = unknown_enchant
+					add_artifact_modifier = mana_battery
+				}
+				gain_arcane_xp = { VALUE = 25 }
+			}
+		}
+		30 = {
+			# Powerful but risky
+			option = {
+				name = artifact_events.0201.b
+				scope:found_artifact = {
+					remove_artifact_modifier = unknown_enchant
+					add_artifact_modifier = soul_hungry
+				}
+				gain_arcane_xp = { VALUE = 35 }
+			}
+		}
+		30 = {
+			# Actually cursed
+			option = {
+				name = artifact_events.0201.c
+				scope:found_artifact = {
+					remove_artifact_modifier = unknown_enchant
+					add_artifact_modifier = cursed_enchant
+				}
+				add_character_modifier = {
+					modifier = cursed_by_artifact
+					years = 3
+				}
+			}
+		}
+	}
+}
+
+# ============================================================
+# LEGENDARY ARTIFACT EVENTS
+# ============================================================
+artifact_events.0300 = {
+	type = character_event
+	title = artifact_events.0300.t
+	desc = artifact_events.0300.desc
+	picture = "gfx/event_illustrations/legendary_artifact.dds"
+
+	trigger = {
+		has_trait = archmage
+		has_advanced_laboratory = yes
+		var:arcane_mana >= 200
+		NOT = { has_character_modifier = legendary_crafting_done }
+	}
+
+	mean_time_to_happen = {
+		years = 20
+	}
+
+	option = {
+		name = artifact_events.0300.a  # Attempt legendary crafting
+		trigger = { gold >= 2000 }
+		add_gold = -2000
+		spend_mana_200 = yes
+		trigger_event = artifact_events.0301
+	}
+
+	option = {
+		name = artifact_events.0300.b  # Not ready
+		add_character_modifier = {
+			modifier = legendary_crafting_done
+			years = 5
+		}
+	}
+}
+
+artifact_events.0301 = {
+	type = character_event
+	title = artifact_events.0301.t
+	desc = artifact_events.0301.desc
+	picture = "gfx/event_illustrations/create_legendary.dds"
+
+	is_triggered_only = yes
+
+	random_list = {
+		40 = {
+			modifier = { factor = 1.5 learning >= 28 }
+			# Success
+			option = {
+				name = artifact_events.0301.a
+				create_artifact = {
+					name = artifact_legendary_masterpiece
+					type = trinket
+					modifier = legendary_arcane_artifact
+					modifier = arcane_artifact
+					modifier = mana_battery
+					modifier = spell_amplifier
+					quality = legendary
+					save_scope_as = legendary_item
+				}
+				gain_arcane_xp = { VALUE = 200 }
+				add_prestige = 1000
+				add_character_modifier = {
+					modifier = legendary_crafting_done
+					years = -1
+				}
+			}
+		}
+		35 = {
+			# Partial success
+			option = {
+				name = artifact_events.0301.b
+				create_artifact = {
+					name = artifact_powerful_item
+					type = trinket
+					modifier = arcane_artifact
+					modifier = mana_battery
+					quality = masterwork
+					save_scope_as = craft_result
+				}
+				gain_arcane_xp = { VALUE = 80 }
+				add_character_modifier = {
+					modifier = legendary_crafting_done
+					years = 10
+				}
+			}
+		}
+		25 = {
+			# Catastrophic failure
+			option = {
+				name = artifact_events.0301.c
+				health_impact_add = -2.0
+				add_character_modifier = {
+					modifier = arcane_overload
+					months = 12
+				}
+				add_character_modifier = {
+					modifier = legendary_crafting_done
+					years = 15
+				}
+			}
+		}
+	}
+}

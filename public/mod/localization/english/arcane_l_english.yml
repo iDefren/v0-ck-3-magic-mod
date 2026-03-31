@@ -1,154 +1,398 @@
 l_english:
- # Traits
- mage: "Mage"
- mage_desc: "A practitioner of magic, wielding arcane forces to influence the world."
+ # ============================================================
+ # TRAIT LOCALIZATION
+ # ============================================================
  
- demon: "Demon"
- demon_desc: "A being of demonic origin, corrupted by dark forces."
+ # Mage Tiers
+ arcane_spark: "Arcane Spark"
+ arcane_spark_desc: "A faint flicker of magical potential lies dormant within this soul, waiting to be awakened."
  
- angel: "Angel"
- angel_desc: "A celestial being blessed by heavenly power."
+ mage_initiate: "Mage Initiate"
+ mage_initiate_desc: "Having taken the first steps on the path of magic, this individual can feel the flow of mana through the world."
  
- spell_caster: "Spell Caster"
- spell_caster_desc: "Trained in the art of spellcasting."
+ mage_adept: "Mage Adept"
+ mage_adept_desc: "A practiced spellcaster capable of wielding considerable magical power."
  
- curse_wielder: "Curse Wielder"
- curse_wielder_desc: "Master of curses and hexes."
+ mage_journeyman: "Mage Journeyman"
+ mage_journeyman_desc: "An experienced mage who has mastered the fundamentals and begun exploring advanced magical arts."
  
- mana_affinity: "Mana Affinity"
- mana_affinity_desc: "Natural connection to magical energies."
+ mage_expert: "Mage Expert"
+ mage_expert_desc: "A formidable wielder of arcane power, respected and feared for their magical prowess."
  
- arcane_scholar: "Arcane Scholar"
- arcane_scholar_desc: "A scholar of magical knowledge."
+ mage_master: "Mage Master"
+ mage_master_desc: "A true master of the arcane arts, capable of feats that lesser mages can only dream of."
  
- demonologist: "Demonologist"
- demonologist_desc: "Student of demonic lore and summoning."
+ archmage: "Archmage"
+ archmage_desc: "One of the most powerful magic wielders in existence. Reality itself bends to their will."
  
- celestial_blessed: "Celestial Blessed"
- celestial_blessed_desc: "Blessed by celestial powers."
+ mundane_soul: "Mundane Soul"
+ mundane_soul_desc: "This individual possesses no magical potential whatsoever. The arcane arts will forever remain beyond their grasp."
  
- transformation_demon: "Demonic Transformation"
- transformation_demon_desc: "Can transform into a demonic form."
+ # Specializations
+ spec_pyromancer: "Pyromancer"
+ spec_pyromancer_desc: "A master of fire magic, wielding flames as a weapon of devastating destruction."
  
- transformation_angel: "Angelic Transformation"
- transformation_angel_desc: "Can transform into an angelic form."
+ spec_cryomancer: "Cryomancer"
+ spec_cryomancer_desc: "A wielder of frost magic, capable of freezing enemies and creating barriers of ice."
  
- # Decisions
- ritual_of_power_desc: "Perform a ritual to harness mana and increase personal power."
- ritual_of_power_tooltip: "Requires 20 mana."
+ spec_necromancer: "Necromancer"
+ spec_necromancer_desc: "A practitioner of the forbidden arts of death magic, raising the dead and draining life force."
  
- summon_familiar_desc: "Summon a magical familiar to aid you in your endeavors."
- summon_familiar_tooltip: "Requires 15 mana and learning 10+."
+ spec_golemancer: "Golemancer"
+ spec_golemancer_desc: "A creator of magical constructs, breathing life into stone and metal."
  
- ritual_dark_binding_desc: "Perform a dark ritual to bind demonic power to yourself."
- ritual_dark_binding_tooltip: "Requires 30 mana. Corruption increases."
- ritual_dark_binding_effect_tooltip: "You have performed a dark ritual."
+ spec_healer: "Divine Healer"
+ spec_healer_desc: "A channeler of restorative magic, capable of mending wounds and curing ailments."
  
- ritual_heavenly_light_desc: "Perform a ritual of heavenly light to purify yourself."
- ritual_heavenly_light_tooltip: "Requires 25 mana."
- ritual_heavenly_light_effect_tooltip: "You have been blessed by heavenly light."
+ spec_diviner: "Diviner"
+ spec_diviner_desc: "A seer who peers through the veils of time and space to glimpse hidden truths."
  
- bind_contract_desc: "Bind a contract with demonic or celestial forces."
- bind_contract_tooltip: "Requires 20 mana and demon/angel trait."
+ spec_illusionist: "Illusionist"
+ spec_illusionist_desc: "A master of deception magic, creating phantasms and bending perception."
  
- siphon_life_force_desc: "Siphon the life force of others to fuel your magic."
- siphon_life_force_tooltip: "Requires 25 mana. Corruption increases."
+ spec_storm_caller: "Storm Caller"
+ spec_storm_caller_desc: "A commander of the tempest, calling down lightning and howling winds."
  
- purification_ritual_desc: "Perform a ritual to cleanse corruption."
- purification_ritual_tooltip: "Requires 20 mana and corruption."
- purification_ritual_success: "You have been purified of corruption."
+ spec_blood_mage: "Blood Mage"
+ spec_blood_mage_desc: "A practitioner of forbidden blood magic, using life essence as a source of power."
  
- # Laboratory Decisions
- establish_laboratory_desc: "Establish a magical laboratory in your capital for research."
- establish_laboratory_tooltip: "Requires 10 mana and a laboratory building."
+ spec_void_walker: "Void Walker"
+ spec_void_walker_desc: "One who has touched the emptiness between worlds and returned changed forever."
  
- conduct_research_desc: "Conduct magical research in your laboratory."
- conduct_research_tooltip: "Requires 15 mana and learning 12+."
+ # Demon Tiers
+ demon_low: "Lesser Demon"
+ demon_low_desc: "Tainted by infernal corruption, this being has begun their descent into demonic power."
  
- magical_experimentation_desc: "Conduct dangerous magical experimentation."
- magical_experimentation_tooltip: "Requires 20 mana. Results may vary."
+ demon_mid: "Greater Demon"
+ demon_mid_desc: "A powerful demonic entity with significant supernatural abilities and dark influence."
  
- create_artifact_desc: "Create a powerful magical artifact."
- create_artifact_tooltip: "Requires 40 mana and learning 15+."
+ demon_high: "Demon Lord"
+ demon_high_desc: "A fearsome lord of darkness, commanding terrible power and inspiring dread in all who witness them."
  
- enchant_item_desc: "Enchant an item with magical properties."
- enchant_item_tooltip: "Requires 15 mana and learning 10+."
+ demon_legendary: "Demon Prince"
+ demon_legendary_desc: "An ancient and terrifying demon of legendary power, rivaling the darkest entities of the abyss."
  
- brew_potion_desc: "Brew a magical potion for various effects."
- brew_potion_tooltip: "Requires 10 mana and learning 8+."
+ demon_corruptor: "Corruptor"
+ demon_corruptor_desc: "A demon specialized in corrupting souls and spreading darkness."
  
- # Modifiers
- laboratory_owner: "Laboratory Owner"
- arcane_research_boost: "Arcane Research Boost"
- successful_experiment: "Successful Experiment"
- failed_experiment: "Failed Experiment"
- experiment_mishap: "Experiment Mishap"
- artifact_crafter: "Artifact Crafter"
- potion_effects: "Potion Effects"
+ demon_destroyer: "Destroyer"
+ demon_destroyer_desc: "A demon of pure destruction, reveling in chaos and annihilation."
  
- # Events
- arcane_awakening_title: "Arcane Awakening"
- arcane_awakening_desc: "You feel a stirring of magical power within you."
+ demon_deceiver: "Deceiver"
+ demon_deceiver_desc: "A demon who weaves lies and manipulates mortals for their own amusement."
  
- mana_surge_title: "Mana Surge"
- mana_surge_desc: "Your magical energy surges uncontrollably!"
+ demon_tempter: "Tempter"
+ demon_tempter_desc: "A seductive demon who offers power in exchange for one's soul."
  
- demonic_temptation_title: "Demonic Temptation"
- demonic_temptation_desc: "A demonic force tempts you with power."
+ # Angel Tiers
+ angel_lesser: "Lesser Angel"
+ angel_lesser_desc: "Touched by celestial grace, this being radiates an aura of divine light."
  
- celestial_vision_title: "Celestial Vision"
- celestial_vision_desc: "You receive a vision from the heavens."
+ angel_greater: "Greater Angel"
+ angel_greater_desc: "A powerful celestial being, serving as a conduit for heavenly power."
  
- familiar_bonded_title: "Familiar Bonded"
- familiar_bonded_desc: "You have successfully bonded with your familiar."
+ angel_archangel: "Archangel"
+ angel_archangel_desc: "A mighty warrior of heaven, wielding divine authority and formidable power."
  
- demonic_familiar_title: "Demonic Familiar"
- demonic_familiar_desc: "Your familiar is a demon."
+ celestial_ascended: "Celestial Ascended"
+ celestial_ascended_desc: "Having achieved true celestial ascension, this being exists as a living embodiment of divine will."
  
- celestial_familiar_title: "Celestial Familiar"
- celestial_familiar_desc: "Your familiar is a celestial being."
+ angel_guardian: "Guardian Angel"
+ angel_guardian_desc: "A celestial protector, shielding the innocent from harm."
  
- arcane_familiar_title: "Arcane Familiar"
- arcane_familiar_desc: "Your familiar is a magical creature."
+ angel_healer: "Angel of Mercy"
+ angel_healer_desc: "A celestial healer, bringing comfort and restoration to the wounded."
  
- spell_learned_title: "Spell Learned"
- spell_learned_desc: "You have learned a new spell."
+ angel_prophet: "Prophet"
+ angel_prophet_desc: "A celestial messenger, receiving visions and divine guidance."
  
- curse_created_title: "Curse Created"
- curse_created_desc: "You have created a curse."
+ angel_warlord: "Celestial Warlord"
+ angel_warlord_desc: "A commander of heavenly hosts, leading the righteous into battle."
  
- transformation_achieved_title: "Transformation Achieved"
- transformation_achieved_desc: "You have achieved a transformation."
+ # Other Traits
+ magical_scholar: "Magical Scholar"
+ magical_scholar_desc: "A dedicated student of arcane lore and magical theory."
  
- demonic_pact_title: "Demonic Pact"
- demonic_pact_desc: "You have made a pact with demonic forces."
+ ley_line_attuned: "Ley Line Attuned"
+ ley_line_attuned_desc: "Deeply connected to the magical currents that flow through the earth."
  
- celestial_covenant_title: "Celestial Covenant"
- celestial_covenant_desc: "You have made a covenant with celestial forces."
+ ritual_master: "Ritual Master"
+ ritual_master_desc: "An expert in the performance of complex magical rituals."
  
- mage_hunter_confrontation_title: "Confronted by Mage Hunter"
- mage_hunter_confrontation_desc: "A mage hunter has discovered your magical nature."
+ arcane_teacher: "Arcane Teacher"
+ arcane_teacher_desc: "A patient instructor who guides others along the path of magic."
  
- magical_tournament_title: "Magical Tournament"
- magical_tournament_desc: "You are invited to a grand tournament of mages."
+ student_of_magic: "Student of Magic"
+ student_of_magic_desc: "Actively learning the ways of magic under the guidance of a mentor."
  
- magical_artifact_discovered_title: "Artifact Discovered"
- magical_artifact_discovered_desc: "You have discovered a powerful magical artifact."
+ mana_starved: "Mana Starved"
+ mana_starved_desc: "Suffering from severe magical exhaustion, their connection to mana has weakened."
  
- # Buildings
- laboratory_building: "Magical Laboratory"
- arcane_tower_building: "Arcane Tower"
- demonic_altar_building: "Demonic Altar"
- celestial_shrine_building: "Celestial Shrine"
- runic_circle_building: "Runic Circle"
- artifact_vault_building: "Artifact Vault"
+ arcane_overload: "Arcane Overload"
+ arcane_overload_desc: "Overwhelmed by magical energy, struggling to contain the power within."
  
- # Lifestyle
+ cursed_bloodline: "Cursed Bloodline"
+ cursed_bloodline_desc: "A dark curse taints this family line, passing misfortune through generations."
+ 
+ soul_tainted: "Soul Tainted"
+ soul_tainted_desc: "Their very soul has been corrupted by dark forces, leaving lasting damage."
+ 
+ mage_hunter_initiate: "Mage Hunter Initiate"
+ mage_hunter_initiate_desc: "Training in the art of hunting and neutralizing magical threats."
+ 
+ mage_hunter_adept: "Mage Hunter Adept"
+ mage_hunter_adept_desc: "An experienced hunter of mages, knowing their tricks and weaknesses."
+ 
+ mage_hunter_master: "Mage Hunter Master"
+ mage_hunter_master_desc: "A legendary hunter of magical beings, feared by mages across the realm."
+ 
+ bound_by_contract: "Bound by Contract"
+ bound_by_contract_desc: "Their soul is bound by a demonic contract, granting power at a terrible price."
+ 
+ soul_forfeit: "Soul Forfeit"
+ soul_forfeit_desc: "Having lost their soul to a demon, they exist as a hollow shell of their former self."
+ 
+ half_demon: "Half-Demon"
+ half_demon_desc: "Born of both mortal and demonic parentage, torn between two worlds."
+ 
+ half_angel: "Half-Angel"
+ half_angel_desc: "Born of both mortal and celestial blood, blessed with divine heritage."
+ 
+ ageless_mage: "Ageless"
+ ageless_mage_desc: "Having conquered death through magic, this being no longer ages."
+ 
+ phylactery_bound: "Phylactery Bound"
+ phylactery_bound_desc: "Their soul is bound to a phylactery, granting near-immortality at a terrible cost."
+ 
+ lich_touched: "Lich-Touched"
+ lich_touched_desc: "Having dabbled in the darkest necromancy, they bear the mark of undeath."
+ 
+ # ============================================================
+ # DECISION LOCALIZATION
+ # ============================================================
+ 
+ cast_fireball_title: "Cast Fireball"
+ cast_fireball_desc: "Channel your pyromantic abilities to unleash a devastating ball of fire."
+ 
+ cast_frost_nova_title: "Cast Frost Nova"
+ cast_frost_nova_desc: "Release a wave of freezing energy to immobilize your enemies."
+ 
+ cast_lightning_storm_title: "Summon Lightning Storm"
+ cast_lightning_storm_desc: "Call down the fury of the heavens upon your foes."
+ 
+ cast_necromantic_wave_title: "Cast Necromantic Wave"
+ cast_necromantic_wave_desc: "Channel the power of death to raise the fallen or drain the living."
+ 
+ summon_golem_title: "Summon Golem"
+ summon_golem_desc: "Create a magical construct to serve as guardian or warrior."
+ 
+ healing_light_title: "Healing Light"
+ healing_light_desc: "Channel restorative magic to heal wounds and cure ailments."
+ 
+ divine_shield_title: "Divine Shield"
+ divine_shield_desc: "Invoke celestial protection to shield yourself from harm."
+ 
+ infernal_burst_title: "Infernal Burst"
+ infernal_burst_desc: "Unleash the fires of hell upon your enemies."
+ 
+ mind_control_title: "Attempt Mind Control"
+ mind_control_desc: "Try to dominate the mind of another, bending them to your will."
+ 
+ blood_sacrifice_title: "Blood Sacrifice"
+ blood_sacrifice_desc: "Sacrifice a prisoner to fuel your dark magic."
+ 
+ void_step_title: "Void Step"
+ void_step_desc: "Step through the void between worlds to escape danger or travel instantly."
+ 
+ curse_misfortune_title: "Curse of Misfortune"
+ curse_misfortune_desc: "Place a curse of ill luck upon an enemy."
+ 
+ curse_withering_title: "Curse of Withering"
+ curse_withering_desc: "A terrible curse that causes the victim to slowly waste away."
+ 
+ demonic_curse_title: "Demonic Curse"
+ demonic_curse_desc: "Mark an enemy with demonic corruption, tormenting their very soul."
+ 
+ celestial_curse_title: "Divine Judgment"
+ celestial_curse_desc: "Call down heavenly judgment upon the wicked."
+ 
+ perform_awakening_ritual_title: "Attempt Magical Awakening"
+ perform_awakening_ritual_desc: "Perform a ritual to awaken latent magical potential."
+ 
+ upgrade_magic_laboratory_title: "Upgrade Laboratory"
+ upgrade_magic_laboratory_desc: "Expand and improve your magical research facilities."
+ 
+ found_mage_cult_title: "Found Mage Cult"
+ found_mage_cult_desc: "Establish a secret society of mages under your leadership."
+ 
+ demonic_contract_offer_title: "Offer Demonic Contract"
+ demonic_contract_offer_desc: "Offer a mortal a contract for power in exchange for their soul."
+ 
+ angel_blessing_decision_title: "Bestow Celestial Blessing"
+ angel_blessing_decision_desc: "Grant divine blessings to a worthy individual."
+ 
+ craft_magical_artifact_title: "Craft Magical Artifact"
+ craft_magical_artifact_desc: "Create a powerful magical item in your laboratory."
+ 
+ research_eternal_life_title: "Research Eternal Life"
+ research_eternal_life_desc: "Begin the dangerous quest for immortality."
+ 
+ mage_ascend_to_demon_title: "Demonic Ascension"
+ mage_ascend_to_demon_desc: "Attempt to transcend mortality by embracing demonic power."
+ 
+ mage_ascend_to_angel_title: "Celestial Ascension"
+ mage_ascend_to_angel_desc: "Attempt to ascend to celestial status through purity and devotion."
+ 
+ attend_magical_tournament_title: "Attend Magical Tournament"
+ attend_magical_tournament_desc: "Participate in a grand tournament where mages test their skills."
+ 
+ visit_ley_line_title: "Visit Ley Line"
+ visit_ley_line_desc: "Journey to a powerful ley line to meditate and absorb magical energy."
+ 
+ summon_magical_companion_title: "Summon Magical Companion"
+ summon_magical_companion_desc: "Perform a ritual to summon a magical creature as your companion."
+ 
+ become_mage_hunter_title: "Become Mage Hunter"
+ become_mage_hunter_desc: "Train to hunt down those who abuse magical power."
+ 
+ need_mana_25: "Requires at least 25 mana"
+ 
+ # ============================================================
+ # EVENT LOCALIZATION
+ # ============================================================
+ 
+ # Arcane Events
+ arcane.0001.t: "Arcane Awakening"
+ arcane.0001.desc: "In the quiet of night, you feel something stir within you. A strange energy pulses through your veins, and the world suddenly seems more... alive. You sense hidden currents of power flowing through all things. Could this be... magic?"
+ arcane.0001.a: "Embrace this newfound power"
+ arcane.0001.b: "Fight against it and suppress the feeling"
+ 
+ arcane.0010.t: "Adept's Breakthrough"
+ arcane.0010.desc: "Your magical abilities have grown significantly. The spells that once required intense concentration now flow naturally, and you can feel greater reserves of power within you. You have become a true mage adept."
+ arcane.0010.a: "I feel the power growing within me"
+ 
+ arcane.0011.t: "Choose Your Path"
+ arcane.0011.desc: "As your magical abilities mature, you must decide which school of magic calls to you most strongly. Each path offers unique abilities and challenges."
+ arcane.0011.a: "The flames of pyromancy speak to me"
+ arcane.0011.b: "The cold clarity of cryomancy appeals"
+ arcane.0011.c: "I wish to heal and restore"
+ arcane.0011.d: "I seek the knowledge of divination"
+ arcane.0011.e: "The storms shall be my weapon"
+ arcane.0011.f: "I will find my own path in time"
+ 
+ arcane.0020.t: "Master of Magic"
+ arcane.0020.desc: "You have achieved mastery over the arcane arts. Few in this world can match your magical prowess. Lesser mages look upon you with awe and respect."
+ arcane.0020.a: "My power continues to grow"
+ 
+ arcane.0030.t: "Ascended to Archmage"
+ arcane.0030.desc: "You have reached the pinnacle of magical achievement. You are now an Archmage, one of the most powerful wielders of magic in existence. Reality itself bends to your will."
+ arcane.0030.a: "I have transcended mortal limits"
+ 
+ # ============================================================
+ # BUILDING LOCALIZATION
+ # ============================================================
+ 
+ magic_laboratory: "Magic Laboratory"
+ magic_laboratory_desc: "A facility dedicated to magical research and experimentation."
+ 
+ magic_laboratory_tier_2: "Advanced Laboratory"
+ magic_laboratory_tier_2_desc: "An expanded laboratory with sophisticated magical equipment."
+ 
+ magic_laboratory_tier_3: "Grand Laboratory"
+ magic_laboratory_tier_3_desc: "A magnificent research facility equipped with rare magical instruments."
+ 
+ magic_laboratory_tier_4: "Archmage's Sanctum"
+ magic_laboratory_tier_4_desc: "The ultimate magical research facility, worthy of an archmage."
+ 
+ arcane_tower: "Arcane Tower"
+ arcane_tower_desc: "A tower of magical power that serves as a beacon and fortress."
+ 
+ arcane_tower_tier_2: "Grand Arcane Spire"
+ arcane_tower_tier_2_desc: "A magnificent spire crackling with magical energy."
+ 
+ demonic_altar: "Demonic Altar"
+ demonic_altar_desc: "A dark altar where infernal rituals are performed."
+ 
+ demonic_altar_greater: "Greater Demonic Altar"
+ demonic_altar_greater_desc: "A powerful altar saturated with demonic energy."
+ 
+ celestial_shrine: "Celestial Shrine"
+ celestial_shrine_desc: "A sacred place where divine light gathers."
+ 
+ celestial_shrine_greater: "Grand Celestial Temple"
+ celestial_shrine_greater_desc: "A magnificent temple radiating heavenly power."
+ 
+ runic_circle: "Runic Circle"
+ runic_circle_desc: "A circle of power inscribed with ancient runes."
+ 
+ runic_circle_greater: "Greater Runic Circle"
+ runic_circle_greater_desc: "A powerful runic array capable of enhancing all magic."
+ 
+ artifact_vault: "Artifact Vault"
+ artifact_vault_desc: "A secure vault for storing and protecting magical artifacts."
+ 
+ leyline_attunement_stone: "Leyline Attunement Stone"
+ leyline_attunement_stone_desc: "A massive crystal that channels the power of nearby ley lines."
+ 
+ mage_hunter_outpost: "Mage Hunter Outpost"
+ mage_hunter_outpost_desc: "A fortified outpost where mage hunters train and plan their hunts."
+ 
+ # ============================================================
+ # LIFESTYLE LOCALIZATION
+ # ============================================================
+ 
  arcane_lifestyle: "Arcane Path"
- arcane_lifestyle_desc: "Follow the path of pure magic and knowledge."
+ arcane_lifestyle_desc: "Dedicate yourself to the study and mastery of magic."
  
  demonic_lifestyle: "Demonic Path"
- demonic_lifestyle_desc: "Embrace demonic power and corruption."
+ demonic_lifestyle_desc: "Embrace the dark power of demons and infernal corruption."
  
  celestial_lifestyle: "Celestial Path"
- celestial_lifestyle_desc: "Pursue celestial blessings and divine power."
+ celestial_lifestyle_desc: "Walk the path of light and seek divine transcendence."
+ 
+ arcane_research_focus: "Arcane Research"
+ arcane_research_focus_desc: "Focus on expanding your magical knowledge and power."
+ 
+ combat_magic_focus: "Combat Magic"
+ combat_magic_focus_desc: "Hone your magical abilities for warfare and combat."
+ 
+ hidden_arts_focus: "Hidden Arts"
+ hidden_arts_focus_desc: "Master the subtle arts of illusion, curses, and manipulation."
+ 
+ # ============================================================
+ # MODIFIER LOCALIZATION
+ # ============================================================
+ 
+ divine_shield_active: "Divine Shield"
+ ice_barrier_active: "Ice Barrier"
+ void_phased: "Void Phased"
+ blood_empowered: "Blood Empowered"
+ void_touched: "Void Touched"
+ fire_elemental_companion: "Fire Elemental Companion"
+ ice_elemental_companion: "Ice Elemental Companion"
+ storm_elemental_companion: "Storm Elemental Companion"
+ earth_elemental_companion: "Earth Elemental Companion"
+ bound_demon_servant: "Bound Demon Servant"
+ celestial_guardian: "Celestial Guardian"
+ stone_golem_guardian: "Stone Golem Guardian"
+ iron_golem_warrior: "Iron Golem Warrior"
+ crystal_golem_amplifier: "Crystal Golem Amplifier"
+ cursed_misfortune: "Curse of Misfortune"
+ cursed_withering: "Curse of Withering"
+ demonic_corruption: "Demonic Corruption"
+ divine_judgment: "Divine Judgment"
+ mage_cult_founded: "Mage Cult Founder"
+ 
+ # ============================================================
+ # OPINION MODIFIERS
+ # ============================================================
+ 
+ opinion_fellow_mage: "Fellow Practitioner of Magic"
+ opinion_fellow_mage_desc: "We share the gift of magic."
+ 
+ terrified_of_demon: "Terrified of Demonic Power"
+ healed_by_magic: "Healed by Magic"
+ grateful_for_cure: "Grateful for Curse Removal"
+ grateful_teacher: "Grateful Student"
+ attempted_mind_control: "Attempted Mind Control"
+ compelled_friendship: "Magically Compelled Friendship"

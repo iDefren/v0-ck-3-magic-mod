@@ -1,130 +1,695 @@
-# Magical Buildings and Structures
+# ============================================================
+# ARCANE DOMINION - common/buildings/arcane_buildings.txt
+# Magical buildings with proper CK3 syntax
+# ============================================================
 
-laboratory_building = {
-	construction_time = 3
-	construction_cost = 600
-	
+# ---- MAGIC LABORATORY TIERS ----
+
+magic_laboratory = {
+	construction_time = 730  # 2 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 0.5
+		monthly_arcane_xp = 2
 		learning = 1
+		arcane_mana_regen = 5
 	}
-	
-	character_construction_modifier = {
-		build_speed = 0.1
+
+	county_modifier = {
+		development_growth_factor = 0.05
 	}
-	
-	ai_value = {
-		ai_value = 100
-		modifier = {
-			add = 50
-			has_trait = scholar
+
+	cost = {
+		gold = 400
+		prestige = 200
+	}
+
+	is_shown = {
+		holder = {
+			is_any_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_any_mage = yes
+			learning >= 10
+		}
+	}
+
+	ai_value = {
+		value = 100
+		if = {
+			limit = { holder = { has_trait = mage_master } }
+			add = 100
+		}
+		if = {
+			limit = { holder = { has_trait = archmage } }
+			add = 150
+		}
+	}
+
+	next_building = magic_laboratory_tier_2
+
+	flag = magical_building
 }
 
-arcane_tower_building = {
-	construction_time = 4
-	construction_cost = 800
-	
+magic_laboratory_tier_2 = {
+	construction_time = 1095  # 3 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 1
+		monthly_arcane_xp = 4
 		learning = 2
-		arcane_knowledge = 5
+		arcane_mana_regen = 10
+		arcane_spell_success_chance_add = 5
 	}
-	
+
 	county_modifier = {
-		monthly_mana = 0.3
+		development_growth_factor = 0.08
 	}
-	
-	ai_value = {
-		ai_value = 120
-		modifier = {
-			add = 80
-			has_trait = scholar
+
+	cost = {
+		gold = 700
+		prestige = 300
+	}
+
+	is_shown = {
+		has_building = magic_laboratory
+		holder = {
+			is_practicing_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_practicing_mage = yes
+			learning >= 14
+		}
+	}
+
+	ai_value = {
+		value = 150
+	}
+
+	next_building = magic_laboratory_tier_3
+
+	flag = magical_building
 }
 
-demonic_altar_building = {
-	construction_time = 3
-	construction_cost = 700
-	
+magic_laboratory_tier_3 = {
+	construction_time = 1460  # 4 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 0.7
-		dread = 1
-		corruption = 2
+		monthly_arcane_xp = 7
+		learning = 3
+		arcane_mana_regen = 18
+		arcane_spell_success_chance_add = 10
 	}
-	
+
 	county_modifier = {
-		loot = 0.15
-		monthly_mana = 0.2
+		development_growth_factor = 0.12
+		tax_mult = 0.05
 	}
-	
-	ai_value = {
-		ai_value = 100
-		modifier = {
-			add = 100
-			has_trait = demon
+
+	cost = {
+		gold = 1200
+		prestige = 500
+	}
+
+	is_shown = {
+		has_building = magic_laboratory_tier_2
+		holder = {
+			is_powerful_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_powerful_mage = yes
+			learning >= 18
+		}
+	}
+
+	ai_value = {
+		value = 200
+	}
+
+	next_building = magic_laboratory_tier_4
+
+	flag = magical_building
+	flag = advanced_laboratory
 }
 
-celestial_shrine_building = {
-	construction_time = 3
-	construction_cost = 700
-	
+magic_laboratory_tier_4 = {
+	construction_time = 1825  # 5 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 0.7
-		monthly_piety = 2
-		holiness = 1
+		monthly_arcane_xp = 12
+		learning = 5
+		arcane_mana_regen = 30
+		arcane_spell_success_chance_add = 18
+		health = 0.5
 	}
-	
+
 	county_modifier = {
-		monthly_piety = 1
-		monthly_mana = 0.2
+		development_growth_factor = 0.15
+		tax_mult = 0.1
+		levy_size = 0.05
 	}
-	
-	ai_value = {
-		ai_value = 100
-		modifier = {
-			add = 100
-			has_trait = angel
+
+	cost = {
+		gold = 2000
+		prestige = 800
+	}
+
+	is_shown = {
+		has_building = magic_laboratory_tier_3
+		holder = {
+			is_master_level_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_master_level_mage = yes
+			learning >= 22
+		}
+	}
+
+	ai_value = {
+		value = 300
+	}
+
+	flag = magical_building
+	flag = advanced_laboratory
+	flag = master_laboratory
 }
 
-runic_circle_building = {
-	construction_time = 2
-	construction_cost = 500
-	
+# ---- ARCANE TOWER ----
+
+arcane_tower = {
+	construction_time = 1095  # 3 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 0.3
-		spell_effectiveness = 2
+		monthly_arcane_xp = 3
+		learning = 2
+		arcane_mana_regen = 8
+		monthly_prestige = 0.3
 	}
-	
-	ai_value = {
-		ai_value = 80
-		modifier = {
-			add = 60
-			has_trait = mage
+
+	county_modifier = {
+		development_growth_factor = 0.08
+		fort_level = 1
+	}
+
+	cost = {
+		gold = 600
+		prestige = 400
+	}
+
+	is_shown = {
+		holder = {
+			is_practicing_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_practicing_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 120
+	}
+
+	next_building = arcane_tower_tier_2
+
+	flag = magical_building
 }
 
-artifact_vault_building = {
-	construction_time = 5
-	construction_cost = 1000
-	
+arcane_tower_tier_2 = {
+	construction_time = 1460  # 4 years
+
+	type = special
+	slot = special_building
+
 	character_modifier = {
-		monthly_mana = 0.5
-		artifact_slots = 2
+		monthly_arcane_xp = 6
+		learning = 3
+		arcane_mana_regen = 15
+		monthly_prestige = 0.6
+		prowess = 2
 	}
-	
-	ai_value = {
-		ai_value = 140
-		modifier = {
-			add = 100
-			has_trait = scholar
+
+	county_modifier = {
+		development_growth_factor = 0.12
+		fort_level = 2
+		levy_size = 0.05
+	}
+
+	cost = {
+		gold = 1000
+		prestige = 600
+	}
+
+	is_shown = {
+		has_building = arcane_tower
+		holder = {
+			is_powerful_mage = yes
 		}
 	}
+
+	can_construct = {
+		holder = {
+			is_powerful_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 180
+	}
+
+	flag = magical_building
+}
+
+# ---- DEMONIC ALTAR ----
+
+demonic_altar = {
+	construction_time = 730  # 2 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 12
+		intrigue = 3
+		dread_gain_mult = 0.2
+		monthly_piety = -1.0
+		corruption_power = 10
+	}
+
+	county_modifier = {
+		monthly_county_control_decline = 0.1
+	}
+
+	cost = {
+		gold = 500
+		piety = -300  # Costs piety to build
+	}
+
+	is_shown = {
+		holder = {
+			OR = {
+				is_any_demon = yes
+				has_dark_alignment = yes
+			}
+		}
+	}
+
+	can_construct = {
+		holder = {
+			OR = {
+				is_any_demon = yes
+				has_dark_alignment = yes
+			}
+		}
+	}
+
+	ai_value = {
+		value = 80
+		if = {
+			limit = { holder = { is_any_demon = yes } }
+			add = 150
+		}
+	}
+
+	next_building = demonic_altar_greater
+
+	flag = magical_building
+	flag = dark_building
+}
+
+demonic_altar_greater = {
+	construction_time = 1095  # 3 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 25
+		intrigue = 5
+		prowess = 4
+		dread_gain_mult = 0.4
+		monthly_piety = -2.5
+		corruption_power = 25
+	}
+
+	county_modifier = {
+		monthly_county_control_decline = 0.2
+		levy_size = 0.1
+	}
+
+	cost = {
+		gold = 1000
+		piety = -600
+	}
+
+	is_shown = {
+		has_building = demonic_altar
+		holder = {
+			is_powerful_demon = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_powerful_demon = yes
+		}
+	}
+
+	ai_value = {
+		value = 150
+	}
+
+	flag = magical_building
+	flag = dark_building
+}
+
+# ---- CELESTIAL SHRINE ----
+
+celestial_shrine = {
+	construction_time = 730  # 2 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 10
+		diplomacy = 2
+		monthly_piety = 1.5
+		health = 0.5
+		celestial_power = 10
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.05
+		monthly_county_control_growth_add = 0.1
+	}
+
+	cost = {
+		gold = 500
+		piety = 300
+	}
+
+	is_shown = {
+		holder = {
+			OR = {
+				is_any_angel = yes
+				has_light_alignment = yes
+			}
+		}
+	}
+
+	can_construct = {
+		holder = {
+			OR = {
+				is_any_angel = yes
+				has_light_alignment = yes
+				piety >= 1000
+			}
+		}
+	}
+
+	ai_value = {
+		value = 100
+		if = {
+			limit = { holder = { is_any_angel = yes } }
+			add = 150
+		}
+	}
+
+	next_building = celestial_shrine_greater
+
+	flag = magical_building
+	flag = holy_building
+}
+
+celestial_shrine_greater = {
+	construction_time = 1095  # 3 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 22
+		diplomacy = 4
+		learning = 2
+		monthly_piety = 3.0
+		health = 1.5
+		celestial_power = 25
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+		monthly_county_control_growth_add = 0.2
+		levy_size = 0.05
+	}
+
+	cost = {
+		gold = 1000
+		piety = 600
+	}
+
+	is_shown = {
+		has_building = celestial_shrine
+		holder = {
+			is_powerful_angel = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_powerful_angel = yes
+		}
+	}
+
+	ai_value = {
+		value = 180
+	}
+
+	flag = magical_building
+	flag = holy_building
+}
+
+# ---- RUNIC CIRCLE ----
+
+runic_circle = {
+	construction_time = 365  # 1 year
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 6
+		arcane_spell_success_chance_add = 8
+	}
+
+	cost = {
+		gold = 300
+		prestige = 100
+	}
+
+	is_shown = {
+		holder = {
+			is_any_mage = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_any_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 80
+	}
+
+	next_building = runic_circle_greater
+
+	flag = magical_building
+}
+
+runic_circle_greater = {
+	construction_time = 730  # 2 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 15
+		arcane_spell_success_chance_add = 15
+		monthly_arcane_xp = 3
+	}
+
+	cost = {
+		gold = 600
+		prestige = 200
+	}
+
+	is_shown = {
+		has_building = runic_circle
+		holder = {
+			is_practicing_mage = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_practicing_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 120
+	}
+
+	flag = magical_building
+}
+
+# ---- ARTIFACT VAULT ----
+
+artifact_vault = {
+	construction_time = 1095  # 3 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 5
+		monthly_prestige = 0.5
+	}
+
+	cost = {
+		gold = 800
+		prestige = 300
+	}
+
+	is_shown = {
+		holder = {
+			is_powerful_mage = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_powerful_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 100
+	}
+
+	flag = magical_building
+}
+
+# ---- LEYLINE ATTUNEMENT STONE ----
+
+leyline_attunement_stone = {
+	construction_time = 1460  # 4 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		arcane_mana_regen = 25
+		monthly_arcane_xp = 5
+		health = 0.5
+	}
+
+	county_modifier = {
+		development_growth_factor = 0.1
+	}
+
+	cost = {
+		gold = 1500
+		prestige = 500
+	}
+
+	is_shown = {
+		holder = {
+			has_trait = ley_line_attuned
+		}
+	}
+
+	can_construct = {
+		holder = {
+			has_trait = ley_line_attuned
+			is_powerful_mage = yes
+		}
+	}
+
+	ai_value = {
+		value = 200
+	}
+
+	flag = magical_building
+}
+
+# ---- MAGE HUNTER OUTPOST ----
+
+mage_hunter_outpost = {
+	construction_time = 730  # 2 years
+
+	type = special
+	slot = special_building
+
+	character_modifier = {
+		prowess = 2
+		intrigue = 2
+		arcane_resist = 10
+	}
+
+	county_modifier = {
+		levy_size = 0.05
+	}
+
+	cost = {
+		gold = 400
+		prestige = 200
+	}
+
+	is_shown = {
+		holder = {
+			is_any_mage_hunter = yes
+		}
+	}
+
+	can_construct = {
+		holder = {
+			is_any_mage_hunter = yes
+		}
+	}
+
+	ai_value = {
+		value = 80
+	}
+
+	flag = mage_hunter_building
 }

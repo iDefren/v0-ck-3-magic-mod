@@ -1,0 +1,75 @@
+# ============================================================
+# ARCANE DOMINION - common/modifiers/county_modifiers.txt
+# County-level modifiers for magical effects
+# ============================================================
+
+# ---- NEGATIVE COUNTY MODIFIERS ----
+
+frozen_battlefield = {
+	icon = negative
+	levy_size = -0.25
+	development_growth_factor = -0.15
+	supply_limit_mult = -0.3
+}
+
+storm_ravaged = {
+	icon = negative
+	development_growth_factor = -0.2
+	levy_size = -0.15
+	tax_mult = -0.1
+}
+
+corrupted_land = {
+	icon = negative
+	development_growth_factor = -0.25
+	supply_limit_mult = -0.2
+	monthly_county_control_decline = 0.3
+}
+
+void_breach = {
+	icon = negative
+	development_growth_factor = -0.4
+	levy_size = -0.3
+	supply_limit_mult = -0.4
+	monthly_county_control_decline = 0.5
+}
+
+laboratory_damage = {
+	icon = negative
+	development_growth_factor = -0.1
+	tax_mult = -0.05
+}
+
+# ---- POSITIVE COUNTY MODIFIERS ----
+
+ley_line_nexus = {
+	icon = positive
+	development_growth_factor = 0.15
+	# Bonus to mages in this county
+}
+
+arcane_prosperity = {
+	icon = positive
+	development_growth_factor = 0.1
+	tax_mult = 0.1
+}
+
+blessed_land = {
+	icon = positive
+	development_growth_factor = 0.1
+	levy_size = 0.1
+	supply_limit_mult = 0.15
+}
+
+# ---- BUILDING EFFECT MODIFIERS ----
+
+magic_laboratory_county = {
+	icon = positive
+	development_growth_factor = 0.05
+}
+
+arcane_tower_county = {
+	icon = positive
+	development_growth_factor = 0.08
+	levy_size = 0.05
+}

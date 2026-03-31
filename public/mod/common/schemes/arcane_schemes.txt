@@ -1,0 +1,323 @@
+# ============================================================
+# ARCANE DOMINION - common/schemes/arcane_schemes.txt
+# Magical scheme types
+# ============================================================
+
+# ---- CURSE SCHEME ----
+curse_scheme = {
+	skill = intrigue
+	desc = curse_scheme_desc
+	icon = intrigue_lifestyle
+
+	cooldown = { years = 5 }
+
+	is_valid = {
+		scope:owner = {
+			OR = {
+				has_lifestyle_perk = curse_weaver
+				is_any_demon = yes
+				has_trait = spec_blood_mage
+			}
+			can_spend_mana_40 = yes
+		}
+		scope:target = {
+			NOT = { is_any_angel = yes }
+			is_alive = yes
+		}
+	}
+
+	is_secret = yes
+	uses_agents = no
+
+	base_success_chance = {
+		base = 30
+		modifier = {
+			add = 20
+			scope:owner = { learning >= 18 }
+			desc = "High learning"
+		}
+		modifier = {
+			add = 15
+			scope:owner = { has_trait = spec_blood_mage }
+			desc = "Blood magic specialist"
+		}
+		modifier = {
+			add = 25
+			scope:owner = { is_powerful_demon = yes }
+			desc = "Demonic power"
+		}
+		modifier = {
+			add = -20
+			scope:target = { learning >= 15 }
+			desc = "Target has magical knowledge"
+		}
+		modifier = {
+			add = -40
+			scope:target = { is_any_mage = yes }
+			desc = "Target is a mage"
+		}
+	}
+
+	on_start = {
+		scope:owner = {
+			spend_mana_40 = yes
+		}
+	}
+
+	on_success = {
+		scope:target = {
+			add_character_modifier = {
+				modifier = cursed_misfortune
+				years = 5
+			}
+			trigger_event = curse_events.0003
+		}
+		scope:owner = {
+			gain_arcane_xp = { VALUE = 30 }
+			add_piety = -100
+		}
+	}
+
+	on_fail = {
+		scope:owner = {
+			add_character_modifier = {
+				modifier = spell_backfire
+				months = 6
+			}
+		}
+	}
+
+	on_expose = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = cursed_by_mage
+			}
+			set_relation_nemesis = scope:owner
+		}
+	}
+}
+
+# ---- MAGICAL ASSASSINATION SCHEME ----
+magical_murder_scheme = {
+	skill = intrigue
+	desc = magical_murder_scheme_desc
+	icon = intrigue_lifestyle
+
+	cooldown = { years = 10 }
+
+	is_valid = {
+		scope:owner = {
+			is_powerful_mage = yes
+			has_lifestyle_perk = arcane_assassin
+			can_spend_mana_80 = yes
+		}
+		scope:target = {
+			is_alive = yes
+		}
+	}
+
+	is_secret = yes
+	uses_agents = no
+	power_per_skill_point = 3
+
+	base_success_chance = {
+		base = 20
+		modifier = {
+			add = 25
+			scope:owner = { has_trait = archmage }
+			desc = "Archmage power"
+		}
+		modifier = {
+			add = 20
+			scope:owner = { has_trait = spec_void_walker }
+			desc = "Void magic"
+		}
+		modifier = {
+			add = -30
+			scope:target = { is_any_mage = yes }
+			desc = "Target is a mage"
+		}
+		modifier = {
+			add = -50
+			scope:target = { is_any_angel = yes }
+			desc = "Target is protected by celestial power"
+		}
+	}
+
+	on_start = {
+		scope:owner = {
+			spend_mana_80 = yes
+		}
+	}
+
+	on_success = {
+		scope:target = {
+			death = { death_reason = death_magic }
+		}
+		scope:owner = {
+			gain_arcane_xp = { VALUE = 50 }
+			add_piety = -300
+			add_dread = 20
+		}
+	}
+
+	on_fail = {
+		scope:owner = {
+			health_impact_add = -1.0
+			add_character_modifier = {
+				modifier = arcane_overload
+				months = 6
+			}
+		}
+	}
+}
+
+# ---- MIND DOMINATION SCHEME ----
+domination_scheme = {
+	skill = intrigue
+	desc = domination_scheme_desc
+	icon = intrigue_lifestyle
+
+	cooldown = { years = 10 }
+
+	is_valid = {
+		scope:owner = {
+			OR = {
+				has_lifestyle_perk = puppet_strings
+				has_trait = spec_illusionist
+			}
+			can_spend_mana_100 = yes
+		}
+		scope:target = {
+			NOT = { is_any_mage = yes }
+			NOT = { has_trait = magically_dominated }
+			is_alive = yes
+		}
+	}
+
+	is_secret = yes
+	uses_agents = no
+	power_per_skill_point = 2
+
+	base_success_chance = {
+		base = 25
+		modifier = {
+			add = 30
+			scope:owner = { has_trait = archmage }
+			desc = "Archmage power"
+		}
+		modifier = {
+			add = 20
+			scope:owner = { has_trait = spec_illusionist }
+			desc = "Illusion specialist"
+		}
+		modifier = {
+			add = -25
+			scope:target = { intrigue >= 15 }
+			desc = "Target has strong will"
+		}
+	}
+
+	on_start = {
+		scope:owner = {
+			spend_mana_100 = yes
+		}
+	}
+
+	on_success = {
+		scope:target = {
+			add_trait = magically_dominated
+		}
+		scope:owner = {
+			add_trait = puppet_master
+			gain_arcane_xp = { VALUE = 60 }
+		}
+	}
+
+	on_fail = {
+		scope:owner = {
+			add_character_modifier = {
+				modifier = domination_cooldown
+				years = 5
+			}
+		}
+	}
+
+	on_expose = {
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = attempted_mind_control
+			}
+		}
+	}
+}
+
+# ---- MAGE HUNTING SCHEME ----
+mage_hunt_scheme = {
+	skill = prowess
+	desc = mage_hunt_scheme_desc
+	icon = martial_lifestyle
+
+	cooldown = { years = 3 }
+
+	is_valid = {
+		scope:owner = {
+			is_any_mage_hunter = yes
+		}
+		scope:target = {
+			is_any_mage = yes
+			is_alive = yes
+		}
+	}
+
+	is_secret = yes
+	uses_agents = yes
+	power_per_skill_point = 4
+
+	base_success_chance = {
+		base = 40
+		modifier = {
+			add = 30
+			scope:owner = { has_trait = mage_hunter_master }
+			desc = "Master mage hunter"
+		}
+		modifier = {
+			add = -25
+			scope:target = { is_powerful_mage = yes }
+			desc = "Target is a powerful mage"
+		}
+		modifier = {
+			add = -40
+			scope:target = { has_trait = archmage }
+			desc = "Target is an archmage"
+		}
+	}
+
+	on_success = {
+		scope:target = {
+			imprison = { target = scope:owner type = dungeon }
+			add_character_modifier = {
+				modifier = magic_suppressed
+				years = 5
+			}
+		}
+		scope:owner = {
+			add_prestige = 200
+			add_piety = 100
+		}
+	}
+
+	on_fail = {
+		scope:owner = {
+			health_impact_add = -1.5
+		}
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = hunted_by_mage_hunter
+			}
+		}
+	}
+}

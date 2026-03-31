@@ -1,0 +1,552 @@
+# ============================================================
+# ARCANE DOMINION - common/character_modifiers/spell_modifiers.txt
+# Modifiers for spells, curses, and magical effects
+# ============================================================
+
+# ---- BUFF MODIFIERS ----
+
+divine_shield_active = {
+	icon = positive
+	health = 2.0
+	prowess = 5
+	arcane_resist = 30
+}
+
+ice_barrier_active = {
+	icon = positive
+	health = 1.5
+	prowess = 3
+	arcane_resist = 20
+}
+
+void_phased = {
+	icon = positive
+	arcane_resist = 50
+	intrigue = 5
+	scheme_resistance_mult = 0.5
+}
+
+blood_empowered = {
+	icon = positive
+	prowess = 8
+	arcane_mana_regen = 20
+	health = 1.0
+	monthly_piety = -1.0
+}
+
+void_touched = {
+	icon = positive
+	arcane_mana_regen = 25
+	learning = 3
+	intrigue = 3
+	monthly_piety = -0.5
+}
+
+soul_empowered = {
+	icon = positive
+	arcane_mana_regen = 30
+	prowess = 4
+	intrigue = 4
+}
+
+life_force_mastery = {
+	icon = positive
+	health = 3.0
+	healing_power = 30
+	arcane_mana_regen = 15
+}
+
+formula_breakthrough = {
+	icon = positive
+	arcane_spell_success_chance_add = 15
+	monthly_arcane_xp = 5
+	learning = 2
+}
+
+elemental_discoverer = {
+	icon = positive
+	learning = 4
+	monthly_prestige = 0.5
+	arcane_spell_success_chance_add = 8
+}
+
+forbidden_knowledge = {
+	icon = positive
+	learning = 5
+	arcane_mana_regen = 20
+	monthly_piety = -1.0
+	arcane_spell_success_chance_add = 12
+}
+
+spell_breakthrough = {
+	icon = positive
+	arcane_spell_success_chance_add = 10
+	monthly_arcane_xp = 3
+}
+
+enchanted_weapon_bonus = {
+	icon = positive
+	prowess = 5
+	duel_skill = 20
+}
+
+enchanted_armor_bonus = {
+	icon = positive
+	health = 1.0
+	prowess = 2
+	arcane_resist = 15
+}
+
+strength_elixir_active = {
+	icon = positive
+	prowess = 6
+	health = 0.5
+}
+
+healing_potion_ready = {
+	icon = positive
+	health = 0.5
+}
+
+magical_poison_ready = {
+	icon = positive
+	hostile_scheme_power_mult = 0.25
+	intrigue = 2
+}
+
+soul_artifact_empowered = {
+	icon = positive
+	arcane_mana_regen = 20
+	prowess = 4
+}
+
+blood_moon_empowered = {
+	icon = positive
+	arcane_mana_regen = 30
+	prowess = 6
+	intrigue = 4
+	monthly_piety = -2.0
+}
+
+solstice_blessed = {
+	icon = positive
+	health = 1.5
+	monthly_piety = 1.0
+	arcane_mana_regen = 15
+	diplomacy = 2
+}
+
+leyline_convergence_power = {
+	icon = positive
+	arcane_mana_regen = 40
+	arcane_spell_success_chance_add = 20
+	learning = 3
+}
+
+slowed_aging = {
+	icon = positive
+	health = 2.5
+	# Reduce aging effect
+}
+
+# ---- COMPANION MODIFIERS ----
+
+fire_elemental_companion = {
+	icon = positive
+	prowess = 4
+	fire_magic_power = 20
+	arcane_mana_regen = 10
+}
+
+ice_elemental_companion = {
+	icon = positive
+	prowess = 3
+	frost_magic_power = 20
+	arcane_mana_regen = 10
+}
+
+storm_elemental_companion = {
+	icon = positive
+	prowess = 4
+	storm_power = 20
+	arcane_mana_regen = 12
+}
+
+earth_elemental_companion = {
+	icon = positive
+	prowess = 5
+	health = 1.0
+	construct_power = 15
+}
+
+bound_demon_servant = {
+	icon = positive
+	prowess = 6
+	intrigue = 4
+	arcane_mana_regen = 15
+	monthly_piety = -1.5
+}
+
+celestial_guardian = {
+	icon = positive
+	health = 2.0
+	diplomacy = 3
+	monthly_piety = 1.5
+	arcane_resist = 20
+}
+
+demonic_pact_active = {
+	icon = mixed
+	arcane_mana_regen = 25
+	prowess = 5
+	intrigue = 5
+	monthly_piety = -3.0
+	health = -0.5
+}
+
+# ---- GOLEM MODIFIERS ----
+
+stone_golem_guardian = {
+	icon = positive
+	health = 2.0
+	prowess = 3
+	arcane_resist = 15
+	scheme_resistance_mult = 0.2
+}
+
+iron_golem_warrior = {
+	icon = positive
+	prowess = 8
+	martial = 2
+	duel_skill = 30
+}
+
+crystal_golem_amplifier = {
+	icon = positive
+	arcane_mana_regen = 25
+	arcane_spell_success_chance_add = 15
+	learning = 2
+}
+
+# ---- NEGATIVE MODIFIERS ----
+
+badly_burned = {
+	icon = negative
+	health = -2.0
+	prowess = -4
+	diplomacy = -2
+}
+
+minor_burns = {
+	icon = negative
+	health = -0.5
+	prowess = -2
+}
+
+spell_backfire = {
+	icon = negative
+	health = -0.5
+	arcane_mana_regen = -10
+	arcane_spell_success_chance_add = -10
+}
+
+frozen_in_place = {
+	icon = negative
+	prowess = -6
+	martial = -3
+}
+
+struck_by_lightning = {
+	icon = negative
+	health = -2.5
+	prowess = -4
+}
+
+infernal_burns = {
+	icon = negative
+	health = -2.0
+	monthly_piety = -1.0
+	prowess = -3
+}
+
+void_sickness = {
+	icon = negative
+	health = -1.5
+	learning = -2
+	stress_gain_mult = 0.25
+}
+
+void_madness = {
+	icon = negative
+	health = -2.0
+	intrigue = -4
+	diplomacy = -5
+	learning = -3
+	stress_gain_mult = 0.5
+}
+
+# ---- CURSE MODIFIERS ----
+
+cursed_misfortune = {
+	icon = negative
+	health = -0.5
+	prowess = -2
+	diplomacy = -2
+	intrigue = -2
+	# Random negative events more likely
+}
+
+cursed_withering = {
+	icon = negative
+	health = -2.0
+	prowess = -4
+	fertility_mult = -0.5
+}
+
+demonic_corruption = {
+	icon = negative
+	monthly_piety = -2.0
+	health = -0.5
+	arcane_mana_regen = 10
+	intrigue = 2
+}
+
+demon_marked_for_death = {
+	icon = negative
+	health = -1.0
+	stress_gain_mult = 0.3
+}
+
+divine_judgment = {
+	icon = negative
+	monthly_piety = -3.0
+	health = -1.5
+	diplomacy = -4
+}
+
+marked_by_heaven = {
+	icon = mixed
+	monthly_piety = 1.0
+	monthly_prestige = -0.5
+	# Angels can track this character
+}
+
+curse_weakened = {
+	icon = mixed
+	health = 0.5
+	# Curse partially lifted
+}
+
+soul_bound_to_master = {
+	icon = negative
+	intrigue = -5
+	diplomacy = -3
+	scheme_resistance_mult = -0.5
+}
+
+puppet_ruler = {
+	icon = negative
+	diplomacy = -8
+	intrigue = -6
+	# Under magical control
+}
+
+artifact_curse = {
+	icon = negative
+	health = -1.0
+	monthly_piety = -1.0
+}
+
+cursed_by_artifact = {
+	icon = negative
+	health = -0.5
+	arcane_mana_regen = -5
+}
+
+# ---- DUEL AND COMBAT MODIFIERS ----
+
+magic_duel_boost = {
+	icon = positive
+	prowess = 8
+	duel_skill = 50
+}
+
+mage_duelist_active = {
+	icon = positive
+	prowess = 5
+	duel_skill = 40
+	arcane_spell_success_chance_add = 10
+}
+
+# ---- COOLDOWN MODIFIERS ----
+
+domination_cooldown = {
+	icon = neutral
+	# Cannot attempt domination again
+}
+
+tournament_cooldown = {
+	icon = neutral
+	# Cannot attend another tournament
+}
+
+ritual_cooldown = {
+	icon = neutral
+	# Ritual exhaustion
+}
+
+blood_moon_ritual_done = {
+	icon = neutral
+	# Blood moon already observed
+}
+
+legendary_crafting_done = {
+	icon = neutral
+	# Already attempted legendary craft
+}
+
+crafting_artifact = {
+	icon = neutral
+	learning = 2
+	# Currently crafting
+}
+
+enhancing_artifact = {
+	icon = neutral
+	learning = 1
+	# Currently enhancing
+}
+
+companion_hunt_active = {
+	icon = neutral
+	# Searching for companion
+}
+
+hunter_training_active = {
+	icon = neutral
+	prowess = 1
+	intrigue = 1
+	# Training as mage hunter
+}
+
+immortality_quest = {
+	icon = neutral
+	learning = 3
+	monthly_arcane_xp = 5
+	# Researching immortality
+}
+
+awakening_attempted = {
+	icon = neutral
+	# Already attempted awakening
+}
+
+ascension_attempted = {
+	icon = neutral
+	# Already attempted ascension
+}
+
+ley_line_visited = {
+	icon = neutral
+	arcane_mana_regen = 5
+}
+
+# ---- STUDY AND LEARNING MODIFIERS ----
+
+student_of_magic_drive = {
+	icon = positive
+	monthly_arcane_xp = 5
+	learning = 2
+}
+
+careful_student = {
+	icon = positive
+	monthly_arcane_xp = 3
+	arcane_spell_success_chance_add = 5
+}
+
+magical_sensitivity = {
+	icon = positive
+	learning = 2
+	arcane_mana_regen = 3
+}
+
+# ---- LABORATORY MODIFIERS ----
+
+laboratory_accident_recovery = {
+	icon = negative
+	health = -0.5
+	learning = -1
+}
+
+# ---- MISC MODIFIERS ----
+
+arcane_unsettled = {
+	icon = negative
+	stress_gain_mult = 0.15
+	arcane_mana_regen = -5
+}
+
+blessed_future = {
+	icon = positive
+	health = 1.0
+	monthly_prestige = 0.3
+}
+
+danger_foreseen = {
+	icon = positive
+	arcane_resist = 15
+	scheme_resistance_mult = 0.2
+}
+
+death_foreseen = {
+	icon = mixed
+	health = 0.5
+	stress_gain_mult = 0.2
+}
+
+enemy_plans_revealed = {
+	icon = positive
+	martial = 3
+	intrigue = 2
+	# War advantage
+}
+
+undead_army_raised = {
+	icon = mixed
+	martial = 4
+	monthly_piety = -2.0
+	dread_gain_mult = 0.3
+}
+
+terrified_of_demon = {
+	icon = negative
+	# Reduced opinion and fear
+}
+
+compelled_friendship = {
+	icon = positive
+	# Magically induced friendship
+}
+
+grateful_for_cure = {
+	icon = positive
+	# Grateful for curse removal
+}
+
+healed_by_magic = {
+	icon = positive
+	# Grateful for magical healing
+}
+
+grateful_teacher = {
+	icon = positive
+	# Grateful to magical teacher
+}
+
+soul_collector = {
+	icon = mixed
+	intrigue = 4
+	monthly_piety = -2.0
+	dread_gain_mult = 0.2
+}

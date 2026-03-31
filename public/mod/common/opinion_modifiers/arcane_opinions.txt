@@ -1,0 +1,167 @@
+# ============================================================
+# ARCANE DOMINION - common/opinion_modifiers/arcane_opinions.txt
+# Opinion modifiers for magical relationships
+# ============================================================
+
+# ---- POSITIVE OPINIONS ----
+
+opinion_fellow_mage = {
+	opinion = 15
+	decaying = no
+}
+
+opinion_fellow_demon = {
+	opinion = 10
+	decaying = no
+}
+
+opinion_fellow_angel = {
+	opinion = 20
+	decaying = no
+}
+
+healed_by_magic = {
+	opinion = 40
+	months = 120
+}
+
+grateful_for_cure = {
+	opinion = 50
+	months = 120
+}
+
+grateful_teacher = {
+	opinion = 30
+	decaying = no
+}
+
+shared_knowledge = {
+	opinion = 20
+	months = 60
+}
+
+blessed_by_angel = {
+	opinion = 40
+	decaying = no
+}
+
+saved_by_magic = {
+	opinion = 35
+	months = 120
+}
+
+magic_ally = {
+	opinion = 25
+	months = 60
+}
+
+tournament_respect = {
+	opinion = 15
+	months = 60
+}
+
+# ---- NEGATIVE OPINIONS ----
+
+terrified_of_demon = {
+	opinion = -30
+	months = 60
+}
+
+attempted_mind_control = {
+	opinion = -100
+	decaying = no
+}
+
+cursed_by_mage = {
+	opinion = -80
+	decaying = no
+}
+
+declined_pact = {
+	opinion = -25
+	months = 60
+}
+
+magical_rival = {
+	opinion = -20
+	decaying = no
+}
+
+fears_magic_user = {
+	opinion = -15
+	months = 36
+}
+
+distrusts_demon = {
+	opinion = -40
+	decaying = no
+}
+
+burned_by_spell = {
+	opinion = -35
+	months = 60
+}
+
+soul_claimed = {
+	opinion = -100
+	decaying = no
+}
+
+# ---- MIXED/NEUTRAL OPINIONS ----
+
+compelled_friendship = {
+	opinion = 50
+	months = 60
+	# Magically induced - not genuine
+}
+
+respects_power = {
+	opinion = 10
+	months = 36
+}
+
+fears_power = {
+	opinion = -10
+	months = 36
+}
+
+# ---- MAGE HUNTER OPINIONS ----
+
+hunted_by_mage_hunter = {
+	opinion = -60
+	decaying = no
+}
+
+escaped_mage_hunter = {
+	opinion = -30
+	months = 60
+}
+
+mage_hunter_ally = {
+	opinion = 20
+	months = 36
+}
+
+# ---- CONTRACT OPINIONS ----
+
+bound_to_demon = {
+	opinion = -50
+	decaying = no
+}
+
+demon_master = {
+	opinion = 10
+	decaying = no
+}
+
+# ---- COMPANION OPINIONS ----
+
+companion_bond = {
+	opinion = 30
+	decaying = no
+}
+
+familiar_bond = {
+	opinion = 25
+	decaying = no
+}

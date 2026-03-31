@@ -1,0 +1,482 @@
+# ============================================================
+# ARCANE DOMINION - common/character_interactions/arcane_interactions.txt
+# Character interactions for magic system
+# ============================================================
+
+# ---- TEACH MAGIC ----
+teach_magic_interaction = {
+	category = interaction_category_friendly
+	
+	desc = teach_magic_interaction_desc
+	icon = learning
+	
+	is_shown = {
+		scope:actor = {
+			is_master_level_mage = yes
+		}
+		scope:recipient = {
+			can_learn_magic = yes
+			is_courtier_of = scope:actor
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = must_not_be_teaching
+				NOT = { has_character_modifier = currently_teaching }
+			}
+		}
+		scope:recipient = {
+			custom_description = {
+				text = must_not_be_student
+				NOT = { has_character_modifier = student_of_magic }
+			}
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			add_character_modifier = {
+				modifier = currently_teaching
+				years = 3
+			}
+			add_trait = arcane_teacher
+			trigger_event = arcane.0051
+		}
+		scope:recipient = {
+			add_trait = arcane_spark
+			initialize_mana_system = yes
+			add_character_modifier = {
+				modifier = student_of_magic
+				years = 3
+			}
+			add_opinion = {
+				target = scope:actor
+				modifier = grateful_teacher
+				years = -1
+			}
+		}
+	}
+	
+	ai_accept = {
+		base = 50
+		modifier = {
+			add = 20
+			scope:actor = { learning >= 18 }
+		}
+		modifier = {
+			add = -30
+			has_trait = lazy
+		}
+	}
+	
+	ai_potential = {
+		is_master_level_mage = yes
+	}
+	
+	ai_targets = {
+		ai_recipients = courtiers
+	}
+	
+	ai_frequency = 36
+}
+
+# ---- CHALLENGE TO MAGICAL DUEL ----
+magical_duel_interaction = {
+	category = interaction_category_hostile
+	
+	desc = magical_duel_interaction_desc
+	icon = prowess
+	
+	is_shown = {
+		scope:actor = {
+			is_practicing_mage = yes
+		}
+		scope:recipient = {
+			is_practicing_mage = yes
+			NOT = { this = scope:actor }
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			can_spend_mana_50 = yes
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			spend_mana_50 = yes
+		}
+		scope:recipient = {
+			spend_mana_50 = yes
+		}
+		trigger_event = tournament_events.0100
+	}
+	
+	on_decline = {
+		scope:actor = {
+			add_prestige = 50
+		}
+		scope:recipient = {
+			add_prestige = -100
+		}
+	}
+	
+	ai_accept = {
+		base = 0
+		modifier = {
+			add = 50
+			scope:recipient = { prowess >= scope:actor.prowess }
+		}
+		modifier = {
+			add = -30
+			scope:recipient = { prowess < scope:actor.prowess }
+		}
+		modifier = {
+			add = 30
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -40
+			has_trait = craven
+		}
+	}
+	
+	ai_potential = {
+		is_practicing_mage = yes
+		any_known_character = {
+			is_practicing_mage = yes
+			opinion = { target = root value < 0 }
+		}
+	}
+	
+	ai_frequency = 60
+}
+
+# ---- REQUEST MAGICAL TEACHING ----
+request_teaching_interaction = {
+	category = interaction_category_friendly
+	
+	desc = request_teaching_interaction_desc
+	icon = learning
+	
+	is_shown = {
+		scope:actor = {
+			can_learn_magic = yes
+		}
+		scope:recipient = {
+			is_master_level_mage = yes
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			gold >= 100
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			add_gold = -100
+			add_trait = arcane_spark
+			initialize_mana_system = yes
+			add_character_modifier = {
+				modifier = student_of_magic
+				years = 3
+			}
+			add_opinion = {
+				target = scope:recipient
+				modifier = grateful_teacher
+				years = -1
+			}
+		}
+		scope:recipient = {
+			add_gold = 100
+			add_trait = arcane_teacher
+			gain_arcane_xp = { VALUE = 20 }
+		}
+	}
+	
+	ai_accept = {
+		base = 20
+		modifier = {
+			add = 30
+			opinion = { target = scope:actor value >= 30 }
+		}
+		modifier = {
+			add = -50
+			opinion = { target = scope:actor value < 0 }
+		}
+	}
+	
+	ai_frequency = 48
+}
+
+# ---- OFFER DEMONIC PACT ----
+offer_demonic_pact_interaction = {
+	category = interaction_category_hostile
+	
+	desc = offer_demonic_pact_interaction_desc
+	icon = intrigue
+	
+	is_shown = {
+		scope:actor = {
+			is_any_demon = yes
+		}
+		scope:recipient = {
+			NOT = { is_any_demon = yes }
+			NOT = { has_trait = bound_by_contract }
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			can_spend_mana_50 = yes
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			spend_mana_50 = yes
+			add_character_modifier = {
+				modifier = soul_collector
+				years = -1
+			}
+		}
+		scope:recipient = {
+			add_trait = bound_by_contract
+			add_character_modifier = {
+				modifier = demonic_pact_active
+				years = 20
+			}
+			# Gains power
+			add_prowess_skill = 3
+			add_intrigue_skill = 3
+		}
+	}
+	
+	on_decline = {
+		scope:actor = {
+			add_opinion = {
+				target = scope:recipient
+				modifier = declined_pact
+				years = 5
+			}
+		}
+	}
+	
+	ai_accept = {
+		base = -50
+		modifier = {
+			add = 30
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 20
+			prowess < 8
+		}
+		modifier = {
+			add = -30
+			has_trait = zealous
+		}
+		modifier = {
+			add = 40
+			is_at_war = yes
+		}
+	}
+	
+	ai_potential = {
+		is_any_demon = yes
+	}
+	
+	ai_frequency = 72
+}
+
+# ---- BESTOW CELESTIAL BLESSING ----
+celestial_blessing_interaction = {
+	category = interaction_category_friendly
+	
+	desc = celestial_blessing_interaction_desc
+	icon = diplomacy
+	
+	is_shown = {
+		scope:actor = {
+			is_powerful_angel = yes
+		}
+		scope:recipient = {
+			NOT = { has_character_modifier = celestial_blessed }
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			can_spend_mana_40 = yes
+		}
+		scope:recipient = {
+			NOT = { is_any_demon = yes }
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			spend_mana_40 = yes
+			add_piety = 100
+		}
+		scope:recipient = {
+			add_character_modifier = {
+				modifier = celestial_blessed
+				years = 10
+			}
+			add_opinion = {
+				target = scope:actor
+				modifier = blessed_by_angel
+				years = -1
+			}
+		}
+	}
+	
+	ai_accept = {
+		base = 80
+		modifier = {
+			add = -100
+			has_trait = cynical
+		}
+	}
+	
+	ai_potential = {
+		is_powerful_angel = yes
+	}
+	
+	ai_frequency = 36
+}
+
+# ---- HIRE MAGE HUNTER ----
+hire_mage_hunter_interaction = {
+	category = interaction_category_friendly
+	
+	desc = hire_mage_hunter_interaction_desc
+	icon = intrigue
+	
+	is_shown = {
+		scope:recipient = {
+			is_any_mage_hunter = yes
+		}
+		scope:actor = {
+			NOT = { is_any_mage = yes }
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			gold >= 200
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			add_gold = -200
+		}
+		scope:recipient = {
+			add_gold = 200
+			set_employer = scope:actor
+		}
+	}
+	
+	ai_accept = {
+		base = 40
+		modifier = {
+			add = 30
+			scope:actor = { gold >= 400 }
+		}
+	}
+	
+	ai_frequency = 60
+}
+
+# ---- CURSE TARGET ----
+curse_target_interaction = {
+	category = interaction_category_hostile
+	
+	desc = curse_target_interaction_desc
+	icon = intrigue
+	hidden = yes
+	
+	is_shown = {
+		scope:actor = {
+			OR = {
+				has_lifestyle_perk = curse_weaver
+				is_any_demon = yes
+			}
+		}
+	}
+	
+	on_accept = {
+		scope:recipient = {
+			save_scope_as = curse_target
+		}
+		scope:actor = {
+			trigger_event = curse_events.0002
+		}
+	}
+	
+	ai_accept = {
+		base = 0  # Hidden interaction, always accepted
+	}
+}
+
+# ---- SHARE MAGICAL KNOWLEDGE ----
+share_knowledge_interaction = {
+	category = interaction_category_friendly
+	
+	desc = share_knowledge_interaction_desc
+	icon = learning
+	
+	is_shown = {
+		scope:actor = {
+			is_practicing_mage = yes
+		}
+		scope:recipient = {
+			is_practicing_mage = yes
+			NOT = { this = scope:actor }
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			gain_arcane_xp = { VALUE = 15 }
+			add_opinion = {
+				target = scope:recipient
+				modifier = shared_knowledge
+				years = 5
+			}
+		}
+		scope:recipient = {
+			gain_arcane_xp = { VALUE = 15 }
+			add_opinion = {
+				target = scope:actor
+				modifier = shared_knowledge
+				years = 5
+			}
+		}
+	}
+	
+	ai_accept = {
+		base = 30
+		modifier = {
+			add = 40
+			opinion = { target = scope:actor value >= 30 }
+		}
+		modifier = {
+			add = -60
+			opinion = { target = scope:actor value < 0 }
+		}
+	}
+	
+	ai_potential = {
+		is_practicing_mage = yes
+	}
+	
+	ai_frequency = 24
+}

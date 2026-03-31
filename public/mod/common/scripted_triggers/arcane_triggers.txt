@@ -1,0 +1,365 @@
+# ============================================================
+# ARCANE DOMINION - common/scripted_triggers/arcane_triggers.txt
+# Reusable trigger conditions for magic system
+# ============================================================
+
+# ---- MAGE TIER CHECKS ----
+
+is_any_mage = {
+	OR = {
+		has_trait = arcane_spark
+		has_trait = mage_initiate
+		has_trait = mage_adept
+		has_trait = mage_journeyman
+		has_trait = mage_expert
+		has_trait = mage_master
+		has_trait = archmage
+	}
+}
+
+is_practicing_mage = {
+	OR = {
+		has_trait = mage_adept
+		has_trait = mage_journeyman
+		has_trait = mage_expert
+		has_trait = mage_master
+		has_trait = archmage
+	}
+}
+
+is_powerful_mage = {
+	OR = {
+		has_trait = mage_expert
+		has_trait = mage_master
+		has_trait = archmage
+	}
+}
+
+is_master_level_mage = {
+	OR = {
+		has_trait = mage_master
+		has_trait = archmage
+	}
+}
+
+# ---- DEMON CHECKS ----
+
+is_any_demon = {
+	OR = {
+		has_trait = demon_low
+		has_trait = demon_mid
+		has_trait = demon_high
+		has_trait = demon_legendary
+	}
+}
+
+is_powerful_demon = {
+	OR = {
+		has_trait = demon_high
+		has_trait = demon_legendary
+	}
+}
+
+# ---- ANGEL CHECKS ----
+
+is_any_angel = {
+	OR = {
+		has_trait = angel_lesser
+		has_trait = angel_greater
+		has_trait = angel_archangel
+		has_trait = celestial_ascended
+	}
+}
+
+is_powerful_angel = {
+	OR = {
+		has_trait = angel_archangel
+		has_trait = celestial_ascended
+	}
+}
+
+# ---- MAGICAL BEING CHECKS ----
+
+is_supernatural_being = {
+	OR = {
+		is_any_mage = yes
+		is_any_demon = yes
+		is_any_angel = yes
+	}
+}
+
+is_magical_threat = {
+	OR = {
+		is_powerful_mage = yes
+		is_powerful_demon = yes
+		is_powerful_angel = yes
+	}
+}
+
+can_learn_magic = {
+	NOT = { has_trait = mundane_soul }
+	NOT = { is_any_mage = yes }
+	learning >= 6
+	age >= 10
+}
+
+# ---- MANA CHECKS ----
+
+has_mana_system = {
+	has_variable = arcane_mana
+}
+
+has_low_mana = {
+	has_variable = arcane_mana
+	var:arcane_mana < 20
+}
+
+has_moderate_mana = {
+	has_variable = arcane_mana
+	var:arcane_mana >= 20
+	var:arcane_mana < 50
+}
+
+has_high_mana = {
+	has_variable = arcane_mana
+	var:arcane_mana >= 50
+}
+
+has_full_mana = {
+	has_variable = arcane_mana
+	has_variable = arcane_mana_max
+	var:arcane_mana >= var:arcane_mana_max
+}
+
+can_spend_mana_25 = {
+	has_variable = arcane_mana
+	var:arcane_mana >= 25
+}
+
+can_spend_mana_50 = {
+	has_variable = arcane_mana
+	var:arcane_mana >= 50
+}
+
+can_spend_mana_100 = {
+	has_variable = arcane_mana
+	var:arcane_mana >= 100
+}
+
+# ---- SPECIALIZATION CHECKS ----
+
+has_elemental_specialization = {
+	OR = {
+		has_trait = spec_pyromancer
+		has_trait = spec_cryomancer
+		has_trait = spec_storm_caller
+	}
+}
+
+has_dark_specialization = {
+	OR = {
+		has_trait = spec_necromancer
+		has_trait = spec_blood_mage
+		has_trait = spec_void_walker
+	}
+}
+
+has_support_specialization = {
+	OR = {
+		has_trait = spec_healer
+		has_trait = spec_diviner
+		has_trait = spec_golemancer
+	}
+}
+
+# ---- MAGE HUNTER CHECKS ----
+
+is_any_mage_hunter = {
+	OR = {
+		has_trait = mage_hunter_initiate
+		has_trait = mage_hunter_adept
+		has_trait = mage_hunter_master
+	}
+}
+
+is_master_mage_hunter = {
+	has_trait = mage_hunter_master
+}
+
+# ---- ALIGNMENT CHECKS ----
+
+has_dark_alignment = {
+	OR = {
+		is_any_demon = yes
+		has_trait = spec_necromancer
+		has_trait = spec_blood_mage
+		has_trait = spec_void_walker
+		has_trait = soul_tainted
+		has_trait = cursed_bloodline
+	}
+}
+
+has_light_alignment = {
+	OR = {
+		is_any_angel = yes
+		has_trait = spec_healer
+		piety >= 1000
+	}
+}
+
+has_neutral_alignment = {
+	NOR = {
+		has_dark_alignment = yes
+		has_light_alignment = yes
+	}
+}
+
+# ---- BUILDING CHECKS ----
+
+has_magic_laboratory = {
+	capital_county = {
+		OR = {
+			has_building = magic_laboratory
+			has_building = magic_laboratory_tier_2
+			has_building = magic_laboratory_tier_3
+			has_building = magic_laboratory_tier_4
+		}
+	}
+}
+
+has_advanced_laboratory = {
+	capital_county = {
+		OR = {
+			has_building = magic_laboratory_tier_3
+			has_building = magic_laboratory_tier_4
+		}
+	}
+}
+
+has_arcane_tower = {
+	capital_county = {
+		OR = {
+			has_building = arcane_tower
+			has_building = arcane_tower_tier_2
+		}
+	}
+}
+
+# ---- COMPANION CHECKS ----
+
+has_magical_companion = {
+	has_character_modifier = has_companion
+}
+
+has_elemental_companion = {
+	OR = {
+		has_character_modifier = fire_elemental_companion
+		has_character_modifier = ice_elemental_companion
+		has_character_modifier = storm_elemental_companion
+	}
+}
+
+has_familiar = {
+	OR = {
+		has_character_modifier = familiar_bonded
+		has_character_modifier = demonic_familiar
+		has_character_modifier = celestial_familiar
+	}
+}
+
+# ---- ARTIFACT CHECKS ----
+
+has_magical_artifact = {
+	any_artifact = {
+		has_artifact_modifier = arcane_artifact
+	}
+}
+
+has_legendary_artifact = {
+	any_artifact = {
+		has_artifact_modifier = legendary_arcane_artifact
+	}
+}
+
+# ---- EVENT COOLDOWN CHECKS ----
+
+can_trigger_awakening = {
+	NOT = { has_character_modifier = awakening_attempted }
+	NOT = { is_any_mage = yes }
+	NOT = { has_trait = mundane_soul }
+}
+
+can_attend_tournament = {
+	NOT = { has_character_modifier = tournament_cooldown }
+	is_practicing_mage = yes
+}
+
+can_perform_ritual = {
+	NOT = { has_character_modifier = ritual_cooldown }
+	is_any_mage = yes
+}
+
+can_craft_artifact = {
+	NOT = { has_character_modifier = crafting_artifact }
+	is_master_level_mage = yes
+	has_advanced_laboratory = yes
+}
+
+# ---- RELATIONSHIP CHECKS ----
+
+is_magical_rival = {
+	is_any_mage = yes
+	opinion = { target = root value < -20 }
+}
+
+is_magical_ally = {
+	is_any_mage = yes
+	opinion = { target = root value >= 30 }
+}
+
+can_be_magical_teacher = {
+	OR = {
+		has_trait = mage_master
+		has_trait = archmage
+		has_trait = arcane_teacher
+	}
+}
+
+can_be_magical_student = {
+	can_learn_magic = yes
+	NOT = { has_character_modifier = student_of_magic }
+}
+
+# ---- COMBAT CHECKS ----
+
+can_use_combat_magic = {
+	is_practicing_mage = yes
+	has_mana_system = yes
+	var:arcane_mana >= 20
+}
+
+has_magical_prowess_bonus = {
+	OR = {
+		has_character_modifier = battle_channeling_modifier
+		has_character_modifier = elemental_strike_modifier
+		has_character_modifier = magic_duel_boost
+	}
+}
+
+# ---- CORRUPTION CHECKS ----
+
+is_corrupted = {
+	OR = {
+		has_trait = soul_tainted
+		has_trait = cursed_bloodline
+		has_trait = bound_by_contract
+		has_character_modifier = demonic_corruption
+	}
+}
+
+can_be_purified = {
+	is_corrupted = yes
+	NOT = { has_trait = demon_high }
+	NOT = { has_trait = demon_legendary }
+	NOT = { has_trait = soul_forfeit }
+}

@@ -1,0 +1,582 @@
+# ============================================================
+# ARCANE DOMINION - events/laboratory_events.txt
+# Laboratory research, experiments, and discoveries
+# ============================================================
+
+namespace = laboratory_events
+
+# ============================================================
+# LABORATORY UPGRADE
+# ============================================================
+laboratory_events.0001 = {
+	type = character_event
+	title = laboratory_events.0001.t
+	desc = laboratory_events.0001.desc
+	picture = "gfx/event_illustrations/laboratory.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		add_gold = -300
+	}
+
+	option = {
+		name = laboratory_events.0001.a  # Upgrade successful
+		trigger = { learning >= 15 }
+		capital_county = {
+			if = {
+				limit = { has_building = magic_laboratory }
+				remove_building = magic_laboratory
+				add_building = magic_laboratory_tier_2
+			}
+			else_if = {
+				limit = { has_building = magic_laboratory_tier_2 }
+				remove_building = magic_laboratory_tier_2
+				add_building = magic_laboratory_tier_3
+			}
+			else_if = {
+				limit = { has_building = magic_laboratory_tier_3 }
+				remove_building = magic_laboratory_tier_3
+				add_building = magic_laboratory_tier_4
+			}
+		}
+		gain_arcane_xp = { VALUE = 40 }
+		add_prestige = 100
+	}
+
+	option = {
+		name = laboratory_events.0001.b  # Failed upgrade
+		trigger = { learning < 15 }
+		add_gold = -100
+		stress_impact = { base = 15 }
+	}
+}
+
+# ============================================================
+# RESEARCH EVENTS
+# ============================================================
+laboratory_events.0100 = {
+	type = character_event
+	title = laboratory_events.0100.t
+	desc = laboratory_events.0100.desc
+	picture = "gfx/event_illustrations/research.dds"
+
+	trigger = {
+		has_magic_laboratory = yes
+		is_any_mage = yes
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = laboratory_events.0100.a  # Research spells
+		trigger_event = laboratory_events.0101
+	}
+
+	option = {
+		name = laboratory_events.0100.b  # Research enchantments
+		trigger_event = laboratory_events.0102
+	}
+
+	option = {
+		name = laboratory_events.0100.c  # Research alchemy
+		trigger_event = laboratory_events.0103
+	}
+
+	option = {
+		name = laboratory_events.0100.d  # Skip research
+		custom_tooltip = laboratory_events.0100.d.tt
+	}
+}
+
+laboratory_events.0101 = {
+	type = character_event
+	title = laboratory_events.0101.t
+	desc = laboratory_events.0101.desc
+	picture = "gfx/event_illustrations/spell_research.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_25 = yes
+	}
+
+	random_list = {
+		40 = {
+			# New spell insight
+			modifier = { factor = 1.5 has_advanced_laboratory = yes }
+			option = {
+				name = laboratory_events.0101.a
+				gain_arcane_xp = { VALUE = 35 }
+				add_character_modifier = {
+					modifier = spell_breakthrough
+					months = 12
+				}
+			}
+		}
+		35 = {
+			# Incremental progress
+			option = {
+				name = laboratory_events.0101.b
+				gain_arcane_xp = { VALUE = 20 }
+				gain_mana_30 = yes
+			}
+		}
+		25 = {
+			# Failed experiment
+			option = {
+				name = laboratory_events.0101.c
+				health_impact_add = -0.3
+				gain_arcane_xp = { VALUE = 10 }
+			}
+		}
+	}
+}
+
+laboratory_events.0102 = {
+	type = character_event
+	title = laboratory_events.0102.t
+	desc = laboratory_events.0102.desc
+	picture = "gfx/event_illustrations/enchanting.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_30 = yes
+	}
+
+	option = {
+		name = laboratory_events.0102.a  # Enchant a weapon
+		trigger = { gold >= 100 }
+		add_gold = -100
+		add_character_modifier = {
+			modifier = enchanted_weapon_bonus
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 25 }
+	}
+
+	option = {
+		name = laboratory_events.0102.b  # Enchant armor
+		trigger = { gold >= 150 }
+		add_gold = -150
+		add_character_modifier = {
+			modifier = enchanted_armor_bonus
+			years = 5
+		}
+		gain_arcane_xp = { VALUE = 28 }
+	}
+
+	option = {
+		name = laboratory_events.0102.c  # Study enchantment theory
+		gain_arcane_xp = { VALUE = 30 }
+		add_learning_skill = 1
+	}
+}
+
+laboratory_events.0103 = {
+	type = character_event
+	title = laboratory_events.0103.t
+	desc = laboratory_events.0103.desc
+	picture = "gfx/event_illustrations/alchemy.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_25 = yes
+		add_gold = -50
+	}
+
+	option = {
+		name = laboratory_events.0103.a  # Brew healing potion
+		add_character_modifier = {
+			modifier = healing_potion_ready
+			years = 2
+		}
+		gain_arcane_xp = { VALUE = 15 }
+	}
+
+	option = {
+		name = laboratory_events.0103.b  # Brew mana potion
+		gain_mana_50 = yes
+		gain_arcane_xp = { VALUE = 18 }
+	}
+
+	option = {
+		name = laboratory_events.0103.c  # Brew strength elixir
+		add_character_modifier = {
+			modifier = strength_elixir_active
+			months = 12
+		}
+		gain_arcane_xp = { VALUE = 20 }
+	}
+
+	option = {
+		name = laboratory_events.0103.d  # Brew poison (intrigue)
+		trigger = { intrigue >= 12 }
+		add_character_modifier = {
+			modifier = magical_poison_ready
+			years = 3
+		}
+		gain_arcane_xp = { VALUE = 22 }
+		add_piety = -50
+	}
+}
+
+# ============================================================
+# DANGEROUS EXPERIMENTS
+# ============================================================
+laboratory_events.0200 = {
+	type = character_event
+	title = laboratory_events.0200.t
+	desc = laboratory_events.0200.desc
+	picture = "gfx/event_illustrations/dangerous_experiment.dds"
+
+	trigger = {
+		has_advanced_laboratory = yes
+		is_powerful_mage = yes
+	}
+
+	mean_time_to_happen = {
+		years = 3
+	}
+
+	option = {
+		name = laboratory_events.0200.a  # Void energy experiment
+		trigger = {
+			OR = {
+				has_trait = spec_void_walker
+				has_trait = archmage
+			}
+		}
+		trigger_event = laboratory_events.0201
+	}
+
+	option = {
+		name = laboratory_events.0200.b  # Soul binding experiment
+		trigger = { has_dark_alignment = yes }
+		trigger_event = laboratory_events.0202
+	}
+
+	option = {
+		name = laboratory_events.0200.c  # Life force experiment
+		trigger = { has_trait = spec_healer }
+		trigger_event = laboratory_events.0203
+	}
+
+	option = {
+		name = laboratory_events.0200.d  # Too dangerous
+		add_prestige = -25
+	}
+}
+
+laboratory_events.0201 = {
+	type = character_event
+	title = laboratory_events.0201.t
+	desc = laboratory_events.0201.desc
+	picture = "gfx/event_illustrations/void_experiment.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_80 = yes
+	}
+
+	random_list = {
+		30 = {
+			# Major success
+			modifier = { factor = 2 learning >= 25 }
+			option = {
+				name = laboratory_events.0201.a
+				add_trait = spec_void_walker
+				gain_arcane_xp = { VALUE = 100 }
+				add_character_modifier = {
+					modifier = void_mastery
+					years = -1
+				}
+			}
+		}
+		40 = {
+			# Partial success
+			option = {
+				name = laboratory_events.0201.b
+				gain_arcane_xp = { VALUE = 50 }
+				add_character_modifier = {
+					modifier = void_touched
+					years = 5
+				}
+			}
+		}
+		30 = {
+			# Catastrophe
+			option = {
+				name = laboratory_events.0201.c
+				health_impact_add = -2.0
+				add_trait = soul_tainted
+				capital_county = {
+					add_county_modifier = {
+						modifier = void_breach
+						years = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+laboratory_events.0202 = {
+	type = character_event
+	title = laboratory_events.0202.t
+	desc = laboratory_events.0202.desc
+	picture = "gfx/event_illustrations/soul_experiment.dds"
+
+	is_triggered_only = yes
+
+	trigger = {
+		any_prisoner = { always = yes }
+	}
+
+	immediate = {
+		spend_mana_60 = yes
+	}
+
+	option = {
+		name = laboratory_events.0202.a  # Perform the experiment
+		random_prisoner = {
+			death = { death_reason = death_sacrificed }
+		}
+		random_list = {
+			50 = {
+				gain_mana_100 = yes
+				gain_arcane_xp = { VALUE = 60 }
+				add_character_modifier = {
+					modifier = soul_empowered
+					years = 3
+				}
+			}
+			30 = {
+				gain_arcane_xp = { VALUE = 40 }
+				add_piety = -200
+			}
+			20 = {
+				health_impact_add = -1.5
+				add_trait = soul_tainted
+			}
+		}
+		add_piety = -400
+		add_dread = 30
+	}
+}
+
+laboratory_events.0203 = {
+	type = character_event
+	title = laboratory_events.0203.t
+	desc = laboratory_events.0203.desc
+	picture = "gfx/event_illustrations/life_experiment.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+		spend_mana_50 = yes
+	}
+
+	option = {
+		name = laboratory_events.0203.a  # Experiment succeeds
+		trigger = { learning >= 18 }
+		add_character_modifier = {
+			modifier = life_force_mastery
+			years = -1
+		}
+		gain_arcane_xp = { VALUE = 70 }
+		add_piety = 200
+	}
+
+	option = {
+		name = laboratory_events.0203.b  # Partial success
+		trigger = { learning >= 12 }
+		health_impact_add = 1.0
+		gain_arcane_xp = { VALUE = 40 }
+	}
+
+	option = {
+		name = laboratory_events.0203.c  # Failed
+		trigger = { learning < 12 }
+		health_impact_add = -0.5
+		stress_impact = { base = 20 }
+	}
+}
+
+# ============================================================
+# LABORATORY ACCIDENTS
+# ============================================================
+laboratory_events.0300 = {
+	type = character_event
+	title = laboratory_events.0300.t
+	desc = laboratory_events.0300.desc
+	picture = "gfx/event_illustrations/lab_accident.dds"
+
+	trigger = {
+		has_magic_laboratory = yes
+		is_any_mage = yes
+	}
+
+	mean_time_to_happen = {
+		years = 8
+		modifier = {
+			factor = 0.5
+			has_trait = arcane_overload
+		}
+	}
+
+	option = {
+		name = laboratory_events.0300.a  # Minor explosion
+		health_impact_add = -0.5
+		add_character_modifier = {
+			modifier = laboratory_accident_recovery
+			months = 6
+		}
+		capital_county = {
+			add_county_modifier = {
+				modifier = laboratory_damage
+				months = 12
+			}
+		}
+	}
+
+	option = {
+		name = laboratory_events.0300.b  # Contain the damage
+		trigger = { learning >= 18 }
+		gain_arcane_xp = { VALUE = 20 }
+		custom_tooltip = laboratory_events.0300.b.tt
+	}
+}
+
+# ============================================================
+# APPRENTICE TRAINING
+# ============================================================
+laboratory_events.0400 = {
+	type = character_event
+	title = laboratory_events.0400.t
+	desc = laboratory_events.0400.desc
+	picture = "gfx/event_illustrations/train_apprentice.dds"
+
+	trigger = {
+		has_magic_laboratory = yes
+		is_master_level_mage = yes
+		any_courtier = {
+			can_learn_magic = yes
+		}
+	}
+
+	mean_time_to_happen = {
+		years = 3
+	}
+
+	option = {
+		name = laboratory_events.0400.a  # Take an apprentice
+		random_courtier = {
+			limit = { can_learn_magic = yes }
+			save_scope_as = apprentice
+		}
+		scope:apprentice = {
+			add_trait = arcane_spark
+			initialize_mana_system = yes
+			add_character_modifier = {
+				modifier = student_of_magic
+				years = 5
+			}
+			add_opinion = {
+				target = root
+				modifier = grateful_teacher
+				years = -1
+			}
+		}
+		add_trait = arcane_teacher
+		gain_arcane_xp = { VALUE = 30 }
+	}
+
+	option = {
+		name = laboratory_events.0400.b  # No time for students
+		add_prestige = -20
+	}
+}
+
+# ============================================================
+# DISCOVERY EVENTS
+# ============================================================
+laboratory_events.0500 = {
+	type = character_event
+	title = laboratory_events.0500.t
+	desc = laboratory_events.0500.desc
+	picture = "gfx/event_illustrations/discovery.dds"
+
+	trigger = {
+		has_advanced_laboratory = yes
+		is_powerful_mage = yes
+	}
+
+	mean_time_to_happen = {
+		years = 5
+	}
+
+	option = {
+		name = laboratory_events.0500.a  # New magical formula
+		gain_arcane_xp = { VALUE = 50 }
+		add_character_modifier = {
+			modifier = formula_breakthrough
+			years = 5
+		}
+		check_mage_tier_upgrade = yes
+	}
+
+	option = {
+		name = laboratory_events.0500.b  # Ancient text translation
+		gain_arcane_xp = { VALUE = 40 }
+		add_learning_skill = 2
+		trigger_event = { id = laboratory_events.0501 days = 30 }
+	}
+
+	option = {
+		name = laboratory_events.0500.c  # New element discovered
+		gain_arcane_xp = { VALUE = 60 }
+		add_prestige = 200
+		add_character_modifier = {
+			modifier = elemental_discoverer
+			years = -1
+		}
+	}
+}
+
+laboratory_events.0501 = {
+	type = character_event
+	title = laboratory_events.0501.t
+	desc = laboratory_events.0501.desc
+	picture = "gfx/event_illustrations/ancient_text.dds"
+
+	is_triggered_only = yes
+
+	option = {
+		name = laboratory_events.0501.a  # Forbidden knowledge
+		trigger = { learning >= 20 }
+		gain_arcane_xp = { VALUE = 80 }
+		add_piety = -200
+		add_character_modifier = {
+			modifier = forbidden_knowledge
+			years = -1
+		}
+	}
+
+	option = {
+		name = laboratory_events.0501.b  # Useful but mundane
+		gain_arcane_xp = { VALUE = 30 }
+		add_gold = 100
+	}
+
+	option = {
+		name = laboratory_events.0501.c  # Dangerous - destroy it
+		add_piety = 100
+		gain_arcane_xp = { VALUE = 10 }
+	}
+}
