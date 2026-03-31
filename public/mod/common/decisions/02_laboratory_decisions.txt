@@ -1,0 +1,273 @@
+namespace = laboratory
+
+# Establish Magic Laboratory
+establish_laboratory = {
+	picture = "gfx/interface/illustrations/decisions/decision_laboratory.dds"
+	desc = establish_laboratory_desc
+	selection_tooltip = establish_laboratory_tooltip
+
+	is_shown = {
+		has_trait = mage
+		mana >= 10
+		location = { has_building = laboratory_building }
+	}
+
+	is_valid = {
+		mana >= 10
+		is_location_valid = yes
+		has_capital = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -10
+		set_character_flag = laboratory_established
+		capital_county = {
+			add_county_modifier = {
+				modifier = magical_laboratory
+				years = 20
+			}
+		}
+		add_character_modifier = {
+			modifier = laboratory_owner
+			years = 20
+		}
+	}
+
+	ai_chance = {
+		base = 30
+		modifier = {
+			add = 40
+			has_trait = scholar
+		}
+	}
+}
+
+# Conduct Research
+conduct_research = {
+	picture = "gfx/interface/illustrations/decisions/decision_research.dds"
+	desc = conduct_research_desc
+	selection_tooltip = conduct_research_tooltip
+
+	is_shown = {
+		has_character_flag = laboratory_established
+		mana >= 15
+	}
+
+	is_valid = {
+		mana >= 15
+		is_location_valid = yes
+		learning >= 12
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -15
+		add_mana = 25
+		add_character_modifier = {
+			modifier = arcane_research_boost
+			years = 3
+		}
+	}
+
+	ai_chance = {
+		base = 40
+		modifier = {
+			add = 60
+			has_trait = scholar
+		}
+	}
+}
+
+# Magical Experimentation
+magical_experimentation = {
+	picture = "gfx/interface/illustrations/decisions/decision_experimentation.dds"
+	desc = magical_experimentation_desc
+	selection_tooltip = magical_experimentation_tooltip
+
+	is_shown = {
+		has_character_flag = laboratory_established
+		mana >= 20
+	}
+
+	is_valid = {
+		mana >= 20
+		is_location_valid = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -20
+		random = {
+			chance = 30
+			effect = {
+				add_mana = 40
+				add_character_modifier = {
+					modifier = successful_experiment
+					years = 2
+				}
+			}
+		}
+		random = {
+			chance = 40
+			effect = {
+				add_character_modifier = {
+					modifier = failed_experiment
+					years = 2
+				}
+			}
+		}
+		random = {
+			chance = 30
+			effect = {
+				add_trait = maimed
+				add_character_modifier = {
+					modifier = experiment_mishap
+					years = 3
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		base = 20
+		modifier = {
+			add = 50
+			has_trait = reckless
+		}
+		modifier = {
+			add = -40
+			has_trait = cautious
+		}
+	}
+}
+
+# Create Magical Artifact
+create_artifact = {
+	picture = "gfx/interface/illustrations/decisions/decision_artifact.dds"
+	desc = create_artifact_desc
+	selection_tooltip = create_artifact_tooltip
+
+	is_shown = {
+		has_character_flag = laboratory_established
+		mana >= 40
+	}
+
+	is_valid = {
+		mana >= 40
+		is_location_valid = yes
+		learning >= 15
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -40
+		create_character_artifact = {
+			name = random
+			description = magical_artifact_description
+		}
+		add_character_modifier = {
+			modifier = artifact_crafter
+			years = 10
+		}
+	}
+
+	ai_chance = {
+		base = 20
+		modifier = {
+			add = 50
+			has_trait = scholar
+		}
+	}
+}
+
+# Enchant Item
+enchant_item = {
+	picture = "gfx/interface/illustrations/decisions/decision_enchant.dds"
+	desc = enchant_item_desc
+	selection_tooltip = enchant_item_tooltip
+
+	is_shown = {
+		has_character_flag = laboratory_established
+		mana >= 15
+	}
+
+	is_valid = {
+		mana >= 15
+		is_location_valid = yes
+		learning >= 10
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -15
+		add_prestige = 20
+		random_courtier = {
+			add_artifact = {
+				type = enchanted_item
+				name = enchanted_weapon
+			}
+		}
+	}
+
+	ai_chance = {
+		base = 25
+		modifier = {
+			add = 40
+			has_trait = scholar
+		}
+	}
+}
+
+# Brew Magical Potion
+brew_potion = {
+	picture = "gfx/interface/illustrations/decisions/decision_potion.dds"
+	desc = brew_potion_desc
+	selection_tooltip = brew_potion_tooltip
+
+	is_shown = {
+		has_character_flag = laboratory_established
+		mana >= 10
+	}
+
+	is_valid = {
+		mana >= 10
+		is_location_valid = yes
+		learning >= 8
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -10
+		add_character_modifier = {
+			modifier = potion_effects
+			years = 2
+		}
+	}
+
+	ai_chance = {
+		base = 35
+		modifier = {
+			add = 50
+			has_trait = scholar
+		}
+	}
+}

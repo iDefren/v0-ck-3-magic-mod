@@ -1,0 +1,130 @@
+# Magical Buildings and Structures
+
+laboratory_building = {
+	construction_time = 3
+	construction_cost = 600
+	
+	character_modifier = {
+		monthly_mana = 0.5
+		learning = 1
+	}
+	
+	character_construction_modifier = {
+		build_speed = 0.1
+	}
+	
+	ai_value = {
+		ai_value = 100
+		modifier = {
+			add = 50
+			has_trait = scholar
+		}
+	}
+}
+
+arcane_tower_building = {
+	construction_time = 4
+	construction_cost = 800
+	
+	character_modifier = {
+		monthly_mana = 1
+		learning = 2
+		arcane_knowledge = 5
+	}
+	
+	county_modifier = {
+		monthly_mana = 0.3
+	}
+	
+	ai_value = {
+		ai_value = 120
+		modifier = {
+			add = 80
+			has_trait = scholar
+		}
+	}
+}
+
+demonic_altar_building = {
+	construction_time = 3
+	construction_cost = 700
+	
+	character_modifier = {
+		monthly_mana = 0.7
+		dread = 1
+		corruption = 2
+	}
+	
+	county_modifier = {
+		loot = 0.15
+		monthly_mana = 0.2
+	}
+	
+	ai_value = {
+		ai_value = 100
+		modifier = {
+			add = 100
+			has_trait = demon
+		}
+	}
+}
+
+celestial_shrine_building = {
+	construction_time = 3
+	construction_cost = 700
+	
+	character_modifier = {
+		monthly_mana = 0.7
+		monthly_piety = 2
+		holiness = 1
+	}
+	
+	county_modifier = {
+		monthly_piety = 1
+		monthly_mana = 0.2
+	}
+	
+	ai_value = {
+		ai_value = 100
+		modifier = {
+			add = 100
+			has_trait = angel
+		}
+	}
+}
+
+runic_circle_building = {
+	construction_time = 2
+	construction_cost = 500
+	
+	character_modifier = {
+		monthly_mana = 0.3
+		spell_effectiveness = 2
+	}
+	
+	ai_value = {
+		ai_value = 80
+		modifier = {
+			add = 60
+			has_trait = mage
+		}
+	}
+}
+
+artifact_vault_building = {
+	construction_time = 5
+	construction_cost = 1000
+	
+	character_modifier = {
+		monthly_mana = 0.5
+		artifact_slots = 2
+	}
+	
+	ai_value = {
+		ai_value = 140
+		modifier = {
+			add = 100
+			has_trait = scholar
+		}
+	}
+}

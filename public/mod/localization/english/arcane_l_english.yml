@@ -1,0 +1,154 @@
+l_english:
+ # Traits
+ mage: "Mage"
+ mage_desc: "A practitioner of magic, wielding arcane forces to influence the world."
+ 
+ demon: "Demon"
+ demon_desc: "A being of demonic origin, corrupted by dark forces."
+ 
+ angel: "Angel"
+ angel_desc: "A celestial being blessed by heavenly power."
+ 
+ spell_caster: "Spell Caster"
+ spell_caster_desc: "Trained in the art of spellcasting."
+ 
+ curse_wielder: "Curse Wielder"
+ curse_wielder_desc: "Master of curses and hexes."
+ 
+ mana_affinity: "Mana Affinity"
+ mana_affinity_desc: "Natural connection to magical energies."
+ 
+ arcane_scholar: "Arcane Scholar"
+ arcane_scholar_desc: "A scholar of magical knowledge."
+ 
+ demonologist: "Demonologist"
+ demonologist_desc: "Student of demonic lore and summoning."
+ 
+ celestial_blessed: "Celestial Blessed"
+ celestial_blessed_desc: "Blessed by celestial powers."
+ 
+ transformation_demon: "Demonic Transformation"
+ transformation_demon_desc: "Can transform into a demonic form."
+ 
+ transformation_angel: "Angelic Transformation"
+ transformation_angel_desc: "Can transform into an angelic form."
+ 
+ # Decisions
+ ritual_of_power_desc: "Perform a ritual to harness mana and increase personal power."
+ ritual_of_power_tooltip: "Requires 20 mana."
+ 
+ summon_familiar_desc: "Summon a magical familiar to aid you in your endeavors."
+ summon_familiar_tooltip: "Requires 15 mana and learning 10+."
+ 
+ ritual_dark_binding_desc: "Perform a dark ritual to bind demonic power to yourself."
+ ritual_dark_binding_tooltip: "Requires 30 mana. Corruption increases."
+ ritual_dark_binding_effect_tooltip: "You have performed a dark ritual."
+ 
+ ritual_heavenly_light_desc: "Perform a ritual of heavenly light to purify yourself."
+ ritual_heavenly_light_tooltip: "Requires 25 mana."
+ ritual_heavenly_light_effect_tooltip: "You have been blessed by heavenly light."
+ 
+ bind_contract_desc: "Bind a contract with demonic or celestial forces."
+ bind_contract_tooltip: "Requires 20 mana and demon/angel trait."
+ 
+ siphon_life_force_desc: "Siphon the life force of others to fuel your magic."
+ siphon_life_force_tooltip: "Requires 25 mana. Corruption increases."
+ 
+ purification_ritual_desc: "Perform a ritual to cleanse corruption."
+ purification_ritual_tooltip: "Requires 20 mana and corruption."
+ purification_ritual_success: "You have been purified of corruption."
+ 
+ # Laboratory Decisions
+ establish_laboratory_desc: "Establish a magical laboratory in your capital for research."
+ establish_laboratory_tooltip: "Requires 10 mana and a laboratory building."
+ 
+ conduct_research_desc: "Conduct magical research in your laboratory."
+ conduct_research_tooltip: "Requires 15 mana and learning 12+."
+ 
+ magical_experimentation_desc: "Conduct dangerous magical experimentation."
+ magical_experimentation_tooltip: "Requires 20 mana. Results may vary."
+ 
+ create_artifact_desc: "Create a powerful magical artifact."
+ create_artifact_tooltip: "Requires 40 mana and learning 15+."
+ 
+ enchant_item_desc: "Enchant an item with magical properties."
+ enchant_item_tooltip: "Requires 15 mana and learning 10+."
+ 
+ brew_potion_desc: "Brew a magical potion for various effects."
+ brew_potion_tooltip: "Requires 10 mana and learning 8+."
+ 
+ # Modifiers
+ laboratory_owner: "Laboratory Owner"
+ arcane_research_boost: "Arcane Research Boost"
+ successful_experiment: "Successful Experiment"
+ failed_experiment: "Failed Experiment"
+ experiment_mishap: "Experiment Mishap"
+ artifact_crafter: "Artifact Crafter"
+ potion_effects: "Potion Effects"
+ 
+ # Events
+ arcane_awakening_title: "Arcane Awakening"
+ arcane_awakening_desc: "You feel a stirring of magical power within you."
+ 
+ mana_surge_title: "Mana Surge"
+ mana_surge_desc: "Your magical energy surges uncontrollably!"
+ 
+ demonic_temptation_title: "Demonic Temptation"
+ demonic_temptation_desc: "A demonic force tempts you with power."
+ 
+ celestial_vision_title: "Celestial Vision"
+ celestial_vision_desc: "You receive a vision from the heavens."
+ 
+ familiar_bonded_title: "Familiar Bonded"
+ familiar_bonded_desc: "You have successfully bonded with your familiar."
+ 
+ demonic_familiar_title: "Demonic Familiar"
+ demonic_familiar_desc: "Your familiar is a demon."
+ 
+ celestial_familiar_title: "Celestial Familiar"
+ celestial_familiar_desc: "Your familiar is a celestial being."
+ 
+ arcane_familiar_title: "Arcane Familiar"
+ arcane_familiar_desc: "Your familiar is a magical creature."
+ 
+ spell_learned_title: "Spell Learned"
+ spell_learned_desc: "You have learned a new spell."
+ 
+ curse_created_title: "Curse Created"
+ curse_created_desc: "You have created a curse."
+ 
+ transformation_achieved_title: "Transformation Achieved"
+ transformation_achieved_desc: "You have achieved a transformation."
+ 
+ demonic_pact_title: "Demonic Pact"
+ demonic_pact_desc: "You have made a pact with demonic forces."
+ 
+ celestial_covenant_title: "Celestial Covenant"
+ celestial_covenant_desc: "You have made a covenant with celestial forces."
+ 
+ mage_hunter_confrontation_title: "Confronted by Mage Hunter"
+ mage_hunter_confrontation_desc: "A mage hunter has discovered your magical nature."
+ 
+ magical_tournament_title: "Magical Tournament"
+ magical_tournament_desc: "You are invited to a grand tournament of mages."
+ 
+ magical_artifact_discovered_title: "Artifact Discovered"
+ magical_artifact_discovered_desc: "You have discovered a powerful magical artifact."
+ 
+ # Buildings
+ laboratory_building: "Magical Laboratory"
+ arcane_tower_building: "Arcane Tower"
+ demonic_altar_building: "Demonic Altar"
+ celestial_shrine_building: "Celestial Shrine"
+ runic_circle_building: "Runic Circle"
+ artifact_vault_building: "Artifact Vault"
+ 
+ # Lifestyle
+ arcane_lifestyle: "Arcane Path"
+ arcane_lifestyle_desc: "Follow the path of pure magic and knowledge."
+ 
+ demonic_lifestyle: "Demonic Path"
+ demonic_lifestyle_desc: "Embrace demonic power and corruption."
+ 
+ celestial_lifestyle: "Celestial Path"
+ celestial_lifestyle_desc: "Pursue celestial blessings and divine power."

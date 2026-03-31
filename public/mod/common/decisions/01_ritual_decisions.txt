@@ -1,0 +1,288 @@
+namespace = ritual
+
+# Ritual of Power
+ritual_of_power = {
+	picture = "gfx/interface/illustrations/decisions/decision_ritual.dds"
+	desc = ritual_of_power_desc
+	selection_tooltip = ritual_of_power_tooltip
+
+	is_shown = {
+		has_trait = mage
+		mana >= 20
+	}
+
+	is_valid = {
+		mana >= 20
+		is_location_valid = yes
+		NOT = { has_character_flag = performing_ritual }
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		set_character_flag = performing_ritual
+		add_mana = -20
+		add_personal_scheme_power = {
+			scheme = active_schemes
+			power = 30
+		}
+		create_character_event = { on_action = ritual_complete }
+	}
+
+	ai_chance = {
+		base = 20
+		modifier = {
+			add = 30
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 20
+			has_trait = scholar
+		}
+	}
+}
+
+# Summon Familiar
+summon_familiar = {
+	picture = "gfx/interface/illustrations/decisions/decision_familiar.dds"
+	desc = summon_familiar_desc
+	selection_tooltip = summon_familiar_tooltip
+
+	is_shown = {
+		has_trait = mage
+		mana >= 15
+		NOT = { has_character_flag = has_familiar }
+	}
+
+	is_valid = {
+		mana >= 15
+		is_location_valid = yes
+		learning >= 10
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -15
+		set_character_flag = has_familiar
+		if = {
+			limit = { has_trait = demon }
+			set_character_flag = demonic_familiar
+		}
+		else_if = {
+			limit = { has_trait = angel }
+			set_character_flag = celestial_familiar
+		}
+		else = {
+			set_character_flag = arcane_familiar
+		}
+		custom_tooltip = summon_familiar_effect_tooltip
+	}
+
+	ai_chance = {
+		base = 25
+		modifier = {
+			add = 40
+			has_trait = scholar
+		}
+	}
+}
+
+# Ritual of Dark Binding
+ritual_dark_binding = {
+	picture = "gfx/interface/illustrations/decisions/decision_dark_ritual.dds"
+	desc = ritual_dark_binding_desc
+	selection_tooltip = ritual_dark_binding_tooltip
+
+	is_shown = {
+		has_trait = demon
+		mana >= 30
+	}
+
+	is_valid = {
+		mana >= 30
+		is_location_valid = yes
+		NOT = { has_character_flag = performing_ritual }
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		set_character_flag = performing_ritual
+		add_mana = -30
+		add_trait = corrupted
+		add_dread = 10
+		custom_tooltip = ritual_dark_binding_effect_tooltip
+	}
+
+	ai_chance = {
+		base = 15
+		modifier = {
+			add = 50
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 35
+			has_trait = vengeful
+		}
+	}
+}
+
+# Ritual of Heavenly Light
+ritual_heavenly_light = {
+	picture = "gfx/interface/illustrations/decisions/decision_light_ritual.dds"
+	desc = ritual_heavenly_light_desc
+	selection_tooltip = ritual_heavenly_light_tooltip
+
+	is_shown = {
+		has_trait = angel
+		mana >= 25
+	}
+
+	is_valid = {
+		mana >= 25
+		is_location_valid = yes
+		NOT = { has_character_flag = performing_ritual }
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		set_character_flag = performing_ritual
+		add_mana = -25
+		add_piety = 100
+		add_prestige = 30
+		custom_tooltip = ritual_heavenly_light_effect_tooltip
+	}
+
+	ai_chance = {
+		base = 20
+		modifier = {
+			add = 40
+			has_trait = zealous
+		}
+	}
+}
+
+# Bind Contract
+bind_contract = {
+	picture = "gfx/interface/illustrations/decisions/decision_contract.dds"
+	desc = bind_contract_desc
+	selection_tooltip = bind_contract_tooltip
+
+	is_shown = {
+		has_trait = mage
+		mana >= 20
+		OR = {
+			has_trait = demon
+			has_trait = angel
+		}
+	}
+
+	is_valid = {
+		mana >= 20
+		is_location_valid = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -20
+		set_character_flag = contract_bound
+		if = {
+			limit = { has_trait = demon }
+			add_trait = ambition_realized
+			add_prestige = 50
+		}
+		else_if = {
+			limit = { has_trait = angel }
+			add_piety = 75
+			add_prestige = 40
+		}
+	}
+
+	ai_chance = {
+		base = 30
+		modifier = {
+			add = 50
+			has_trait = ambitious
+		}
+	}
+}
+
+# Siphon Life Force
+siphon_life_force = {
+	picture = "gfx/interface/illustrations/decisions/decision_siphon.dds"
+	desc = siphon_life_force_desc
+	selection_tooltip = siphon_life_force_tooltip
+
+	is_shown = {
+		has_trait = demon
+		mana >= 25
+	}
+
+	is_valid = {
+		mana >= 25
+		is_location_valid = yes
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -25
+		add_mana = 50
+		add_trait = corrupted
+		custom_tooltip = siphon_life_force_tooltip
+	}
+
+	ai_chance = {
+		base = 25
+		modifier = {
+			add = 60
+			has_trait = ambitious
+		}
+	}
+}
+
+# Purification Ritual
+purification_ritual = {
+	picture = "gfx/interface/illustrations/decisions/decision_purification.dds"
+	desc = purification_ritual_desc
+	selection_tooltip = purification_ritual_tooltip
+
+	is_shown = {
+		has_trait = angel
+		has_trait = corrupted
+		mana >= 20
+	}
+
+	is_valid = {
+		mana >= 20
+		is_location_valid = yes
+		is_capable_adult = yes
+	}
+
+	effect = {
+		add_mana = -20
+		remove_trait = corrupted
+		add_piety = 50
+		custom_tooltip = purification_ritual_success
+	}
+
+	ai_chance = {
+		base = 50
+		modifier = {
+			add = 50
+			has_trait = zealous
+		}
+	}
+}
