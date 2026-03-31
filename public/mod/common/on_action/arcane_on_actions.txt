@@ -1,158 +1,101 @@
 # ============================================================
 # ARCANE DOMINION - common/on_action/arcane_on_actions.txt
-# Hooks into CK3 on_actions for monthly pulse, duel, battle
+# Hooks into CK3 on_actions for game events
 # ============================================================
 
-on_monthly_pulse = {
+# Monthly check for mana regeneration
+on_monthly = {
+	on_actions = {
+		arcane_monthly_pulse
+	}
+}
+
+arcane_monthly_pulse = {
+	trigger = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+			has_trait = demon_low
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+			has_trait = angel_lesser
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
 	events = {
-		arcane.0600  # Monthly mana regen check
+		arcane.0600
+	}
+}
+
+# Hook into trait gain for mana initialization
+on_character_gained_trait = {
+	trigger = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = demon_low
+			has_trait = angel_lesser
+		}
+		NOT = { has_variable = arcane_mana }
 	}
 	effect = {
-		every_player = {
-			limit = {
-				OR = {
-					has_trait = arcane_spark
-					has_trait = mage_initiate
-					has_trait = mage_adept
-					has_trait = mage_journeyman
-					has_trait = mage_expert
-					has_trait = mage_master
-					has_trait = archmage
-					has_trait = demon_low
-					has_trait = demon_mid
-					has_trait = demon_high
-					has_trait = demon_legendary
-					has_trait = angel_lesser
-					has_trait = angel_greater
-					has_trait = angel_archangel
-					has_trait = celestial_ascended
-				}
-			}
-			monthly_mana_regen = yes
+		set_variable = {
+			name = arcane_mana
+			value = 0
+		}
+		set_variable = {
+			name = arcane_mana_max
+			value = 100
+		}
+		set_variable = {
+			name = arcane_xp
+			value = 0
 		}
 	}
 }
 
-# Hook into duels to add experience and modify chances
-on_duel_started = {
-	effect = {
-		if = {
-			limit = {
-				OR = {
-					has_trait = mage_adept
-					has_trait = mage_journeyman
-					has_trait = mage_expert
-					has_trait = mage_master
-					has_trait = archmage
-				}
-			}
-			trigger_event = arcane.0700
-		}
-		if = {
-			limit = {
-				OR = {
-					has_trait = mage_hunter_adept
-					has_trait = mage_hunter_master
-				}
-			}
-			trigger_event = mage_hunter.0100
+# Combat magic when duel starts
+on_combat_start = {
+	trigger = {
+		OR = {
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
 		}
 	}
-}
-
-# Hook into trait gain for mana init
-on_trait_gain = {
-	effect = {
-		if = {
-			limit = {
-				OR = {
-					has_trait = arcane_spark
-					has_trait = mage_initiate
-					has_trait = demon_low
-					has_trait = angel_lesser
-				}
-				NOT = { has_variable = arcane_mana }
-			}
-			initialize_mana_system = yes
-		}
-	}
-}
-
-# Duel - mage vs mage - experience boosts chance significantly
-on_duel_end = {
-	effect = {
-		if = {
-			limit = { has_trait = mage_master }
-			gain_arcane_xp = { VALUE = 20 }
-		}
-		else_if = {
-			limit = { has_trait = mage_expert }
-			gain_arcane_xp = { VALUE = 15 }
-		}
-		else_if = {
-			limit = { has_trait = mage_adept }
-			gain_arcane_xp = { VALUE = 10 }
-		}
-	}
-}
-
-# Hook into battle start for mage commander events
-on_battle_started = {
-	effect = {
-		commander = {
-			if = {
-				limit = {
-					OR = {
-						has_trait = mage_expert
-						has_trait = mage_master
-						has_trait = archmage
-					}
-				}
-				trigger_event = battle_magic.0001
-			}
-			if = {
-				limit = {
-					OR = {
-						has_trait = demon_high
-						has_trait = demon_legendary
-					}
-				}
-				trigger_event = battle_magic.0010
-			}
-			if = {
-				limit = {
-					OR = {
-						has_trait = angel_archangel
-						has_trait = celestial_ascended
-					}
-				}
-				trigger_event = battle_magic.0020
-			}
-		}
-	}
-}
-
-# Random magical crises trigger
-on_yearly_pulse = {
 	events = {
-		arcane.9000  # Check for magical crisis conditions
+		arcane.0700
 	}
-	effect = {
-		# Random magical events for mages
-		every_player = {
-			limit = {
-				OR = {
-					has_trait = mage_journeyman
-					has_trait = mage_expert
-					has_trait = mage_master
-					has_trait = archmage
-				}
-				random <= 15
-			}
-			trigger_event = {
-				id = arcane.0800
-				months = { 1 12 }
-			}
+}
+
+# Random yearly magical events
+on_yearly = {
+	random_events = {
+		chance_to_happen = 15
+		100 = arcane.0800
+	}
+	trigger = {
+		OR = {
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
 		}
 	}
 }

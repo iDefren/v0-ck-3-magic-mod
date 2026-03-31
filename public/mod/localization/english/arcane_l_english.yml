@@ -257,6 +257,60 @@ l_english:
  
  need_mana_25: "Requires at least 25 mana"
  
+ # Ritual Decisions
+ ritual_of_power_title: "Ritual of Power"
+ ritual_of_power_desc: "Perform a ritual to channel magical energy and gain power."
+ ritual_of_power_tooltip: "Perform a ritual to enhance your magical abilities."
+ 
+ summon_familiar_title: "Summon Familiar"
+ summon_familiar_desc: "Summon a magical familiar to serve as your companion and aide."
+ summon_familiar_tooltip: "Summon a magical creature bound to your will."
+ 
+ ritual_dark_binding_title: "Ritual of Dark Binding"
+ ritual_dark_binding_desc: "Perform a dark ritual to bind demonic energy to your soul."
+ ritual_dark_binding_tooltip: "Embrace the darkness to gain forbidden power."
+ 
+ ritual_heavenly_light_title: "Ritual of Heavenly Light"
+ ritual_heavenly_light_desc: "Channel the divine light to purify and strengthen yourself."
+ ritual_heavenly_light_tooltip: "Invoke celestial power through sacred ritual."
+ 
+ bind_contract_title: "Bind Contract"
+ bind_contract_desc: "Use your supernatural nature to forge binding contracts."
+ bind_contract_tooltip: "Create a mystical contract empowered by your nature."
+ 
+ siphon_life_force_title: "Siphon Life Force"
+ siphon_life_force_desc: "Drain life energy from the world around you to restore your power."
+ siphon_life_force_tooltip: "Absorb ambient life force to replenish mana."
+ 
+ purification_ritual_title: "Purification Ritual"
+ purification_ritual_desc: "Perform a holy ritual to cleanse yourself of dark corruption."
+ purification_ritual_tooltip: "Remove the taint of darkness through divine power."
+ 
+ # Laboratory Decisions
+ establish_laboratory_title: "Establish Magic Laboratory"
+ establish_laboratory_desc: "Create a dedicated space for magical research and experimentation."
+ establish_laboratory_tooltip: "Build a laboratory to conduct magical research."
+ 
+ conduct_research_title: "Conduct Magical Research"
+ conduct_research_desc: "Spend time in your laboratory studying the arcane arts."
+ conduct_research_tooltip: "Research magic to gain knowledge and power."
+ 
+ magical_experimentation_title: "Magical Experimentation"
+ magical_experimentation_desc: "Conduct dangerous experiments to push the boundaries of magic."
+ magical_experimentation_tooltip: "Risk danger for potentially great rewards."
+ 
+ create_artifact_title: "Create Magical Artifact"
+ create_artifact_desc: "Use your expertise to craft a powerful magical item."
+ create_artifact_tooltip: "Forge a magical artifact in your laboratory."
+ 
+ enchant_item_title: "Enchant Item"
+ enchant_item_desc: "Imbue an ordinary item with magical properties."
+ enchant_item_tooltip: "Add magical enchantments to an item."
+ 
+ brew_potion_title: "Brew Magical Potion"
+ brew_potion_desc: "Create a magical elixir with beneficial effects."
+ brew_potion_tooltip: "Brew a potion in your laboratory."
+ 
  # ============================================================
  # EVENT LOCALIZATION
  # ============================================================

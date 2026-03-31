@@ -6,573 +6,421 @@
 # ---- DEMON TIERS ----
 
 demon_low = {
-	category = lifestyle
-	description = demon_low_desc
-	group = demon_tier
-	index = 0
+	desc = demon_low_desc
 	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended }
 
-	monthly_character_modifier = {
-		prowess = 3
-		intrigue = 3
-		monthly_piety = -1.5
-		monthly_prestige = 0.5
-		arcane_mana_regen = 8
-		health = 0.5
-		corruption_power = 10
-	}
+	prowess = 3
+	intrigue = 3
 
-	portrait_modifier = {
-		demonic_horns_low = yes
-	}
+	monthly_piety = -1.5
+	monthly_prestige = 0.5
+	health = 0.5
 
-	cost = 0
-	icon = demon_low
+	general_opinion = -15
+	clergy_opinion = -30
+
+	ruler_designer_cost = 50
 }
 
 demon_mid = {
-	category = lifestyle
-	description = demon_mid_desc
-	group = demon_tier
-	index = 1
-	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended }
+	desc = demon_mid_desc
+	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended demon_low }
 
-	monthly_character_modifier = {
-		prowess = 5
-		intrigue = 5
-		diplomacy = 2
-		monthly_piety = -2.5
-		monthly_prestige = 1.0
-		arcane_mana_regen = 18
-		health = 1.0
-		corruption_power = 20
-		arcane_spell_success_chance_add = 10
-	}
+	prowess = 5
+	intrigue = 5
+	diplomacy = 2
 
-	portrait_modifier = {
-		demonic_horns_mid = yes
-		black_wings = yes
-	}
+	monthly_piety = -2.5
+	monthly_prestige = 1.0
+	health = 1.0
 
-	on_gain = {
-		trigger_event = demon.0010
-	}
-	cost = 0
-	icon = demon_mid
+	general_opinion = -20
+	clergy_opinion = -50
+
+	ruler_designer_cost = 100
 }
 
 demon_high = {
-	category = lifestyle
-	description = demon_high_desc
-	group = demon_tier
-	index = 2
-	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended }
+	desc = demon_high_desc
+	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended demon_low demon_mid }
 
-	monthly_character_modifier = {
-		prowess = 8
-		intrigue = 8
-		diplomacy = 3
-		monthly_piety = -4.0
-		monthly_prestige = 2.0
-		arcane_mana_regen = 35
-		health = 2.0
-		corruption_power = 35
-		arcane_spell_success_chance_add = 22
-	}
+	prowess = 8
+	intrigue = 8
+	diplomacy = 3
 
-	portrait_modifier = {
-		demonic_horns_high = yes
-		black_wings = yes
-		demonic_eyes = yes
-	}
+	monthly_piety = -4.0
+	monthly_prestige = 2.0
+	health = 2.0
 
-	on_gain = {
-		trigger_event = demon.0020
-	}
-	cost = 0
-	icon = demon_high
+	dread_baseline_add = 20
+	general_opinion = -25
+	clergy_opinion = -75
+
+	ruler_designer_cost = 200
 }
 
 demon_legendary = {
-	category = lifestyle
-	description = demon_legendary_desc
-	group = demon_tier
-	index = 3
-	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended }
+	desc = demon_legendary_desc
+	opposites = { angel_lesser angel_greater angel_archangel celestial_ascended demon_low demon_mid demon_high }
 
-	monthly_character_modifier = {
-		prowess = 14
-		intrigue = 12
-		diplomacy = 5
-		learning = 5
-		monthly_piety = -8.0
-		monthly_prestige = 4.0
-		arcane_mana_regen = 70
-		health = 4.0
-		corruption_power = 60
-		arcane_spell_success_chance_add = 40
-		monthly_arcane_xp = 10
-	}
+	prowess = 14
+	intrigue = 12
+	diplomacy = 5
+	learning = 5
 
-	portrait_modifier = {
-		demonic_horns_legendary = yes
-		black_wings_large = yes
-		demonic_eyes = yes
-		dark_aura = yes
-	}
+	monthly_piety = -8.0
+	monthly_prestige = 4.0
+	health = 4.0
 
-	on_gain = {
-		trigger_event = demon.0030
-	}
-	cost = 0
-	icon = demon_legendary
+	dread_baseline_add = 50
+	general_opinion = -30
+	clergy_opinion = -100
+
+	ruler_designer_cost = 500
 }
 
 # ---- DEMON SPECIALIZATION TRAITS ----
 
 demon_corruptor = {
-	category = lifestyle
-	description = demon_corruptor_desc
-	group = demon_spec
-	monthly_character_modifier = {
-		intrigue = 5
-		corruption_power = 20
-		arcane_mana_regen = 5
-		monthly_piety = -1.0
-	}
-	cost = 0
-	icon = demon_corruptor
+	desc = demon_corruptor_desc
+
+	intrigue = 5
+
+	monthly_piety = -1.0
+
+	ruler_designer_cost = 30
 }
 
 demon_destroyer = {
-	category = lifestyle
-	description = demon_destroyer_desc
-	group = demon_spec
-	monthly_character_modifier = {
-		prowess = 6
-		arcane_spell_success_chance_add = 10
-		arcane_mana_regen = 8
-		monthly_piety = -1.5
-	}
-	cost = 0
-	icon = demon_destroyer
+	desc = demon_destroyer_desc
+
+	prowess = 6
+
+	monthly_piety = -1.5
+
+	ruler_designer_cost = 35
 }
 
 demon_deceiver = {
-	category = lifestyle
-	description = demon_deceiver_desc
-	group = demon_spec
-	monthly_character_modifier = {
-		intrigue = 6
-		diplomacy = 3
-		corruption_power = 10
-		monthly_prestige = 0.8
-		monthly_piety = -1.0
-	}
-	cost = 0
-	icon = demon_deceiver
+	desc = demon_deceiver_desc
+
+	intrigue = 6
+	diplomacy = 3
+
+	monthly_prestige = 0.8
+	monthly_piety = -1.0
+
+	ruler_designer_cost = 35
 }
 
 demon_tempter = {
-	category = lifestyle
-	description = demon_tempter_desc
-	group = demon_spec
-	monthly_character_modifier = {
-		diplomacy = 5
-		intrigue = 4
-		corruption_power = 15
-		monthly_prestige = 1.0
-		monthly_piety = -0.8
-	}
-	cost = 0
-	icon = demon_tempter
+	desc = demon_tempter_desc
+
+	diplomacy = 5
+	intrigue = 4
+
+	monthly_prestige = 1.0
+	monthly_piety = -0.8
+
+	ruler_designer_cost = 35
 }
 
 # ---- ANGEL TIERS ----
 
 angel_lesser = {
-	category = lifestyle
-	description = angel_lesser_desc
-	group = angel_tier
-	index = 0
+	desc = angel_lesser_desc
 	opposites = { demon_low demon_mid demon_high demon_legendary }
 
-	monthly_character_modifier = {
-		monthly_piety = 2.0
-		monthly_prestige = 0.5
-		health = 1.0
-		diplomacy = 2
-		arcane_mana_regen = 8
-		celestial_power = 10
-		learning = 2
-	}
+	diplomacy = 2
+	learning = 2
 
-	portrait_modifier = {
-		white_wings_small = yes
-		holy_glow = yes
-	}
+	monthly_piety = 2.0
+	monthly_prestige = 0.5
+	health = 1.0
 
-	cost = 0
-	icon = angel_lesser
+	clergy_opinion = 20
+	general_opinion = 5
+
+	ruler_designer_cost = 50
 }
 
 angel_greater = {
-	category = lifestyle
-	description = angel_greater_desc
-	group = angel_tier
-	index = 1
-	opposites = { demon_low demon_mid demon_high demon_legendary }
+	desc = angel_greater_desc
+	opposites = { demon_low demon_mid demon_high demon_legendary angel_lesser }
 
-	monthly_character_modifier = {
-		monthly_piety = 4.0
-		monthly_prestige = 1.5
-		health = 2.0
-		diplomacy = 4
-		prowess = 3
-		arcane_mana_regen = 20
-		celestial_power = 25
-		learning = 3
-		arcane_spell_success_chance_add = 12
-	}
+	diplomacy = 4
+	prowess = 3
+	learning = 3
 
-	portrait_modifier = {
-		white_wings = yes
-		halo = yes
-		holy_glow = yes
-	}
+	monthly_piety = 4.0
+	monthly_prestige = 1.5
+	health = 2.0
 
-	on_gain = {
-		trigger_event = angel.0010
-	}
-	cost = 0
-	icon = angel_greater
+	clergy_opinion = 40
+	general_opinion = 10
+
+	ruler_designer_cost = 100
 }
 
 angel_archangel = {
-	category = lifestyle
-	description = angel_archangel_desc
-	group = angel_tier
-	index = 2
-	opposites = { demon_low demon_mid demon_high demon_legendary }
+	desc = angel_archangel_desc
+	opposites = { demon_low demon_mid demon_high demon_legendary angel_lesser angel_greater }
 
-	monthly_character_modifier = {
-		monthly_piety = 7.0
-		monthly_prestige = 3.0
-		health = 3.5
-		diplomacy = 6
-		prowess = 5
-		learning = 5
-		arcane_mana_regen = 40
-		celestial_power = 45
-		arcane_spell_success_chance_add = 28
-		monthly_arcane_xp = 8
-	}
+	diplomacy = 6
+	prowess = 5
+	learning = 5
 
-	portrait_modifier = {
-		white_wings_large = yes
-		halo = yes
-		holy_glow_strong = yes
-		golden_armor = yes
-	}
+	monthly_piety = 7.0
+	monthly_prestige = 3.0
+	health = 3.5
 
-	on_gain = {
-		trigger_event = angel.0020
-	}
-	cost = 0
-	icon = angel_archangel
+	clergy_opinion = 60
+	general_opinion = 15
+
+	ruler_designer_cost = 200
 }
 
 celestial_ascended = {
-	category = lifestyle
-	description = celestial_ascended_desc
-	group = angel_tier
-	index = 3
-	opposites = { demon_low demon_mid demon_high demon_legendary }
+	desc = celestial_ascended_desc
+	opposites = { demon_low demon_mid demon_high demon_legendary angel_lesser angel_greater angel_archangel }
 
-	monthly_character_modifier = {
-		monthly_piety = 12.0
-		monthly_prestige = 6.0
-		health = 6.0
-		diplomacy = 10
-		prowess = 7
-		learning = 8
-		arcane_mana_regen = 80
-		celestial_power = 75
-		arcane_spell_success_chance_add = 50
-		monthly_arcane_xp = 15
-	}
+	diplomacy = 10
+	prowess = 7
+	learning = 8
 
-	portrait_modifier = {
-		white_wings_celestial = yes
-		halo_radiant = yes
-		divine_aura = yes
-	}
+	monthly_piety = 12.0
+	monthly_prestige = 6.0
+	health = 6.0
 
-	on_gain = {
-		trigger_event = angel.0030
-	}
-	cost = 0
-	icon = celestial_ascended
+	clergy_opinion = 100
+	general_opinion = 25
+
+	ruler_designer_cost = 500
 }
 
 # ---- ANGEL SPECIALIZATION TRAITS ----
 
 angel_guardian = {
-	category = lifestyle
-	description = angel_guardian_desc
-	group = angel_spec
-	monthly_character_modifier = {
-		prowess = 5
-		health = 2.0
-		celestial_power = 15
-		arcane_spell_success_chance_add = 8
-		monthly_piety = 1.0
-	}
-	cost = 0
-	icon = angel_guardian
+	desc = angel_guardian_desc
+
+	prowess = 5
+	health = 2.0
+
+	monthly_piety = 1.0
+
+	ruler_designer_cost = 40
 }
 
 angel_healer = {
-	category = lifestyle
-	description = angel_healer_desc
-	group = angel_spec
-	monthly_character_modifier = {
-		health = 3.0
-		diplomacy = 3
-		celestial_power = 10
-		healing_power = 25
-		monthly_piety = 2.0
-	}
-	cost = 0
-	icon = angel_healer
+	desc = angel_healer_desc
+
+	diplomacy = 3
+	health = 3.0
+
+	monthly_piety = 2.0
+
+	ruler_designer_cost = 45
 }
 
 angel_prophet = {
-	category = lifestyle
-	description = angel_prophet_desc
-	group = angel_spec
-	monthly_character_modifier = {
-		learning = 5
-		diplomacy = 4
-		celestial_power = 12
-		divination_power = 20
-		monthly_piety = 2.5
-	}
-	cost = 0
-	icon = angel_prophet
+	desc = angel_prophet_desc
+
+	learning = 5
+	diplomacy = 4
+
+	monthly_piety = 2.5
+
+	ruler_designer_cost = 45
 }
 
 angel_warlord = {
-	category = lifestyle
-	description = angel_warlord_desc
-	group = angel_spec
-	monthly_character_modifier = {
-		prowess = 7
-		martial = 3
-		celestial_power = 18
-		monthly_piety = 1.0
-		monthly_prestige = 1.0
-	}
-	cost = 0
-	icon = angel_warlord
+	desc = angel_warlord_desc
+
+	prowess = 7
+	martial = 3
+
+	monthly_piety = 1.0
+	monthly_prestige = 1.0
+
+	ruler_designer_cost = 50
 }
 
 # ---- TRANSFORMATION TRAITS ----
 
 demonic_transformation = {
-	category = lifestyle
-	description = demonic_transformation_desc
-	monthly_character_modifier = {
-		health = 1.0
-		prowess = 3
-		intrigue = 3
-		monthly_piety = -2.0
-		arcane_mana_regen = 10
-	}
-	portrait_modifier = {
-		demonic_skin = yes
-	}
-	cost = 0
-	icon = demonic_transformation
+	desc = demonic_transformation_desc
+
+	health = 1.0
+	prowess = 3
+	intrigue = 3
+
+	monthly_piety = -2.0
+
+	general_opinion = -10
+
+	ruler_designer_cost = 25
 }
 
 celestial_transformation = {
-	category = lifestyle
-	description = celestial_transformation_desc
-	monthly_character_modifier = {
-		health = 1.5
-		diplomacy = 3
-		monthly_piety = 2.0
-		arcane_mana_regen = 10
-	}
-	portrait_modifier = {
-		celestial_skin = yes
-	}
-	cost = 0
-	icon = celestial_transformation
+	desc = celestial_transformation_desc
+
+	health = 1.5
+	diplomacy = 3
+
+	monthly_piety = 2.0
+
+	general_opinion = 5
+
+	ruler_designer_cost = 25
 }
 
 half_demon = {
-	category = personality
-	description = half_demon_desc
+	desc = half_demon_desc
+
+	prowess = 2
+	intrigue = 2
+
+	monthly_piety = -0.8
+
 	inherit_chance = 50
-	monthly_character_modifier = {
-		prowess = 2
-		intrigue = 2
-		monthly_piety = -0.8
-		arcane_mana_regen = 5
-		corruption_power = 5
-	}
-	portrait_modifier = {
-		small_horns = yes
-	}
-	cost = 0
-	icon = half_demon
+
+	general_opinion = -5
+
+	ruler_designer_cost = 20
 }
 
 half_angel = {
-	category = personality
-	description = half_angel_desc
+	desc = half_angel_desc
+
+	diplomacy = 2
+	health = 0.5
+
+	monthly_piety = 0.8
+
 	inherit_chance = 50
-	monthly_character_modifier = {
-		health = 0.5
-		diplomacy = 2
-		monthly_piety = 0.8
-		arcane_mana_regen = 5
-		celestial_power = 5
-	}
-	portrait_modifier = {
-		faint_halo = yes
-	}
-	cost = 0
-	icon = half_angel
+
+	general_opinion = 5
+
+	ruler_designer_cost = 20
 }
 
 # ---- DEMON CONTRACT TRAITS ----
 
 bound_by_contract = {
-	category = lifestyle
-	description = bound_by_contract_desc
-	monthly_character_modifier = {
-		arcane_mana_regen = 20
-		prowess = 4
-		intrigue = 4
-		monthly_piety = -3.0
-		health = -0.5
-	}
-	# Soul at risk when contract ends
-	cost = 0
-	icon = bound_by_contract
+	desc = bound_by_contract_desc
+
+	prowess = 4
+	intrigue = 4
+
+	monthly_piety = -3.0
+	health = -0.5
+
+	ruler_designer_cost = 15
 }
 
 soul_forfeit = {
-	category = lifestyle
-	description = soul_forfeit_desc
-	monthly_character_modifier = {
-		monthly_piety = -5.0
-		health = -2.0
-		intrigue = 5
-	}
-	cost = 0
-	icon = soul_forfeit
+	desc = soul_forfeit_desc
+
+	intrigue = 5
+
+	monthly_piety = -5.0
+	health = -2.0
+
+	general_opinion = -15
+
+	ruler_designer_cost = -30
 }
 
 demon_god_marked = {
-	category = lifestyle
-	description = demon_god_marked_desc
-	monthly_character_modifier = {
-		monthly_piety = -10.0
-		health = -3.0
-		arcane_mana_regen = 40
-		prowess = 8
-		intrigue = 8
-	}
-	cost = 0
-	icon = demon_god_marked
+	desc = demon_god_marked_desc
+
+	prowess = 8
+	intrigue = 8
+
+	monthly_piety = -10.0
+	health = -3.0
+
+	dread_baseline_add = 30
+	general_opinion = -25
+
+	ruler_designer_cost = 0
 }
 
 # ---- PUPPET/CONTROLLED TRAITS ----
 
 magically_dominated = {
-	category = lifestyle
-	description = magically_dominated_desc
-	monthly_character_modifier = {
-		prowess = -5
-		intrigue = -5
-		diplomacy = -5
-	}
-	cost = 0
-	icon = magically_dominated
+	desc = magically_dominated_desc
+
+	prowess = -5
+	intrigue = -5
+	diplomacy = -5
+
+	ruler_designer_cost = -50
 }
 
 puppet_master = {
-	category = lifestyle
-	description = puppet_master_desc
-	monthly_character_modifier = {
-		intrigue = 5
-		diplomacy = 3
-		monthly_prestige = 1.0
-	}
-	cost = 0
-	icon = puppet_master
+	desc = puppet_master_desc
+
+	intrigue = 5
+	diplomacy = 3
+
+	monthly_prestige = 1.0
+
+	ruler_designer_cost = 40
 }
 
 # ---- NECROMANCY SPECIFIC TRAITS ----
 
 undead_commander = {
-	category = lifestyle
-	description = undead_commander_desc
-	monthly_character_modifier = {
-		martial = 3
-		prowess = 2
-		monthly_piety = -2.0
-		necro_power = 15
-		arcane_mana_regen = 5
-	}
-	cost = 0
-	icon = undead_commander
+	desc = undead_commander_desc
+
+	martial = 3
+	prowess = 2
+
+	monthly_piety = -2.0
+
+	general_opinion = -15
+	clergy_opinion = -30
+
+	ruler_designer_cost = 30
 }
 
 lich_touched = {
-	category = lifestyle
-	description = lich_touched_desc
-	monthly_character_modifier = {
-		health = 2.0
-		monthly_piety = -3.0
-		necro_power = 25
-		arcane_mana_regen = 10
-		learning = 3
-	}
-	cost = 0
-	icon = lich_touched
+	desc = lich_touched_desc
+
+	learning = 3
+	health = 2.0
+
+	monthly_piety = -3.0
+
+	general_opinion = -20
+	clergy_opinion = -40
+
+	ruler_designer_cost = 40
 }
 
 phylactery_bound = {
-	category = lifestyle
-	description = phylactery_bound_desc
-	monthly_character_modifier = {
-		health = 5.0
-		monthly_piety = -5.0
-		necro_power = 30
-	}
-	# Near immortality - extremely hard to get
-	cost = 0
-	icon = phylactery_bound
+	desc = phylactery_bound_desc
+
+	health = 5.0
+
+	monthly_piety = -5.0
+
+	general_opinion = -25
+
+	ruler_designer_cost = 100
 }
 
 # ---- ETERNAL LIFE TRAITS (Ultra Rare) ----
 
 ageless_mage = {
-	category = lifestyle
-	description = ageless_mage_desc
-	monthly_character_modifier = {
-		health = 3.0
-		monthly_piety = -2.0
-		arcane_mana_regen = 15
-	}
-	# Removes aging - extremely difficult to obtain
-	immortal = yes
-	cost = 0
-	icon = ageless_mage
-}
+	desc = ageless_mage_desc
 
+	health = 3.0
+
+	monthly_piety = -2.0
+
+	immortal = yes
+
+	ruler_designer_cost = 1000
+}
