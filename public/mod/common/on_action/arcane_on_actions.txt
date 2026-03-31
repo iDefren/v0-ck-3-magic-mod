@@ -3,99 +3,59 @@
 # Hooks into CK3 on_actions for game events
 # ============================================================
 
-# Monthly check for mana regeneration
+# ============================================================
+# MONTHLY MANA REGENERATION
+# Using random_events for monthly mana update
+# ============================================================
+
 on_monthly = {
-	on_actions = {
-		arcane_monthly_pulse
+	random_events = {
+		chance_to_happen = 100
+		100 = arcane.0600
 	}
 }
 
-arcane_monthly_pulse = {
-	trigger = {
-		OR = {
-			has_trait = arcane_spark
-			has_trait = mage_initiate
-			has_trait = mage_adept
-			has_trait = mage_journeyman
-			has_trait = mage_expert
-			has_trait = mage_master
-			has_trait = archmage
-			has_trait = demon_low
-			has_trait = demon_mid
-			has_trait = demon_high
-			has_trait = demon_legendary
-			has_trait = angel_lesser
-			has_trait = angel_greater
-			has_trait = angel_archangel
-			has_trait = celestial_ascended
-		}
-	}
-	events = {
-		arcane.0600
-	}
-}
+# ============================================================
+# TRAIT GAIN - Initialize mana system
+# ============================================================
 
-# Hook into trait gain for mana initialization
-on_character_gained_trait = {
-	trigger = {
-		OR = {
-			has_trait = arcane_spark
-			has_trait = mage_initiate
-			has_trait = demon_low
-			has_trait = angel_lesser
-		}
-		NOT = { has_variable = arcane_mana }
-	}
+on_trait_gained = {
 	effect = {
-		set_variable = {
-			name = arcane_mana
-			value = 0
-		}
-		set_variable = {
-			name = arcane_mana_max
-			value = 100
-		}
-		set_variable = {
-			name = arcane_xp
-			value = 0
+		if = {
+			limit = {
+				OR = {
+					scope:trait = trait:arcane_spark
+					scope:trait = trait:mage_initiate
+					scope:trait = trait:demon_low
+					scope:trait = trait:angel_lesser
+				}
+				NOT = { has_variable = arcane_mana }
+			}
+			set_variable = {
+				name = arcane_mana
+				value = 0
+			}
+			set_variable = {
+				name = arcane_mana_max
+				value = 100
+			}
+			set_variable = {
+				name = arcane_xp
+				value = 0
+			}
+			# Trigger awakening event
+			trigger_event = arcane.0001
 		}
 	}
 }
 
-# Combat magic when duel starts
-on_combat_start = {
-	trigger = {
-		OR = {
-			has_trait = mage_adept
-			has_trait = mage_journeyman
-			has_trait = mage_expert
-			has_trait = mage_master
-			has_trait = archmage
-			has_trait = demon_mid
-			has_trait = demon_high
-			has_trait = demon_legendary
-			has_trait = angel_greater
-			has_trait = angel_archangel
-			has_trait = celestial_ascended
-		}
-	}
-	events = {
-		arcane.0700
-	}
-}
+# ============================================================
+# YEARLY MAGICAL EVENTS
+# ============================================================
 
-# Random yearly magical events
-on_yearly = {
+on_yearly_pulse = {
 	random_events = {
 		chance_to_happen = 15
 		100 = arcane.0800
-	}
-	trigger = {
-		OR = {
-			has_trait = mage_journeyman
-			has_trait = mage_expert
-			has_trait = mage_master
-			has_trait = archmage
-		}
 	}
 }

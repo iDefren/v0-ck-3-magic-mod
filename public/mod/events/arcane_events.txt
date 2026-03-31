@@ -628,17 +628,34 @@ arcane.0502 = {
 }
 
 # ============================================================
-# EVENTS 0600 - MONTHLY PULSE MANA EVENT
+# EVENTS 0600 - MONTHLY PULSE MANA EVENT (Hidden)
 # ============================================================
 arcane.0600 = {
 	type = character_event
 	hidden = yes
-	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_trait = arcane_spark
+			has_trait = mage_initiate
+			has_trait = mage_adept
+			has_trait = mage_journeyman
+			has_trait = mage_expert
+			has_trait = mage_master
+			has_trait = archmage
+			has_trait = demon_low
+			has_trait = demon_mid
+			has_trait = demon_high
+			has_trait = demon_legendary
+			has_trait = angel_lesser
+			has_trait = angel_greater
+			has_trait = angel_archangel
+			has_trait = celestial_ascended
+		}
+	}
 
 	immediate = {
-		every_player = {
-			arcane_monthly_pulse = yes
-		}
+		arcane_monthly_pulse = yes
 	}
 }
 
